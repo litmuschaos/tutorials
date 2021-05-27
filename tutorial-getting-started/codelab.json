@@ -1,0 +1,29 @@
+{
+  "environment": "web",
+  "format": "markdown",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-05-27T02:00:06Z",
+  "id": "tutorial-getting-started",
+  "duration": 0,
+  "title": "LitmusChaos: Getting Started",
+  "authors": "Karthik S",
+  "summary": "In this codelab, you will install LitmusChaos using Helm, setup a chaos project on the Litmus Portal, execute your first chaos workflow to subject a sample application to a pod kill fault and view the result of the experiment.",
+  "source": "1yMHoitNa7PpHhnHuKR-OPllp6wRa-Wc7MpD8y5pq8v8",
+  "theme": "web",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "Web"
+  ],
+  "tags": [
+    "chaos engineering",
+    "devops",
+    "kubernetes",
+    "sre"
+  ],
+  "feedback": "https://github.com/litmuschaos/tutorials/issues",
+  "ga": "N/A",
+  "url": "tutorial-getting-started"
+}
