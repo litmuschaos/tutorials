@@ -1,37 +1,51 @@
-## Welcome to GitHub Pages
+## Welcome to LitmusChaos Tutorials
 
-You can use the [editor on GitHub](https://github.com/litmuschaos/tutorials/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+The tutorials help you to quickly learn some of the standard day-0 to day-n flows associated with the LitmusChaos framework (and Chaos Engineering in general).
+Each tutorial is created with a definitive objective. If you believe the objective is not met, please create issues on the [Github](https://github.com/litmuschaos/tutorials) 
+repository stating what is missing. 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+### Topics 
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/litmuschaos/tutorials/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+<table style="width:100%">
+  <tr>
+    <th> Tutorial </th>
+    <th> Description </th>
+    <th> Links </th>
+  </tr>
+  <tr>
+    <td>LitmusChaos: Getting Started</td>
+    <td>Installation of Litmus, Portal Set Up, Chaos Execution</td>
+    <td><a href="https://litmuschaos.github.io/tutorials/tutorial-getting-started/index.html#0">Click Here</a></td>
+  </tr>
+  <tr>
+    <td>Creating Custom Chaos Workflows</td>
+    <td>Usage MyHub and Asset Discovery to create Custom Workflows</td>
+    <td>Coming Soon</td>
+  </tr>
+  <tr>
+    <td>Running Chaos Workflows On Remote Clusters</td>
+    <td>External Agent Set Up with LitmusCtl</td>
+    <td>Coming Soon</td>
+  </tr>
+  <tr>
+    <td>Defining Steady-State Hypothesis</td>
+    <td>Usage of Litmus Probes to Create Constraints for Experiment Success</td>
+    <td>Coming Soon</td>
+  </tr>
+  <tr>
+    <td>Observing Chaos Impact On Services</td>
+    <td>Instrument Grafana Dashboards with LitmusChaos Prometheus Metrics</td>
+    <td>Coming Soon</td>
+  </tr>
+  <tr>
+    <td>Integrating with GitOps</td>
+    <td>Usage of Git as Golden Copy for Chaos Workflows and Automated Trigger of Chaos </td>
+    <td>Coming Soon</td>
+  </tr>
+  <tr>
+    <td>Teaming in LitmusChaos</td>
+    <td>Invite Team Members and Assign Roles in Chaos Project</td>
+    <td>Coming Soon</td>
+  </tr>
+</table>
