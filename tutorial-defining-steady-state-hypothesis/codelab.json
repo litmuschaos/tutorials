@@ -1,0 +1,22 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-09-20T14:05:58Z",
+  "id": "",
+  "duration": 6,
+  "title": "Defining Steady State Hypothesis",
+  "authors": "Gbadebo Bello",
+  "summary": "In this tutorial, you will learn how to create your own steady-state hypothesis using pluggable checks called probes",
+  "source": "1zZrGgKCB8XBZqvTVcu713n-I_TnsR8d05vGB2iwv_3M",
+  "theme": "web",
+  "status": [
+    "drafts"
+  ],
+  "category": [
+    "web"
+  ],
+  "tags": [],
+  "url": ""
+}
