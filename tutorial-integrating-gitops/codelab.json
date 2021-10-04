@@ -1,0 +1,22 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-10-04T15:16:59Z",
+  "id": "",
+  "duration": 9,
+  "title": "Integrating with Gitops",
+  "authors": "Gbadebo Bello",
+  "summary": "In this tutorial, you will learn how to integrate your Litmus portal with Gitops, how to create remote experiments workflows on Github and have them synced automatically with your local cluster.",
+  "source": "18Cx7ysPXDuYYFuGErPORREpKKhHySRMMb1C2L5avB9U",
+  "theme": "web",
+  "status": [
+    "drafts"
+  ],
+  "category": [
+    "web"
+  ],
+  "tags": [],
+  "url": ""
+}

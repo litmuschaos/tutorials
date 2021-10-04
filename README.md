@@ -43,7 +43,7 @@ repository stating what is missing.
   <tr>
     <td>Integrating with GitOps</td>
     <td>Usage of Git as Golden Copy for Chaos Workflows and Automated Trigger of Chaos </td>
-    <td>Coming Soon</td>
+    <td><a href="https://litmuschaos.github.io/tutorials/tutorial-integrating-gitops/index.html#0">Click Here</a></td>
   </tr>
   <tr>
     <td>Teaming in LitmusChaos</td>
