@@ -48,6 +48,8 @@ repository stating what is missing.
   <tr>
     <td>Teaming in LitmusChaos</td>
     <td>Invite Team Members and Assign Roles in Chaos Project</td>
-    <td>Coming Soon</td>
+    <td>
+      <a href="https://litmuschaos.github.io/tutorials/tutorials-teaming-in-litmus/index.html#0">Click Here</a>
+    </td>
   </tr>
 </table>
