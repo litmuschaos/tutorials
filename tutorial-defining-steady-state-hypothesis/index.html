@@ -51,7 +51,7 @@
       </google-codelab-step>
     
       <google-codelab-step label="Hypothesis" duration="1">
-        <p>An hypothesis in chaos engineering is a supposition or expectation about the behavior of a system, it is a guess of the expected behavior of an application. When chaos is induced on your cluster, what happens to the application? how does it respond? does it kill a pod, cause a network loss, or breaks a downstream application? what happens to the all-around system stability or is there still something that needs to be fixed. Hypothesis are the seeds for further investigation and to learn more about the behavior of the overall system. </p>
+        <p>A hypothesis in chaos engineering is a supposition or expectation about the behavior of a system, it is a guess of the expected behavior of an application. When chaos is induced on your cluster, what happens to the application? how does it respond? does it kill a pod, cause a network loss, or break a downstream application? what happens to the all-around system stability or is there still something that needs to be fixed. Hypothesis are the seeds for further investigation and to learn more about the behavior of the overall system. </p>
 <p>Sometimes, the hypothesis directly translates to an expected result while sometimes it is only a hint to further investigation that can lead to a more solid result after prolonged experimentation. </p>
 <p>In this tutorial, we would talk about creating hypotheses in Litmus using something called Litmus probes, you will learn about Litmus probes, the different kinds of probes, and how to use them.</p>
 <h2 is-upgraded>Steady State</h2>
@@ -96,55 +96,42 @@
     
       <google-codelab-step label="Adding Probes to your Experiment" duration="0">
         <p>Probes were introduced in Litmus version 1.8 with a declarative approach in mind, Litmus version 2.x even takes this approach a step further by making it visual with the Litmus portal. </p>
-<p>In this section, you will learn how you can add probes to an experiment using the Litmus portal. You will add an httpProbe to a kafka-broker-pod-failure experiment. </p>
+<p>In this section, you will learn how you can add probes to an experiment using the Litmus portal. You will add an HTTP probe to a pod-delete experiment. </p>
 <h2 is-upgraded>Create a workflow</h2>
-<p>First, you need to log in into your litmus portal and create a workflow.</p>
+<p>First, you need to log in to your litmus portal and create a workflow.</p>
 <p>First, navigate to the Workflows tab on the portal and click the Schedule a workflow button. This will take you to the workflow page.</p>
 <p>You need to select a Target Agent to proceed, these agents consist of CRDs and the required resources to run a chaos workflow. While installing the Litmus Portal, a default agent named Self Agent is created. Select the Self Agent.</p>
-<p>Then, you will see four different options from which you can create a workflow. For this tutorial, we will only care about the Create a new workflow using experiments from the MyHub option. Select this option, then click Next.</p>
-<p class="image-container"><img style="width: 624.00px" src="img/6109f63ad12834e1.png"></p>
-<p>Edit the workflow name and description as you dim fit and click the next button.</p>
+<p>Then, you will see four different options from which you can create a workflow. For this tutorial, we will only care about the Create a new workflow from one of the pre-defined chaos workflow templates options. Select this option, select MyHub and choose the potato-head experiment.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/61c6cf4e3f286c77.png"></p>
+<p>Click Next to proceed.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/315cb413ca8cb592.png"></p>
+<p>Edit the description and name, if necessary, and click next.</p>
 <h2 is-upgraded>Add a new experiment</h2>
-<p>There is an Add a new experiment button beside the Edit YAML button. This button allows you to add a new experiment to your workflow. The experiments added here allows you to optionally inject probes into them. Click the add a new experiment button.</p>
-<p class="image-container"><img style="width: 624.00px" src="img/8af88bb8278e5cb5.png"></p>
-<p>Clicking this button pops up a modal that lets you select what experiment you want to add.</p>
-<p>Search for kafka/kafka-broker-pod-failure and select it. </p>
-<p class="image-container"><img style="width: 624.00px" src="img/9b10e55b2bbf4a49.png"></p>
-<p>Click the Done button to add this experiment.</p>
-<p>You can now see that the list of experiments has been updated, select the experiment you just added. </p>
+<p>Because we are using a predefined workflow, you will see an option to select and already added experiment. Select this experiment(podtato-main-pod-delete-chaos)</p>
+<p class="image-container"><img style="width: 624.00px" src="img/d704ff3122392f2f.png"></p>
 <h2 is-upgraded>Induce a Probe</h2>
-<p>When you click on an experiment, you&#39;re faced with three sections:</p>
+<p>When you click on an experiment, you&#39;re faced with four sections:</p>
 <ul>
 <li>General</li>
 <li>Target Application</li>
 <li>Defining the steady-state</li>
+<li>Tune Experiment</li>
 </ul>
-<p class="image-container"><img style="width: 624.00px" src="img/2c44f8113e58b28f.png"></p>
+<p class="image-container"><img style="width: 624.00px" src="img/d6ba0f15fb47e689.png"></p>
 <p>For now, we only care about the third option, click next two times without editing the contents of the first two options, so we can define a steady-state for our hypothesis.</p>
-<p>Click the Add a new probe button to add a new probe. Give your probe the desired name and use the following values as the probe&#39;s input.</p>
-<ul>
-<li>Probe Type = http</li>
-<li>Probe Mode = Continuous</li>
-<li>Timeout = 10000</li>
-<li>Retry times = 1</li>
-<li>Intervals = 5</li>
-<li>Polling Intervals = 5</li>
-<li>Initial Delay seconds = 5</li>
-<li>Probe timeout = 5</li>
-<li>Probe polling interval = 2</li>
-<li>Request method = GET</li>
-<li>Criteria =<strong> ==</strong></li>
-<li>Response code = 200</li>
-</ul>
-<p class="image-container"><img style="width: 624.00px" src="img/de1e389a2de7fce9.png"></p>
-<p>Click the Add probe button, and then click finish to proceed.</p>
+<p>Because we are using a pre-defined workflow, a steady-state hypothesis has been pre-defined for us. Let us examine this hypothesis.</p>
+<p>This probe has a check called check-podtato-main-access-url, if you click on the &#34;show details&#34; button, you will see that it checks a url and verifies if an http get call against the url is going to return a status of 200.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/9875429e4a77cd7.png"></p>
+<p>If you click on the show properties button, you will see that it does this request every one second and retries failed requests only once.</p>
+<p class="image-container"><img style="width: 600.00px" src="img/a46d04ecb029ac1f.png"></p>
+<p>Click the Next button below to proceed.</p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Reliability Score and Schedule" duration="0">
         <p>You can assign weights to the experiments present in the workflow. These weights will be then used for the calculation of the resilience score after the workflow completion. By default, 10 points are assigned to each experiment. This can be altered as per your use case. After selecting weights click on the Next Button.</p>
-<p class="image-container"><img style="width: 624.00px" src="img/a888c4b98998e93f.png"></p>
+<p class="image-container"><img style="width: 624.00px" src="img/678a4761604882ce.png"></p>
 <p>Workflows can also be scheduled in two ways;</p>
 <ul>
 <li>Schedule now: This option allows the workflow will start as soon as you schedule it.</li>
@@ -155,24 +142,28 @@
 <li>Every Month</li>
 </ul>
 <p>Select the<strong> Schedule now</strong> option and click next.</p>
-<p class="image-container"><img style="width: 624.00px" src="img/d1c6762537006aa1.png"></p>
+<p class="image-container"><img style="width: 624.00px" src="img/27bfecc017f405fb.png"></p>
 <h2 is-upgraded>Verify and commit</h2>
 <p>Here, you can validate all the changes related to the workflow like the workflow name, the experiment weights, workflow description, workflow manifest, etc. Once you have verified all the changes, you can click the Finish button to start the schedule.</p>
-<p class="image-container"><img style="width: 624.00px" src="img/f28892b19ef1d984.png"></p>
+<p class="image-container"><img style="width: 624.00px" src="img/1d3d05f770d46a87.png"></p>
 <p>Click the go-to workflow button to see the workflow in action. </p>
-<p class="image-container"><img style="width: 718.83px" src="img/5aac1338eac7f3fd.png"></p>
-<p class="image-container"><img style="width: 624.00px" src="img/455645c1b1180535.png"></p>
+<p class="image-container"><img style="width: 695.51px" src="img/f2f231fb489d0d7a.png"></p>
+<p class="image-container"><img style="width: 793.70px" src="img/310faa14f876d961.png"></p>
 <p>The workflow will have a status of pending while it is still running, click on the three vertical dots beside the workflow and view the workflow.</p>
-<p class="image-container"><img style="width: 624.00px" src="img/29326559503522cf.png"></p>
+<p class="image-container"><img style="width: 774.44px" src="img/e902a93e13f0a104.png"></p>
 <p>Keep observing the workflow and over time, you will see the probes being induced into the system as shown below. </p>
-<p class="image-container"><img style="width: 624.00px" src="img/db084f3178f84563.png"></p>
+<p class="image-container"><img style="width: 624.00px" src="img/4cdb39d942a0ae82.png"></p>
+<p>Let&#39;s confirm this, click on the <strong>pod-delete </strong>in the flow diagram above, then select <strong>Chaos Results. </strong>You should see the below.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/a93b1019f907b155.png"></p>
+<p>Scroll down to the bottom, and you will see a part in the result YAML that indicates the status of the probe.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/892060adafdaf2b4.png"></p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Summary" duration="1">
         <p>In this tutorial, you were introduced to how to the concept of hypothesis in chaos engineering and why it is important that this hypothesis is built around the steady-state of the application. You then learned about Litmus probes, their different types and modes, and how to use them.</p>
-<p>You were also able to observe at the end of the experiment that one of our probes on the workflow failed to meet the steady state hypothesis  of our application causing the experiment to fail. </p>
+<p>You were also able to observe at the end of the experiment that our probes on the workflow met the steady state hypothesis of our application, causing the experiment to pass. </p>
 
 
       </google-codelab-step>
