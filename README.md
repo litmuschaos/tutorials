@@ -33,7 +33,7 @@ repository stating what is missing.
   <tr>
     <td>Defining Steady-State Hypothesis</td>
     <td>Usage of Litmus Probes to Create Constraints for Experiment Success</td>
-    <td>Coming Soon</td>
+    <td><a href="https://litmuschaos.github.io/tutorials/tutorial-defining-steady-state-hypothesis/index.html#0">Click Here</a></td>
   </tr>
   <tr>
     <td>Observing Chaos Impact On Services</td>
