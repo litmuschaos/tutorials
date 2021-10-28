@@ -77,9 +77,25 @@
 <p class="image-container"><img style="width: 624.00px" src="img/9b34549af6f1b8e2.png"></p>
 <p>Go back to the portal and paste this token into the access token field, then click the Submit Now button.</p>
 <h2 is-upgraded>Using SSH</h2>
-<p>Another option Gitops provides is the SSH option, if you selected the SSH key option, you will be presented with an already generated SSH key, click the Copy button to copy this key and go to <a href="https://github.com/settings/ssh" target="_blank">github.com/settings/ssh</a> to add it to your account.</p>
+<p>Another option Gitops provides is the SSH option. If you selected the SSH key option, you will be presented with an already generated SSH key. </p>
+<p>Click the Copy button to copy this key and add it to your account. There are two ways this can be added:</p>
+<ul>
+<li>By adding it to your specific repository(recommended).</li>
+<li>By adding it to your profile settings.</li>
+</ul>
+<h3 is-upgraded>Adding ssh to a specific repository</h3>
+<p>This is <strong>recommended</strong> because it gives the keys access to only that repository and nothing else.</p>
+<p>Navigate to your repository and click the settings button at the top right nav. </p>
+<p class="image-container"><img style="width: 624.00px" src="img/c27c40ea2af07cd7.png"></p>
+<p>Select the <strong>Deploy keys </strong>in the vertical menu and click the <strong>Add deploy key </strong>button.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/7ec1f4f17afc29a0.png"></p>
+<p>Paste the copied ssh key, give it a title and save. This key will only have access to this repository.</p>
+<h3 is-upgraded>Adding ssh to your profile settings</h3>
+<p>This is not the recommended way to do it because this will give your ssh key access to your other repositories.</p>
+<p> Navigate to <a href="https://github.com/settings/ssh" target="_blank">github.com/settings/ssh</a>. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/272fa0768df34fe3.png"></p>
-<p>You will see a new SSH key button, click it, add a title and paste in your SSH key and click the Add SSH key button.</p>
+<p>You will see a <strong>New SSH key</strong> button. Click this button, add a title and paste in your SSH key. </p>
+<p>Then, click the Add SSH key button.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/52577463d597efb9.png"></p>
 <h2 is-upgraded>Verifying Gitops</h2>
 <p>Navigate back to your repository and reload, you would observe that Litmus has automatically pushed a commit to your repository.</p>
