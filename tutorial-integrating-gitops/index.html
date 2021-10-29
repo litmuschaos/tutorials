@@ -61,8 +61,10 @@
 <p class="image-container"><img style="width: 624.00px" src="img/c1b0e7a95e489720.png"></p>
 <p>Open your Litmus portal and Navigate to the settings tab, at the top navigation bar, select the Gitops option.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/601db283381b6461.png"></p>
-<p>Select the Git Repository option and type in the url of your repository and the branch in which your experiments resides in.</p>
+<p>Select the git repository option and type in the URL of your repository and the branch in which your experiments resides in.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/7e95765f7663ed2d.png"></p>
+<p><strong>NOTE:</strong> If you intend to use ssh, it is recommended that you add your ssh GitHub URL instead of https.</p>
+<p class="image-container"><img style="width: 433.00px" src="img/c98a94d3bc06db4a.png"></p>
 <p>The portal provides two ways in which you could link a repository. You can connect to a Github repository using either of the following.</p>
 <ul>
 <li>An access Token</li>
@@ -89,7 +91,8 @@
 <p class="image-container"><img style="width: 624.00px" src="img/c27c40ea2af07cd7.png"></p>
 <p>Select the <strong>Deploy keys </strong>in the vertical menu and click the <strong>Add deploy key </strong>button.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/7ec1f4f17afc29a0.png"></p>
-<p>Paste the copied ssh key, give it a title and save. This key will only have access to this repository.</p>
+<p>Paste the copied ssh key, and give it a title. Before you save, there is an <strong>Allow write access </strong>checkbox by the bottom left, make sure it is selected so that the key will be allowed to write to your repository. </p>
+<p>This key will only have access to this repository.</p>
 <h3 is-upgraded>Adding ssh to your profile settings</h3>
 <p>This is not the recommended way to do it because this will give your ssh key access to your other repositories.</p>
 <p> Navigate to <a href="https://github.com/settings/ssh" target="_blank">github.com/settings/ssh</a>. </p>
