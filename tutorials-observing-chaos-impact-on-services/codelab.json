@@ -1,0 +1,22 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-10-31T00:33:48Z",
+  "id": "",
+  "duration": 10,
+  "title": "Observing Choas Impact On Services",
+  "authors": "Gbadebo Bello",
+  "summary": "In this tutorial, you will learn how to observe the impact of your chaos on services by implementing the Grafana dashboard on Litmus chaos Prometheus metrics",
+  "source": "1faVxpc_yLEBjR_7xhj6xu8zVt7HqK3tr18j9WQ88MuY",
+  "theme": "web",
+  "status": [
+    "drafts"
+  ],
+  "category": [
+    "web"
+  ],
+  "tags": [],
+  "url": ""
+}

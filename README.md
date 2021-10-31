@@ -38,7 +38,9 @@ repository stating what is missing.
   <tr>
     <td>Observing Chaos Impact On Services</td>
     <td>Instrument Grafana Dashboards with LitmusChaos Prometheus Metrics</td>
-    <td>Coming Soon</td>
+    <td>
+    <a href="https://litmuschaos.github.io/tutorials/tutorials-observing-chaos-impact-on-services/index.html#0">Click Here</a>
+    </td>
   </tr>
   <tr>
     <td>Integrating with GitOps</td>
