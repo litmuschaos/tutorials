@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Observing Choas Impact On Services</title>
+  <title>Observing Chaos Impact On Services</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,7 +23,7 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id=""
-                  title="Observing Choas Impact On Services"
+                  title="Observing Chaos Impact On Services"
                   environment="web"
                   feedback-link="">
     
@@ -58,7 +58,10 @@
       <google-codelab-step label="Creating a data source" duration="1">
         <p>There are a couple of things that need to be done before you can begin to monitor your chaos workflows on the portal. But first, you need to add a data source. </p>
 <h2 is-upgraded>Get a data source</h2>
-<p>First, we need to set up a data source that can be added. For this, we would be setting up Prometheus and grafana dashboards.</p>
+<p>First, we need to set up a data source that can be added. For this, we would be setting up Prometheus and grafana dashboards. Prometheus is an example of data source we can use here, however, there are other options.</p>
+<h3 is-upgraded>Clone litmus and navigate to monitoring</h3>
+<pre><code>git clone https://github.com/litmuschaos/litmus.git
+cd litmus/monitoring</code></pre>
 <h3 is-upgraded>Create a monitoring namespace on the cluster</h3>
 <pre><code>Kubectl create ns monitoring</code></pre>
 <h3 is-upgraded>Deploy Prometheus components</h3>
@@ -66,25 +69,26 @@
 <h3 is-upgraded>Deploy Metrics exporters </h3>
 <pre><code>kubectl -n monitoring apply -f utils/metrics-exporters/node-exporter/
 kubectl -n monitoring apply -f utils/metrics-exporters/kube-state-metrics/</code></pre>
-<h3 is-upgraded>Deploy chaos-exporter when the cluster is not connected to litmus 2.0 control plane via litmus agent (exporter is installed as a part of the agent bundle)</h3>
+<aside class="warning"><p><strong>Note:</strong> To Deploy chaos-exporter when the cluster is not connected to litmus 2.0 control plane via litmus agent (exporter is installed as a part of the agent bundle)</p>
+</aside>
 <pre><code>kubectl -n litmus apply -f utils/metrics-exporters/litmus-metrics/chaos-exporter/</code></pre>
-<h2 is-upgraded>Setup Grafana &amp; Prometheus</h2>
+<h2 is-upgraded>Setup Grafana</h2>
 <h3 is-upgraded>Apply grafana manifests</h3>
-<pre><code>kubectl -n monitoring apply -f utils/metrics-exporters/node-exporter/
-kubectl -n monitoring apply -f utils/metrics-exporters/kube-state-metrics/</code></pre>
-<p>It might take a while for the manifests to apply, ensure the pods in monitoring have a <strong>Running </strong>status before proceeding. Run the command below to ensure this.</p>
+<pre><code>kubectl -n monitoring apply -f utils/grafana/</code></pre>
+<p>It might take a while for the manifests to apply, ensure that the pods in the monitoring namespace have a <strong>Running </strong>status before proceeding. Run the command below to ensure this.</p>
 <pre><code>kubectl get pods -n monitoring</code></pre>
 <p>You should get the following output.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/79a0df36bf246b22.png"></p>
-<p>To access your grafana dashboard, navigate to &lt;cluster ip&gt;:&lt;grafana port&gt;. Run the below command to get your cluster IP.</p>
+<p>To access your grafana dashboard, navigate to &lt;node ip&gt;:&lt;grafana port&gt;. Run the below command to get your node IP. In case you have an external IP you can directly make use of that too.<br></p>
+<p>For this example, the Node IP is: <strong>192.168.49.2<br></strong></p>
 <pre><code>kubectl get nodes -o wide</code></pre>
 <p class="image-container"><img style="width: 624.00px" src="img/8675549166221c1e.png"></p>
-<p>To get the port number of grafana, run the command below</p>
+<p>To get the port number of grafana service, run the below command</p>
 <pre><code>kubectl get svc -n monitoring</code></pre>
 <p class="image-container"><img style="width: 624.00px" src="img/6e986e3739a12e67.png"></p>
-<p>You can now navigate to &lt;cluster ip&gt;:&lt;grafana port&gt;, in my case, this will be <strong>192.168.49.2:31688</strong>.</p>
+<p>You can now navigate to &lt;node ip&gt;:&lt;grafana port&gt;, in my case, this will be <strong>192.168.49.2:31688</strong>.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/dff34e556a7b978d.png"></p>
-<p>To access prometheus, navigate to  &lt;cluster ip&gt;:&lt;prometheus port&gt;.</p>
+<p>To access prometheus, navigate to  &lt;node ip&gt;:&lt;prometheus port&gt;.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/69dab721be186ca6.png"></p>
 
 
@@ -93,7 +97,7 @@ kubectl -n monitoring apply -f utils/metrics-exporters/kube-state-metrics/</code
       <google-codelab-step label="Add a data source" duration="1">
         <p>On your portal, navigate to the <strong>analytics</strong> section on the right navigation bar. Navigate to the Data Sources part of the top navigation bar and click the <strong>Add data source </strong>button. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/72d7b8bc85510451.png"></p>
-<p>The Data Source Type has defaulted to Prometheus, give your source a title and paste your  &lt;cluster ip&gt;:&lt;grafana port&gt; in the URL section. Click next and save without editing anything else.</p>
+<p>The Data Source Type has defaulted to Prometheus, give your source a title and paste your  &lt;node ip&gt;:&lt;grafana port&gt; in the URL section. Click next and save without editing anything else.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/fdfc84a7bb0b0a8f.png"> </p>
 <p>You will notice that this data source has now been added as a data source in your Data Source tab.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/8c9577491a7adcdb.png"></p>
@@ -108,7 +112,7 @@ kubectl -n monitoring apply -f utils/metrics-exporters/kube-state-metrics/</code
 <p>Next, you will select a dashboard type, there are two default dashboard types namely:</p>
 <ul>
 <li><strong>Node Metrics:</strong> Monitors node level CPU, memory, disk, and IO utilization</li>
-<li><strong>Pod Metrics: </strong>Visualizes pod level CPUU and memory usage metrics</li>
+<li><strong>Pod Metrics: </strong>Visualizes pod level CPU and memory usage metrics</li>
 </ul>
 <p>You will see an option to select one of these metrics. For this tutorial, we would be using the <strong>Pod metrics </strong>as an example, so select <strong>Pod metrics</strong>.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/8cc4b7dedd6ee956.png"></p>
@@ -121,7 +125,7 @@ kubectl -n monitoring apply -f utils/metrics-exporters/kube-state-metrics/</code
 </ul>
 <p>Click both checkboxes to select both. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/dd67e83bf813f006.png"></p>
-<p>Next, you will see an interface that allows you to tune the Queries that are being used to fetch the visualized data. If you know some SQL, you can write custom queries that fit your usecase.</p>
+<p>Next, you will see an interface that allows you to tune the Queries that are being used to fetch the visualized data. If you know some SQL, you can write custom queries that fit your use case.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/5a1632fd1e93b2a3.png"></p>
 <p>You can then save your changes and you&#39;ll be taken to your dashboard visualizations page. There you will see the visualization being grouped into CPU and Memory usage respectively. </p>
 <p>The visualizations are with respect to time and you can hover on the graphs to see the values at that specific data point boldly. </p>
