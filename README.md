@@ -33,17 +33,19 @@ repository stating what is missing.
   <tr>
     <td>Defining Steady-State Hypothesis</td>
     <td>Usage of Litmus Probes to Create Constraints for Experiment Success</td>
-    <td>Coming Soon</td>
+    <td><a href="https://litmuschaos.github.io/tutorials/tutorial-defining-steady-state-hypothesis/index.html#0">Click Here</a></td>
   </tr>
   <tr>
     <td>Observing Chaos Impact On Services</td>
     <td>Instrument Grafana Dashboards with LitmusChaos Prometheus Metrics</td>
-    <td>Coming Soon</td>
+    <td>
+    <a href="https://litmuschaos.github.io/tutorials/tutorials-observing-chaos-impact-on-services/index.html#0">Click Here</a>
+    </td>
   </tr>
   <tr>
     <td>Integrating with GitOps</td>
     <td>Usage of Git as Golden Copy for Chaos Workflows and Automated Trigger of Chaos </td>
-    <td>Coming Soon</td>
+    <td><a href="https://litmuschaos.github.io/tutorials/tutorial-integrating-gitops/index.html#0">Click Here</a></td>
   </tr>
   <tr>
     <td>Teaming in LitmusChaos</td>
