@@ -1,0 +1,22 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-10-11T15:27:49Z",
+  "id": "",
+  "duration": 8,
+  "title": "Teaming in LitmusChaos",
+  "authors": "Gbadebo Bello",
+  "summary": "In this tutorial, you will learn about user and role management on the Litmus Portal. We will look at how to manage users and assign roles to each of them on a project.",
+  "source": "1nXIGlgG33lvD7SEX8ftwLSbI1sDkr19eypQ1TKvvokM",
+  "theme": "web",
+  "status": [
+    "drafts"
+  ],
+  "category": [
+    "web"
+  ],
+  "tags": [],
+  "url": ""
+}

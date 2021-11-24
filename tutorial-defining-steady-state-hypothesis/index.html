@@ -1,0 +1,187 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Defining Steady State Hypothesis</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id=""
+                  title="Defining Steady State Hypothesis"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="Introduction" duration="1">
+        <h2 is-upgraded>Welcome</h2>
+<p>In this tutorial, you will learn how to create your own steady-state hypothesis using pluggable checks called probes.</p>
+<h2 is-upgraded>What you will learn</h2>
+<ul>
+<li>What is a steady-state</li>
+<li>What is a Hypothesis</li>
+<li>Probes</li>
+<li>Different kinds of probes</li>
+</ul>
+<p>In this tutorial, we would first go over what a chaos hypothesis is and why we have to care about them. We would then dive into what probes are, the different types of probes, and when to use them. Lastly, we would use these probes to create pluggable chaos checks in a sample application.</p>
+<h2 is-upgraded>Pre-Requisites</h2>
+<ul>
+<li>Minikube 1.2.0 or later. Recommended sizing of at least: 2 vCPUs, 8GB memory, 10GB of disk space (for persistent volume creation)</li>
+<li>Helm3 or Kubectl</li>
+<li>Access to the Internet from Cluster (For Air-Gapped Environments refer to this guide)</li>
+<li>Have <a href="https://litmuschaos.github.io/tutorials/tutorial-getting-started/index.html#1" target="_blank">Litmus 2.x.x </a>installed.</li>
+<li>Basic Understanding of Litmus.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Hypothesis" duration="1">
+        <p>A hypothesis in chaos engineering is a supposition or expectation about the behavior of a system, it is a guess of the expected behavior of an application. When chaos is induced on your cluster, what happens to the application? how does it respond? does it kill a pod, cause a network loss, or break a downstream application? what happens to the all-around system stability or is there still something that needs to be fixed. Hypothesis are the seeds for further investigation and to learn more about the behavior of the overall system. </p>
+<p>Sometimes, the hypothesis directly translates to an expected result while sometimes it is only a hint to further investigation that can lead to a more solid result after prolonged experimentation. </p>
+<p>In this tutorial, we would talk about creating hypotheses in Litmus using something called Litmus probes, you will learn about Litmus probes, the different kinds of probes, and how to use them.</p>
+<h2 is-upgraded>Steady State</h2>
+<p>The steady-state of a system is a measurement that indicates a laid down measurable attributes of that system which depicts that things are all good. This can be performance values, latency measurements, availability, etc</p>
+<p>It is an important chaos engineering principle to build hypotheses around the steady-state of the system. It allows you to automate the process of gauging, analyzing, and reporting failures that occurred during the course of an experiment. This will in turn let you gain valuable insights about the resilience of the system. </p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Litmus Probes" duration="2">
+        <p>Litmus probes are pluggable checks that can be defined within the chaos engine for any chaos experiment. They execute in different modes. The experiment pods execute the checks based on the modes they are defined in and factors their success as necessary conditions in determining the verdict of the experiment.</p>
+<h2 is-upgraded>Types of Probes</h2>
+<p>Litmus currently has support for four types of probes:</p>
+<ul>
+<li>httpProbe</li>
+<li>cmdProbe</li>
+<li>k8sProbe</li>
+<li>promProbe</li>
+</ul>
+<h3 is-upgraded>httpProbe</h3>
+<p>The <strong>httpProbe</strong> allows developers to specify a URL which the experiment uses to gauge health/service availability (or other custom conditions) as part of the entry/exit criteria. The received status code is mapped against an expected status. It supports http Get and Post methods.</p>
+<h3 is-upgraded>cmdProbe</h3>
+<p>The <strong>cmdProbe</strong> allows developers to run shell commands and match the resulting output as part of the entry/exit criteria. The intent behind this probe was to allow users to implement a non-standard &amp; imperative way for expressing their hypothesis. For example, the cmdProbe enables you to check for specific data within a database, parse the value out of a JSON blob being dumped into a certain path or check for the existence of a particular string in the service logs.</p>
+<h3 is-upgraded>k8sProbe</h3>
+<p>With the proliferation of custom resources &amp; operators, especially in the case of stateful applications, the steady-state is manifested as status parameters/flags within Kubernetes resources. k8sProbe addresses verification of the desired resource state by allowing users to define the Kubernetes GVR (group-version-resource) with appropriate filters (field selectors/label selectors). The experiment makes use of the Kubernetes Dynamic Client to achieve this.The k8sProbe can be defined at .spec.experiments[].spec.probe the path inside ChaosEngine.</p>
+<p><br>It supports CRUD operations that let you create, delete, and check for the presence or absence of K8s resources.</p>
+<h3 is-upgraded>promProbe</h3>
+<p>The <strong>promProbe</strong> allows users to run Prometheus queries and match the resulting output against specific conditions. The intent behind this probe is to allow users to define metrics-based SLOs in a declarative way and determine the experiment verdict based on its success. The probe runs the query on a Prometheus server defined by the endpoint, and checks whether the output satisfies the specified criteria.</p>
+<h2 is-upgraded>Setup Modes</h2>
+<p>The probes can be made to run in different modes:</p>
+<ul>
+<li><strong>SOT</strong>: Excited at the start as a pre-chaos check.</li>
+<li><strong>EOT</strong>: Executed at the end of the test as a post-chaos check.</li>
+<li><strong>EDGE</strong>: Executed both before and after the chaos.</li>
+<li><strong>CONTINUOS</strong>: The probe is executed continuously, with a specified polling interval during the chaos injection.</li>
+<li><strong>OnCHAOS</strong>: The probe is executed continuously, with a specified polling interval strictly for the duration of the chaos.</li>
+</ul>
+<p>Please visit the <a href="https://litmusdocs-beta.netlify.app/docs/concepts/probes/" target="_blank">official documentation of probes</a> to learn more about them. </p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Adding Probes to your Experiment" duration="0">
+        <p>Probes were introduced in Litmus version 1.8 with a declarative approach in mind, Litmus version 2.x even takes this approach a step further by making it visual with the Litmus portal. </p>
+<p>In this section, you will learn how you can add probes to an experiment using the Litmus portal. You will add an HTTP probe to a pod-delete experiment. </p>
+<h2 is-upgraded>Create a workflow</h2>
+<p>First, you need to log in to your litmus portal and create a workflow.</p>
+<p>First, navigate to the Workflows tab on the portal and click the Schedule a workflow button. This will take you to the workflow page.</p>
+<p>You need to select a Target Agent to proceed, these agents consist of CRDs and the required resources to run a chaos workflow. While installing the Litmus Portal, a default agent named Self Agent is created. Select the Self Agent.</p>
+<p>Then, you will see four different options from which you can create a workflow. For this tutorial, we will only care about the Create a new workflow from one of the pre-defined chaos workflow templates options. Select this option, select MyHub and choose the potato-head experiment.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/61c6cf4e3f286c77.png"></p>
+<p>Click Next to proceed.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/315cb413ca8cb592.png"></p>
+<p>Edit the description and name, if necessary, and click next.</p>
+<h2 is-upgraded>Add a new experiment</h2>
+<p>Because we are using a predefined workflow, you will see an option to select and already added experiment. Select this experiment(podtato-main-pod-delete-chaos)</p>
+<p class="image-container"><img style="width: 624.00px" src="img/d704ff3122392f2f.png"></p>
+<h2 is-upgraded>Induce a Probe</h2>
+<p>When you click on an experiment, you&#39;re faced with four sections:</p>
+<ul>
+<li>General</li>
+<li>Target Application</li>
+<li>Defining the steady-state</li>
+<li>Tune Experiment</li>
+</ul>
+<p class="image-container"><img style="width: 624.00px" src="img/d6ba0f15fb47e689.png"></p>
+<p>For now, we only care about the third option, click next two times without editing the contents of the first two options, so we can define a steady-state for our hypothesis.</p>
+<p>Because we are using a pre-defined workflow, a steady-state hypothesis has been pre-defined for us. Let us examine this hypothesis.</p>
+<p>This probe has a check called check-podtato-main-access-url, if you click on the &#34;show details&#34; button, you will see that it checks a url and verifies if an http get call against the url is going to return a status of 200.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/9875429e4a77cd7.png"></p>
+<p>If you click on the show properties button, you will see that it does this request every one second and retries failed requests only once.</p>
+<p class="image-container"><img style="width: 600.00px" src="img/a46d04ecb029ac1f.png"></p>
+<p>Click the Next button below to proceed.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Reliability Score and Schedule" duration="0">
+        <p>You can assign weights to the experiments present in the workflow. These weights will be then used for the calculation of the resilience score after the workflow completion. By default, 10 points are assigned to each experiment. This can be altered as per your use case. After selecting weights click on the Next Button.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/678a4761604882ce.png"></p>
+<p>Workflows can also be scheduled in two ways;</p>
+<ul>
+<li>Schedule now: This option allows the workflow will start as soon as you schedule it.</li>
+<li>Recurring Schedule: This option will allow you to schedule the workflow in recurring ways. It converts a normal workflow to Cron workflow and a cron syntax is added in the workflow manifest. The following methods are available to schedule a workflow in recurring ways:</li>
+<li>Every Hour</li>
+<li>Every Day</li>
+<li>Every Week</li>
+<li>Every Month</li>
+</ul>
+<p>Select the<strong> Schedule now</strong> option and click next.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/27bfecc017f405fb.png"></p>
+<h2 is-upgraded>Verify and commit</h2>
+<p>Here, you can validate all the changes related to the workflow like the workflow name, the experiment weights, workflow description, workflow manifest, etc. Once you have verified all the changes, you can click the Finish button to start the schedule.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/1d3d05f770d46a87.png"></p>
+<p>Click the go-to workflow button to see the workflow in action. </p>
+<p class="image-container"><img style="width: 695.51px" src="img/f2f231fb489d0d7a.png"></p>
+<p class="image-container"><img style="width: 793.70px" src="img/310faa14f876d961.png"></p>
+<p>The workflow will have a status of pending while it is still running, click on the three vertical dots beside the workflow and view the workflow.</p>
+<p class="image-container"><img style="width: 774.44px" src="img/e902a93e13f0a104.png"></p>
+<p>Keep observing the workflow and over time, you will see the probes being induced into the system as shown below. </p>
+<p class="image-container"><img style="width: 624.00px" src="img/4cdb39d942a0ae82.png"></p>
+<p>Let&#39;s confirm this, click on the <strong>pod-delete </strong>in the flow diagram above, then select <strong>Chaos Results. </strong>You should see the below.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/a93b1019f907b155.png"></p>
+<p>Scroll down to the bottom, and you will see a part in the result YAML that indicates the status of the probe.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/892060adafdaf2b4.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Summary" duration="1">
+        <p>In this tutorial, you were introduced to how to the concept of hypothesis in chaos engineering and why it is important that this hypothesis is built around the steady-state of the application. You then learned about Litmus probes, their different types and modes, and how to use them.</p>
+<p>You were also able to observe at the end of the experiment that our probes on the workflow met the steady state hypothesis of our application, causing the experiment to pass. </p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Feedback" duration="1">
+        <p>Please visit us in our LitmusSlack Channel (in <a href="http://slack.kubernetes.io/" target="_blank">Kubernetes </a>workspace) and tell us how you like LitmusChaos and this tutorial! We are happy to hear your thoughts &amp; suggestions!</p>
+<p>Also, make sure to <a href="https://twitter.com/LitmusChaos" target="_blank">follow us on Twitter</a> to get the latest news on LitmusChaos, our tutorials and newest releases!</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

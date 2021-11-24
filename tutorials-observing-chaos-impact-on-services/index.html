@@ -1,0 +1,178 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Observing Chaos Impact On Services</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id=""
+                  title="Observing Chaos Impact On Services"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="Introduction" duration="1">
+        <h2 is-upgraded>Welcome</h2>
+<p>In this tutorial, you will learn how to observe the impact of your chaos on services by using a Prometheus data source and configuring a dashboard on Litmus</p>
+<h2 is-upgraded>What you will learn</h2>
+<ul>
+<li>Why monitoring is important.</li>
+<li>How to create and add a data source.</li>
+<li>Configuring a monitoring dashboard.</li>
+</ul>
+<p>In this tutorial, we would first go over why monitoring is important in chaos engineering. We would then take a look at the analytics section on the portal, learn how to create and add a new data source. Lastly, we would use these data sources to create monitoring dashboards that we can use to observe impacts on our services.</p>
+<h2 is-upgraded>Pre-Requisites</h2>
+<ul>
+<li>Minikube 1.2.0 or later. Recommended sizing of at least: 2 vCPUs, 8GB memory, 10GB of disk space (for persistent volume creation)</li>
+<li>Helm3 or Kubectl</li>
+<li>Access to the Internet from Cluster (For Air-Gapped Environments refer to this guide)</li>
+<li>Have <a href="https://litmuschaos.github.io/tutorials/tutorial-getting-started/index.html#1" target="_blank">Litmus 2.x.x </a>installed.</li>
+<li>Basic Understanding of Litmus.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Monitoring in Litmus Chaos" duration="2">
+        <p>The aim of Chaos Engineering is to build confidence in a system, and this confidence can only be built if this system can be tested in undesirable circumstances. As a part of the monitoring infrastructure, litmus has an analytics section that provides you with a complete set of visualization and performance metrics that helps you gain visual insights from your chaos experiments. </p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Creating a data source" duration="1">
+        <p>There are a couple of things that need to be done before you can begin to monitor your chaos workflows on the portal. But first, you need to add a data source. </p>
+<h2 is-upgraded>Get a data source</h2>
+<p>First, we need to set up a data source that can be added. For this, we would be setting up Prometheus and grafana dashboards. Prometheus is an example of data source we can use here, however, there are other options.</p>
+<h3 is-upgraded>Clone litmus and navigate to monitoring</h3>
+<pre><code>git clone https://github.com/litmuschaos/litmus.git
+cd litmus/monitoring</code></pre>
+<h3 is-upgraded>Create a monitoring namespace on the cluster</h3>
+<pre><code>Kubectl create ns monitoring</code></pre>
+<h3 is-upgraded>Deploy Prometheus components</h3>
+<pre><code>kubectl -n monitoring apply -f  utils/prometheus/prometheus-scrape-configuration/</code></pre>
+<h3 is-upgraded>Deploy Metrics exporters </h3>
+<pre><code>kubectl -n monitoring apply -f utils/metrics-exporters/node-exporter/
+kubectl -n monitoring apply -f utils/metrics-exporters/kube-state-metrics/</code></pre>
+<aside class="warning"><p><strong>Note:</strong> To Deploy chaos-exporter when the cluster is not connected to litmus 2.0 control plane via litmus agent (exporter is installed as a part of the agent bundle)</p>
+</aside>
+<pre><code>kubectl -n litmus apply -f utils/metrics-exporters/litmus-metrics/chaos-exporter/</code></pre>
+<h2 is-upgraded>Setup Grafana</h2>
+<h3 is-upgraded>Apply grafana manifests</h3>
+<pre><code>kubectl -n monitoring apply -f utils/grafana/</code></pre>
+<p>It might take a while for the manifests to apply, ensure that the pods in the monitoring namespace have a <strong>Running </strong>status before proceeding. Run the command below to ensure this.</p>
+<pre><code>kubectl get pods -n monitoring</code></pre>
+<p>You should get the following output.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/79a0df36bf246b22.png"></p>
+<p>To access your grafana dashboard, navigate to &lt;node ip&gt;:&lt;grafana port&gt;. Run the below command to get your node IP. In case you have an external IP you can directly make use of that too.<br></p>
+<p>For this example, the Node IP is: <strong>192.168.49.2<br></strong></p>
+<pre><code>kubectl get nodes -o wide</code></pre>
+<p class="image-container"><img style="width: 624.00px" src="img/8675549166221c1e.png"></p>
+<p>To get the port number of grafana service, run the below command</p>
+<pre><code>kubectl get svc -n monitoring</code></pre>
+<p class="image-container"><img style="width: 624.00px" src="img/6e986e3739a12e67.png"></p>
+<p>You can now navigate to &lt;node ip&gt;:&lt;grafana port&gt;, in my case, this will be <strong>192.168.49.2:31688</strong>.<br><br></p>
+<p class="image-container"><img style="width: 624.00px" src="img/dff34e556a7b978d.png"></p>
+<p>To access prometheus, navigate to  &lt;node ip&gt;:&lt;prometheus port&gt;.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/69dab721be186ca6.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Add a data source" duration="1">
+        <p>On your portal, navigate to the <strong>analytics</strong> section on the right navigation bar. Navigate to the Data Sources part of the top navigation bar and click the <strong>Add data source </strong>button. </p>
+<p class="image-container"><img style="width: 624.00px" src="img/72d7b8bc85510451.png"></p>
+<p>The Data Source Type has defaulted to Prometheus, give your source a title and paste your  &lt;node ip&gt;:&lt;grafana port&gt; in the URL section. Click next and save without editing anything else.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/fdfc84a7bb0b0a8f.png"> </p>
+<p>You will notice that this data source has now been added as a data source in your Data Source tab.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/8c9577491a7adcdb.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Configure a dashboard" duration="3">
+        <p>Now that we have a data source setup, we need to configure a dashboard where we can interface with our analytics data.</p>
+<p>On the overview tab of the analytics section, click the <strong>Create a dashboard </strong>button.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/3efe3dedff964b6a.png"></p>
+<p>Next, you will select a dashboard type, there are two default dashboard types namely:</p>
+<ul>
+<li><strong>Node Metrics:</strong> Monitors node level CPU, memory, disk, and IO utilization</li>
+<li><strong>Pod Metrics: </strong>Visualizes pod level CPU and memory usage metrics</li>
+</ul>
+<p>You will see an option to select one of these metrics. For this tutorial, we would be using the <strong>Pod metrics </strong>as an example, so select <strong>Pod metrics</strong>.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/8cc4b7dedd6ee956.png"></p>
+<p>Don&#39;t edit anything on the dashboard metadata, leave it as it is and click Next. </p>
+<p class="image-container"><img style="width: 624.00px" src="img/317ef59c0bbc2cca.png"></p>
+<p>Next, you will select metrics to visualize, there are two options:</p>
+<ul>
+<li>CPU Usage Metrics.</li>
+<li>Memory Usage Metrics.</li>
+</ul>
+<p>Click both checkboxes to select both. </p>
+<p class="image-container"><img style="width: 624.00px" src="img/dd67e83bf813f006.png"></p>
+<p>Next, you will see an interface that allows you to tune the Queries that are being used to fetch the visualized data. If you know some SQL, you can write custom queries that fit your use case.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/5a1632fd1e93b2a3.png"></p>
+<p>You can then save your changes and you&#39;ll be taken to your dashboard visualizations page. </p>
+<p class="image-container"><img style="width: 624.00px" src="img/76bcafd5450d9a0.png"></p>
+<p>There is an info button at the top right of the dashboard, you can toggle this button to see and adjust your application dashboard information.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/f2644f403fd9bcdd.png"></p>
+<p>Clicking the menu bar beside the info button lets you do the following:</p>
+<ul>
+<li>Configure: To make changes to the metadata and/or fine-tune the queries.</li>
+<li>Clone: To make a copy of the current dashboard.</li>
+<li>Download a JSON: Download the dashboard configuration in JSON format.</li>
+<li>PDF Report: Downloads all metric data in report format with graphs and summary.</li>
+</ul>
+<p>You will also see the visualization being grouped into CPU and Memory usage respectively. </p>
+<p>The visualizations are with respect to time, and you can hover on the graphs to see the values at that specific data point boldly.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/56e3f13e2a020281.png"><img style="width: 624.00px" src="img/194f3f6662628e2.png"></p>
+<p>Each visualization has three buttons at the top right. Edit, pop out and view metrics info.</p>
+<p class="image-container"><img style="width: 537.00px" src="img/653d0fecffcf2dc2.png"></p>
+<p>Clicking edit takes you back to the page where you can tune/edit its queries. </p>
+<p class="image-container"><img style="width: 624.00px" src="img/c438023c32b78484.png"></p>
+<p>Clicking view metrics info or pop out displays the chart in a way that shows the metrics info more clearly.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/3587f7656d1dd13c.png"></p>
+<p>You can hover on anywhere on the chart to see the metrics at that point.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Summary" duration="1">
+        <p>In this tutorial, you were introduced to the importance of Monitoring in chaos engineering, then you went over how you can add a Prometheus data source to your Litmus portal.</p>
+<p>Lastly, you learned how to configure a new dashboard and monitor specific data points. </p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Feedback" duration="1">
+        <p>Please visit us in our LitmusSlack Channel (in <a href="http://slack.kubernetes.io/" target="_blank">Kubernetes </a>workspace) and tell us how you like LitmusChaos and this tutorial! We are happy to hear your thoughts &amp; suggestions!</p>
+<p>Also, make sure to <a href="https://twitter.com/LitmusChaos" target="_blank">follow us on Twitter</a> to get the latest news on LitmusChaos, our tutorials, and the newest releases!</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>
