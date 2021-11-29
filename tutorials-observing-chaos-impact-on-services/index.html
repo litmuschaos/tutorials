@@ -36,7 +36,7 @@
 <li>How to create and add a data source.</li>
 <li>Configuring a monitoring dashboard.</li>
 </ul>
-<p>In this tutorial, we would first go over why monitoring is important in chaos engineering. We would then take a look at the analytics section on the portal, learn how to create and add a new data source. Lastly, we would use these data sources to create monitoring dashboards that we can use to observe impacts on our services.</p>
+<p>In this tutorial, we would first go over why monitoring is important in chaos engineering. We would then take a look at the observability section on the portal, learn how to create and add a new data source. Lastly, we would use these data sources to create monitoring dashboards that we can use to observe impacts on our services.</p>
 <h2 is-upgraded>Pre-Requisites</h2>
 <ul>
 <li>Minikube 1.2.0 or later. Recommended sizing of at least: 2 vCPUs, 8GB memory, 10GB of disk space (for persistent volume creation)</li>
@@ -50,7 +50,7 @@
       </google-codelab-step>
     
       <google-codelab-step label="Monitoring in Litmus Chaos" duration="2">
-        <p>The aim of Chaos Engineering is to build confidence in a system, and this confidence can only be built if this system can be tested in undesirable circumstances. As a part of the monitoring infrastructure, litmus has an analytics section that provides you with a complete set of visualization and performance metrics that helps you gain visual insights from your chaos experiments. </p>
+        <p>The aim of Chaos Engineering is to build confidence in a system, and this confidence can only be built if this system can be tested in undesirable circumstances. As a part of the monitoring infrastructure, litmus has an observability section that provides you with a complete set of visualization and performance metrics that helps you gain visual insights from your chaos experiments. </p>
 
 
       </google-codelab-step>
@@ -95,7 +95,7 @@ kubectl -n monitoring apply -f utils/metrics-exporters/kube-state-metrics/</code
       </google-codelab-step>
     
       <google-codelab-step label="Add a data source" duration="1">
-        <p>On your portal, navigate to the <strong>analytics</strong> section on the right navigation bar. Navigate to the Data Sources part of the top navigation bar and click the <strong>Add data source </strong>button. </p>
+        <p>On your portal, navigate to the <strong>observability</strong>(Analytics) section on the right navigation bar. Navigate to the Data Sources part of the top navigation bar and click the <strong>Add data source </strong>button. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/72d7b8bc85510451.png"></p>
 <p>The Data Source Type has defaulted to Prometheus, give your source a title and paste your  &lt;node ip&gt;:&lt;grafana port&gt; in the URL section. Click next and save without editing anything else.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/fdfc84a7bb0b0a8f.png"> </p>
@@ -106,8 +106,8 @@ kubectl -n monitoring apply -f utils/metrics-exporters/kube-state-metrics/</code
       </google-codelab-step>
     
       <google-codelab-step label="Configure a dashboard" duration="3">
-        <p>Now that we have a data source setup, we need to configure a dashboard where we can interface with our analytics data.</p>
-<p>On the overview tab of the analytics section, click the <strong>Create a dashboard </strong>button.</p>
+        <p>Now that we have a data source setup, we need to configure a dashboard where we can interface with our observability data.</p>
+<p>On the overview tab of the observability section, click the <strong>Create a dashboard </strong>button.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/3efe3dedff964b6a.png"></p>
 <p>Next, you will select a dashboard type, there are two default dashboard types namely:</p>
 <ul>
