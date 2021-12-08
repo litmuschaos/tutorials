@@ -4,7 +4,7 @@
   "prefix": "https://storage.googleapis.com",
   "mainga": "UA-49880327-14",
   "updated": "2021-11-15T18:48:53Z",
-  "id": "your-first-pwapp",
+  "id": "tutorial-running-chaos-workflow-on-remote-cluster",
   "duration": 31,
   "title": "Running Chaos Workflows on Remote Clusters",
   "authors": "Gbadebo Bello",
@@ -18,5 +18,5 @@
     "web"
   ],
   "tags": [],
-  "url": "your-first-pwapp"
+  "url": ""
 }
