@@ -40,7 +40,7 @@
 </ul>
 <h2 is-upgraded>Prerequisites</h2>
 <ul>
-<li>Kubernetes 1.17 or later. Recommended sizing of at least: 2 vCPUs, 8GB memory, 10GB of disk space (for persistent volume creation)</li>
+<li>Minikube 1.2.0 or later. Recommended sizing of at least: 2 vCPUs, 8GB memory, 10GB of disk space (for persistent volume creation)</li>
 <li>Helm3 or Kubectl</li>
 <li>Access to Internet from Cluster</li>
 <li>Have <a href="https://litmuschaos.github.io/tutorials/tutorial-getting-started/index.html#1" target="_blank">Litmus 2.x.x </a>installed.</li>
@@ -63,7 +63,7 @@
 <p>Once the Kubernetes Engine API is enabled, you can create a cluster on GKE. </p>
 <h2 is-upgraded>Create the cluster</h2>
 <p>Click the <strong>Create </strong>button at the top navigation bar. </p>
-<p class="image-container"><img style="width: 624.00px" src="img/848e32212b7d63bc.png"></p>
+<p class="image-container"><img style="width: 624.00px" src="img/5a73fd8b7de10a46.png"></p>
 <p>Next, choose the Standard Cluster by clicking the <strong>Configure</strong> button next to that option. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/74afe77c38c3da5b.png"></p>
 <p>Here, you will see all the options you need to configure your Kubernetes cluster. You can choose to configure your cluster if you&#39;re familiar with it or select the <strong>My first cluster </strong>option by the rightmost navigation.</p>
@@ -87,7 +87,7 @@
 <h3 is-upgraded><strong>Create a namespace</strong></h3>
 <pre><code>kubectl create ns litmus</code></pre>
 <h3 is-upgraded><strong>Install Litmus</strong></h3>
-<pre><code>kubectl apply -f https://litmuschaos.github.io/litmus/2.0.0-Beta/litmus-2.0.0-Beta.yaml</code></pre>
+<pre><code>kubectl apply -f kubectl apply -f https://raw.githubusercontent.com/litmuschaos/litmus/master/mkdocs/docs/2.2.0/litmus-2.2.0.yaml</code></pre>
 <p>Check if the Litmus control plane components comprising the Web-UI (frontend), GraphQL server &amp; MongoDB pods are created and running successfully.</p>
 <h3 is-upgraded><strong>Verify Installation</strong></h3>
 <pre><code>kubectl get pods -n litmus</code></pre>
@@ -129,54 +129,73 @@ gke-litmus-cluster-default-pool-12e7a198-s13l   Ready    &lt;none&gt;   8h    v1
 <li>kubeconfig -  litmusctl needs the kubeconfig of the k8s cluster where we need to connect litmus agents. The CLI currently uses the default path of kubeconfig.</li>
 <li>kubectl - litmusctl is using kubectl under the hood to apply the manifest. To install kubectl, follow: <a href="https://kubernetes.io/docs/tasks/tools/#kubectl" target="_blank">kubectl</a></li>
 </ul>
+<p>Note that the above are corresponding to the target cluster and not the GKE cluster where the control plane is situated. </p>
 <p>Download the litmus binary corresponding to your OS from the table below. </p>
 <aside class="warning"><p><strong>Note:</strong> If you have Litmus the Beta8(and below)  version of Chaos Center installed, you should install litmusctl v0.2.0. For higher, install litmusctl v0.3.0. This is because of some major security rules that were added in Beta9.</p>
 </aside>
 <table>
 <tr><td colspan="1" rowspan="1"><p><strong>Platforms</strong></p>
-</td><td colspan="1" rowspan="1"><p><strong>v0.3.0(Litmus Beta9)</strong></p>
-</td><td colspan="1" rowspan="1"><p><strong>v0.2.0(&lt;= LitmusBeta8 )</strong></p>
+</td><td colspan="1" rowspan="1"><p><strong>v0.5.0</strong></p>
+</td><td colspan="1" rowspan="1"><p><strong>v0.4.0</strong></p>
+</td><td colspan="1" rowspan="1"><p><strong>v0.3.0</strong></p>
+</td><td colspan="1" rowspan="1"><p><strong>v0.2.0</strong></p>
 </td><td colspan="1" rowspan="1"><p><strong>master(Unreleased)</strong></p>
 </td></tr>
 <tr><td colspan="1" rowspan="1"><p>litmusctl-darwin-amd64 (MacOS)</p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-darwin-amd64-v0.3.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-darwin-amd64-v0.2.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-darwin-amd64-master.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-v0.5.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-v0.4.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-v0.3.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-v0.2.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-master.tar.gz" target="_blank">Click here</a></p>
 </td></tr>
 <tr><td colspan="1" rowspan="1"><p>litmusctl-linux-386</p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-linux-386-v0.3.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-linux-386-v0.2.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-linux-386-master.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-v0.5.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-v0.4.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-v0.3.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-v0.2.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-master.tar.gz" target="_blank">Click here</a></p>
 </td></tr>
 <tr><td colspan="1" rowspan="1"><p>litmusctl-linux-amd64</p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-linux-amd64-v0.3.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-linux-amd64-v0.2.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-linux-amd64-master.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-v0.5.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-v0.4.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-v0.3.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-v0.2.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-master.tar.gz" target="_blank">Click here</a></p>
 </td></tr>
 <tr><td colspan="1" rowspan="1"><p>litmusctl-linux-arm</p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-linux-arm-v0.3.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-linux-arm-v0.2.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-linux-arm-master.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-v0.5.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-v0.4.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-v0.3.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-v0.2.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-master.tar.gz" target="_blank">Click here</a></p>
 </td></tr>
 <tr><td colspan="1" rowspan="1"><p>litmusctl-linux-arm64</p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-linux-arm64-v0.3.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-linux-arm64-v0.2.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-linux-arm64-master.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-v0.5.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-v0.4.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-v0.3.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-v0.2.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-master.tar.gz" target="_blank">Click here</a></p>
 </td></tr>
 <tr><td colspan="1" rowspan="1"><p>litmusctl-windows-386</p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-windows-386-v0.3.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-windows-386-v0.2.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-windows-386-master.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-v0.5.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-v0.4.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-v0.3.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-v0.2.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-master.tar.gz" target="_blank">Click here</a></p>
 </td></tr>
-<tr><td colspan="1" rowspan="1"><p>litmusctl-windows-arm64</p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-windows-arm64-v0.3.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-windows-arm64-v0.2.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-windows-arm64-master.tar.gz" target="_blank">Click here</a></p>
+<tr><td colspan="1" rowspan="1"><p>litmusctl-windows-amd64</p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-v0.5.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-v0.4.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-v0.3.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-v0.2.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-master.tar.gz" target="_blank">Click here</a></p>
 </td></tr>
 <tr><td colspan="1" rowspan="1"><p>litmusctl-windows-arm</p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-windows-arm-v0.3.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-windows-arm-v0.2.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-bucket.s3-eu-west-1.amazonaws.com/litmusctl-windows-arm-master.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-v0.5.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-v0.4.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-v0.3.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-v0.2.0.tar.gz" target="_blank">Click here</a></p>
+</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-master.tar.gz" target="_blank">Click here</a></p>
 </td></tr>
 </table>
 <h3 is-upgraded>Linux/MacOS</h3>
@@ -296,7 +315,7 @@ rolebinding.rbac.authorization.k8s.io/argo-binding created
 👉Litmus agents can be accessed here: http://34.132.48.214:32543/targets
 </code></pre>
 <p>Navigate to the IP address printed in your terminal at the end, it should take you to the Agents tab on your remote portal. You should observe that your new Agent has been added to your list of Agents. </p>
-<p class="image-container"><img style="width: 624.00px" src="img/95f7f3193ddbde63.png"></p>
+<p class="image-container"><img style="width: 624.00px" src="img/d3263e66fb3b1b83.png"></p>
 
 
       </google-codelab-step>
@@ -316,13 +335,13 @@ rolebinding.rbac.authorization.k8s.io/argo-binding created
 <p>Here, you will see four different options from which you can create a workflow. For this tutorial, you should select the first option which creates a workflow from a predefined chaos workflow template. Then select the podtato-head experiment, this experiment injects a pod-delete fault into a sample microservice application. Click the Next button when done.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/b8e6d74d405cf8bf.png"></p>
 <h2 is-upgraded>Describe the workflow</h2>
-<p>Here, you can give this workflow a name and a description or leave the default ones. Click next when done. <img style="width: 624.00px" src="img/547a92fbb127c17b.png"></p>
+<p>Here, you can give this workflow a name and a description or leave the default ones. Click <strong>next</strong> when done. <img style="width: 624.00px" src="img/7651ce7eeb67a1a.png"></p>
 <h2 is-upgraded>Tune the workflow</h2>
 <p>This section consists of all the information related to the chaos workflow. It contains a pictorial visualization of the workflow and an option to edit the workflow yaml file. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/71d949883c1d67cb.png"></p>
 <h2 is-upgraded>Reliability Score</h2>
-<p>You can assign weights to the experiments present in the workflow. These weights will be then used for the calculation of the resilience score after the workflow completion. By default, 10 points are assigned to each experiment. This can be altered as per your use-case. After selecting weights click on the Next Button.</p>
-<p class="image-container"><img style="width: 624.00px" src="img/a888c4b98998e93f.png"></p>
+<p>You can assign weights to the experiments present in the workflow. These weights will be then used for the calculation of the resilience score after the workflow completion. By default, 10 points are assigned to each experiment. This can be altered as per your use-case. After selecting weights click on the <strong>Next</strong> Button.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/678a4761604882ce.png"></p>
 <h2 is-upgraded>Schedule</h2>
 <p>Workflows can be scheduled in two ways;</p>
 <ul>
@@ -333,8 +352,8 @@ rolebinding.rbac.authorization.k8s.io/argo-binding created
 <li>Every Week</li>
 <li>Every Month</li>
 </ul>
-<p>Select the<strong> Schedule now</strong> option and click next.</p>
-<p class="image-container"><img style="width: 624.00px" src="img/d1c6762537006aa1.png"></p>
+<p>Select the<strong> Schedule now</strong> option and click <strong>next</strong>.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/27bfecc017f405fb.png"></p>
 <h2 is-upgraded>Verify and commit</h2>
 <p>Here, you can validate all the changes related to the workflow like the workflow name, the experiment weights, workflow description, workflow manifest, etc. Once you have verified all the changes, you can click the Finish button to start the schedule.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/f28892b19ef1d984.png"></p>
