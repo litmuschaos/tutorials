@@ -29,13 +29,13 @@
     
       <google-codelab-step label="Introduction" duration="1">
         <h2 is-upgraded>Welcome</h2>
-<p>In this tutorial, you will learn how to integrate your Litmus portal with Gitops, how to create remote experiments workflows on Github and have them synced automatically with your local cluster.</p>
+<p>In this tutorial, you will learn how to integrate your Litmus ChaosCenter with Gitops, how to create remote experiments workflows on Github and have them synced automatically with your local cluster.</p>
 <h2 is-upgraded>What you will learn</h2>
 <ul>
 <li>What Gitops is.</li>
 <li>How to connect a new chaos hub to a Github repository.</li>
 </ul>
-<p>In this tutorial, you would first go over what Gitops is, why it is useful and the different types of Gitops we have. Next, you would create our own remote chaos hub repository on Github by forking an already existing repository. Then, you will learn how to connect this remote repository to your Litmus portal using an access token or an ssh key.</p>
+<p>In this tutorial, you would first go over what Gitops is, why it is useful and the different types of Gitops. Next, you would create a remote chaos hub repository on Github by forking an already existing repository. Then, you will learn how to connect this remote repository to Chaos Center using an access token or an ssh key.</p>
 <h2 is-upgraded>Pre-Requisites</h2>
 <ul>
 <li>Minikube 1.2.0 or later. Recommended sizing of at least: 2 CPUs, 8GB memory, 10GB of disk space (for persistent volume creation)</li>
@@ -50,18 +50,18 @@
     
       <google-codelab-step label="What is Gitops" duration="1">
         <p>Gitops was released in Litmus v2.0 Beta1. In Litmus, Gitops enables you to configure a single source of truth for your chaos workflows and experiments, such that any changes made to either the artifacts stored in the configured git repository or the portal will automatically sync with each other. This allows you to create and execute workflows directly from git.</p>
-<p>The two types of Gitops we have are mainly frontend and backend Gitops, however, this tutorial will only be focusing on the frontend gitops. </p>
+<p>The two types of Gitops we have are mainly frontend and backend Gitops however, this tutorial will only be focusing on the frontend gitops. </p>
 <p>Frontend Gitops enables you to connect your portal with any git repository and the portal will sync all your workflow manifests with that git repository. You can then make changes directly on Github and it will reflect on the portal as well.</p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Connecting to an external Github repository" duration="5">
-        <p>In this tutorial, you would be using an entirely new repository for your Gitops. Navigate to GitHub and create a new repository. Here&#39;s an example of one I created <a href="https://github.com/Gbahdeyboh/Litmus-Gitops-Example" target="_blank">here</a>.</p>
+        <p>In this tutorial, you will be using an entirely new repository for your Gitops. Navigate to GitHub and create a new repository. Here&#39;s an example of one I created <a href="https://github.com/Gbahdeyboh/Litmus-Gitops-Example" target="_blank">here</a>.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/c1b0e7a95e489720.png"></p>
-<p>Open your Litmus portal and Navigate to the settings tab, at the top navigation bar, select the Gitops option.</p>
+<p>Open teh ChaosCenter and navigate to the settings tab and from the navigation bar select the Gitops option.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/601db283381b6461.png"></p>
-<p>Select the git repository option and type in the URL of your repository and the branch in which your experiments resides in.</p>
+<p>Select the git repository option and type in the URL of your repository and the branch in which your experiments resides.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/7e95765f7663ed2d.png"></p>
 <p><strong>NOTE:</strong> If you intend to use ssh, it is necessary that you add your ssh GitHub URL instead of https.</p>
 <p class="image-container"><img style="width: 433.00px" src="img/c98a94d3bc06db4a.png"></p>
@@ -71,11 +71,11 @@
 <li>SSH key</li>
 </ul>
 <h2 is-upgraded>Using an Access Token</h2>
-<p>The access token option is selected by default, this token can be gotten from your Github profile. To get this access token, navigate to <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a> and click on the Generate new token button. </p>
+<p>The access token option is selected by default. You can get this token from your Github profile.. To get this access token, navigate to <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a> and click on the Generate new token button. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/6f28b3bc0b4ff07f.png"></p>
 <p>Add a description to the note section of the token, select and expiration date, then select scopes for the token. The scopes let GitHub know what permissions levels the token has, select the scopes you want but specifically give the token read access to your repositories and click on the Generate token button.</p>
 <p class="image-container"><img style="width: 354.00px" src="img/d2fc9cda464529c1.png"></p>
-<p>Make sure you copy your token once it is added. You won&#39;t be able to copy it afterwards, you will need to generate a new one.</p>
+<p>Make sure you copy your token once it is added. You won&#39;t be able to copy it afterwards and will need to generate a new one.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/9b34549af6f1b8e2.png"></p>
 <p>Go back to the portal and paste this token into the access token field, then click the Submit Now button.</p>
 <h2 is-upgraded>Using SSH</h2>
@@ -101,22 +101,22 @@
 <p>Then, click the Add SSH key button.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/52577463d597efb9.png"></p>
 <h2 is-upgraded>Verifying Gitops</h2>
-<p>Navigate back to your repository and reload, you would observe that Litmus has automatically pushed a commit to your repository.</p>
+<p>Navigate back to your repository and reload to observe that Litmus has automatically pushed a commit to your repository.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/a48790796d422a4c.png"></p>
-<p>To further verify that this is working as expected, <a href="https://litmuschaos.github.io/tutorials/tutorial-getting-started/index.html#3" target="_blank">schedule a new workflow</a> on your Portal. You will notice that immediately this workflow is scheduled, Litmus automatically pushes this workflow manifest to your designated Gitops repository. </p>
-<p>If this workflow is edited on Github, it will send it back to your Litmus portal making it serve as a single source of truth for all your workflows.</p>
+<p>To further verify that this is working as expected, <a href="https://litmuschaos.github.io/tutorials/tutorial-getting-started/index.html#3" target="_blank">schedule a new workflow</a> on your Portal. You will notice that immediately after the workflow is scheduled, Litmus automatically pushes this workflow manifest to your designated Gitops repository.</p>
+<p>If this workflow is edited on Github, it will be updated on the ChaosCenter making it a single source of truth for all your workflows.</p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Summary" duration="1">
-        <p>In this tutorial, we covered what Gitops is and why it is useful. We showed how you can connect your Litmus portal to a remote Github repository using two different Gitops method -- Access Tokens, and SSH. To learn more about Litmus and the Litmus Portal, you can refer to Litmus <a href="https://litmusdocs-beta.netlify.app/docs" target="_blank">Documentation</a>.</p>
+        <p>In this tutorial, we covered what Gitops is and why it is useful. We showed how you can connect your Chaos Center to a remote Github repository using two different Gitops method -- Access Tokens, and SSH. To learn more about Litmus and the Chaos Center, you can refer to Litmus <a href="https://litmusdocs-beta.netlify.app/docs" target="_blank">Documentation</a>.</p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Feedback" duration="1">
-        <p>Please visit us in our LitmusSlack Channel (in <a href="http://slack.kubernetes.io/" target="_blank">Kubernetes</a> workspace) and tell us how you like LitmusChaos and this tutorial! We are happy to hear your thoughts &amp; suggestions!</p>
+        <p>Please visit us on our LitmusSlack Channel (in <a href="http://slack.kubernetes.io/" target="_blank">Kubernetes</a> workspace) and tell us how you like LitmusChaos and this tutorial! We are happy to hear your thoughts &amp; suggestions!</p>
 <p>Also, make sure to <a href="https://twitter.com/LitmusChaos" target="_blank">follow us on Twitter</a> to get the latest news on LitmusChaos, our tutorials, and the newest releases!</p>
 
 
