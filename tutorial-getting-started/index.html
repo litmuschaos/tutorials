@@ -35,7 +35,7 @@
 <h2 is-upgraded>What you will learn</h2>
 <ul>
 <li>How to install LitmusChaos</li>
-<li>How to setup a chaos project on the ChaosCenter</li>
+<li>How to set up a chaos project on the ChaosCenter</li>
 <li>How to execute a predefined chaos workflow</li>
 <li>How to visualize the chaos experiment progress</li>
 <li>How to view and analyze the results of the chaos experiment </li>
@@ -45,7 +45,7 @@
 <ul>
 <li>Kubernetes 1.17 or later. Recommended sizing of at least: 2 vCPUs, 8GB memory, 10GB of disk space (for persistent volume creation)</li>
 <li>Helm3 or Kubectl</li>
-<li>Access to Internet from Cluster (For Air Gapped Environments refer to this guide)</li>
+<li>Access to the internet from Cluster (For Air-Gapped Environments refer to this guide)</li>
 </ul>
 
 
@@ -75,28 +75,31 @@
 <pre>chaos-litmus-portal-frontend-ff8b554dc-q5rl4   1/1     Running   0          2m6s
 chaos-litmus-portal-mongo-6764cfdd59-c9r56     1/1     Running   0          2m6s
 chaos-litmus-portal-server-5ffbccbfff-dknv8    2/2     Running   0          2m6s</pre>
-<p><strong>Note</strong>: It might take a couple of minutes for the installations to enter running state. </p>
+<p><strong>Note</strong>: It might take a couple of minutes for the installations to enter the running state. </p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Configure Project" duration="0">
-        <p>In this section, we will use the ChaosCenter dashboard to set up your first chaos project, verify installation of agent services on the cluster and prepare for chaos workflow execution. </p>
+        <p>In this section, we will use the ChaosCenter dashboard to set up your first chaos project, verify the installation of agent services on the cluster and prepare for chaos workflow execution. </p>
 <h3 is-upgraded><strong>Access and Login to ChaosCenter Dashboard</strong></h3>
-<p>Obtain the service endpoint of the litmus-frontend service, either via nodePort or loadbalancer URL and open on your preferred browser. In case of the former, use the external IP of any one of the cluster nodes with the assigned nodePort. </p>
+<p>Obtain the service endpoint of the litmus-frontend service, either via nodePort or LoadBalancer URL and open on your preferred browser. In case of the former, use the external IP of any one of the cluster nodes with the assigned nodePort. </p>
 <pre>kubectl get svc -n litmus </pre>
 <pre>NAME                            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)                         AGE
 litmusportal-frontend-service   NodePort    10.40.9.102    &lt;none&gt;        9091:31616/TCP                  12m
 litmusportal-server-service     NodePort    10.40.10.186   &lt;none&gt;        9002:31242/TCP,9003:32073/TCP   12m
 mongo-service                   ClusterIP   10.40.7.121    &lt;none&gt;        27017/TCP                       12m</pre>
-<p>Use the default credentials - username/password: admin/litmus to login. </p>
+<p>Use the default credentials to login. <br/>
+  Username: admin <br/>
+  Password: litmus
+</p>
 <p class="image-container"><img style="width: 624.00px" src="img/login.png"></p>
 <p>Configure a new password for your use.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/getStarted.png"></p>
-<p>You are assigned with a default project, with Owner permissions. </p>
+<p>You have been assigned a default project with Owner permissions </p>
 <p class="image-container"><img style="width: 624.00px" src="img/home.png"></p>
 <h3 is-upgraded><strong>Verify Successful Registration of the Self Agent </strong></h3>
-<p>Once the project is created, the cluster is automagically registered as a chaos target via installation of Litmus Chaos Agents. This is represented as &#34;Self-Agent&#34; in the Agents console of the Portal Dashboard. </p>
+<p>Once the project is created, the cluster is automagically registered as a chaos target via installation of Litmus Chaos Agents. This is represented as &#34;Self-Agent&#34; in the Agents console of the Chaos Center Dashboard. </p>
 <pre>kubectl get pods -n litmus</pre>
 <pre>NAME                                     READY   STATUS    RESTARTS   AGE
 argo-server-58cb64db7f-pmbnq             1/1     Running   0          5m32s
@@ -109,7 +112,7 @@ mongo-0                                  1/1     Running   0          15m
 subscriber-958948965-qbx29               1/1     Running   0          5m30s
 workflow-controller-78fc7b6c6-w82m7      1/1     Running   0          5m32s</pre>
 <p class="image-container"><img style="width: 624.00px" src="img/agents.png"></p>
-<p>At this point we are ready for chaos experimentation ! </p>
+<p>At this point, we are ready to run chaos experiments! </p>
 
 
       </google-codelab-step>
@@ -123,11 +126,11 @@ workflow-controller-78fc7b6c6-w82m7      1/1     Running   0          5m32s</pre
 <li>(Optional) Clean up the chaos resources at the end of the experiment </li>
 </ul>
 <h3 is-upgraded><strong>Select predefined workflow </strong></h3>
-<p>Click the &#34;Schedule Workflow&#34; on the Litmus Portal home page to get started: </p>
+<p>Click the &#34;Schedule Workflow&#34; on the Chaos Center home page to get started: </p>
 <p class="image-container"><img style="width: 624.00px" src="img/279fccbd5cb3c17d.png"></p>
 <p>Select the &#34;Self-Agent&#34; as the target cluster for chaos execution </p>
 <p class="image-container"><img style="width: 624.00px" src="img/297754c0e942727f.png"></p>
-<p>Select the option to create a new workflow from pre-defined chaos workflow templates. Amongst available templates, select the &#34;podtato-head-chaos&#34; option.</p>
+<p>Select the option to create a new workflow from pre-defined chaos workflow templates. Amongst the available templates, select the &#34;podtato-head-chaos&#34; option.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/1015bd4eefd9bf97.png"></p>
 <p>View the description of the chaos workflow </p>
 <p class="image-container"><img style="width: 624.00px" src="img/bbee7b2929080acc.png"></p>
@@ -136,13 +139,14 @@ workflow-controller-78fc7b6c6-w82m7      1/1     Running   0          5m32s</pre
 <p> (Optional) You could also edit the workflow YAML depending upon your need at this stage</p>
 <p class="image-container"><img style="width: 624.00px" src="img/e456843387f5719c.png"></p>
 <h3 is-upgraded><strong>(Optional) Preview the Workflow Steps </strong></h3>
-<p>Assign weights to the chaos experiments that are part of the workflow using the slider. This is typically used when there are multiple experiments as part of a workflow. These weights influence the &#34;Resilience Score&#34; calculation for the chaos workflow. </p>
+<p>Assign weights to the chaos experiments that are part of the workflow using the slider. This is useful when there are multiple experiments in the workflow. These weights influence the &#34;Resilience Score&#34; calculation for the chaos workflow. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/4c73a234fbbddb5.png"></p>
 <h3 is-upgraded>Schedule the Chaos Workflow </h3>
 <p>Schedule the chaos workflow for immediate and one-time execution</p>
 <p class="image-container"><img style="width: 624.00px" src="img/32e14fc71892855d.png"></p>
 <p>Click on &#34;Finish&#34; to launch the Chaos Workflow. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/verify-commit-screen.png"></p>
+<p>The workflow has started running now</p>
 <p class="image-container"><img style="width: 624.00px" src="img/b16ad3b2612f615.png"></p>
 
 
@@ -152,8 +156,8 @@ workflow-controller-78fc7b6c6-w82m7      1/1     Running   0          5m32s</pre
         <p><strong>Check the Chaos Workflow Progress</strong></p>
 <p>Click on &#34;Show the workflow&#34; graph to check the progress of the workflow steps. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/workflow-runs.png"></p>
-<p>Each chaos workflow consists of a set of well-defined steps. The most common amongst them involve installation of the ChaosExperiment template (consisting of low level details of the fault to be executed) and ChaosEngine custom resource (maps a given application instance to the fault along with specification of steady-state hypothesis). The latter triggers the creation of chaos pods.</p>
-<p>In the current example, litmus deploys a sample multi-replica hello-service application before going onto pull the <a href="https://hub.litmuschaos.io/generic/pod-delete" target="_blank">pod-delete</a> ChaosExperiment template. In the next step, it creates the ChaosEngine to launch the chaos injection via dedicated pods. </p>
+<p>Each chaos workflow consists of a set of well-defined steps. The most common amongst them involve installing the ChaosExperiment template (consisting of low-level details of the fault to be executed) and ChaosEngine custom resource (maps a given application instance to the fault along with the specification of steady-state hypothesis). The latter triggers the creation of chaos pods.</p>
+<p>In the current example, litmus deploys a sample multi-replica hello-service application before going on to pull the <a href="https://hub.litmuschaos.io/generic/pod-delete" target="_blank">pod-delete</a> ChaosExperiment template. In the next step, it creates the ChaosEngine to launch the chaos injection via dedicated pods. </p>
 <p>The ChaosEngine spec embedded into the workflow spec looks like this: </p>
 <pre>apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
@@ -230,7 +234,7 @@ podtato-right-arm-98bdff545-jst9f           1/1     Running             0       
 podtato-right-leg-68bb97548f-j2p26          1/1     Running             0          11m
 subscriber-75bd7565cf-shl7t                 1/1     Running             1          40m
 workflow-controller-78dbff5b5d-xcthg        1/1     Running             0          40m</pre>
-<p>Once the experiment completes, the chaos resources (ChaosEngine CR &amp; accompanying chaos pods) are cleaned up as part of a &#34;revert-chaos&#34; step. The sample application is also removed from the cluster. </p>
+<p>Once the experiment completes, the chaos resources (ChaosEngine CR &amp; accompanying chaos pods) are removed as part of a &#34;revert-chaos&#34; step. The sample application is also removed from the cluster. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/workflow-completed.png"></p>
 <p><strong>View the Experiment Results </strong></p>
 <p>The workflow dashboard can be used to view the results of the chaos experiment. Click on the &#34;pod-delete&#34; node on the graph to launch a results console. Click on the &#34;Chaos Results&#34; tab to view the details around success/failure of the steady-state hypothesis constraints (podtato-head website availability through pod deletion period) and the experiment verdict. </p>
@@ -241,21 +245,18 @@ workflow-controller-78dbff5b5d-xcthg        1/1     Running             0       
     
       <google-codelab-step label="Analyze Chaos Workflow" duration="0">
         <p>Check the Resilience Score achieved for the chaos workflow by clicking on &#34;Show the analytics&#34;. </p>
-<p>The analytics view also provides details of successful v/s failed experiments that were part of the workflow. </p>
-<p class="image-container"><img style="width: 624.00px" src="img/workflow-run-completed.png"></p>
-<p class="image-container"><img style="width: 624.00px" src="img/workflow-analytics.png"></p>
-
-
+        <p class="image-container"><img style="width: 624.00px" src="img/workflow-run-completed.png"></p>
+        <p>The analytics view also provides details of successful v/s failed experiments that were part of the workflow. </p>
+        <p class="image-container"><img style="width: 624.00px" src="img/workflow-analytics.png"></p>
       </google-codelab-step>
     
       <google-codelab-step label="Summary" duration="0">
         <p>In this tutorial, we have covered the steps involved in installation/setup of LitmusChaos and execution of a sample chaos experiment. Refer to <a href="https://docs.litmuschaos.io/" target="_blank">Litmus Documentation</a> to learn more about the platform.  </p>
 
-
       </google-codelab-step>
     
       <google-codelab-step label="Feedback" duration="0">
-        <p>Please visit us in our LitmusSlack Channel (in <a href="http://slack.kubernetes.io" target="_blank">Kubernetes </a>workspace) and tell us how you like LitmusChaos and this tutorial! We are happy to hear your thoughts &amp; suggestions!</p>
+        <p>Please visit us on our Litmus Slack Channel (in <a href="http://slack.kubernetes.io" target="_blank">Kubernetes </a>workspace) and tell us how you like LitmusChaos and this tutorial! We are happy to hear your thoughts &amp; suggestions!</p>
 <p>Also, make sure to <a href="https://twitter.com/LitmusChaos" target="_blank">follow us on Twitter</a> to get the latest news on LitmusChaos, our tutorials and newest releases!</p>
 
 
