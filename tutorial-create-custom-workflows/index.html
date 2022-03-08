@@ -29,7 +29,7 @@
     
       <google-codelab-step label="Introduction" duration="1">
         <h2 is-upgraded>Welcome</h2>
-<p>In this tutorial, you will learn how to create your own custom chaos workflows using Litmus. You will use Chaos Hub and asset discovery to create your own custom Workflow.</p>
+<p>In this tutorial, you will learn how to create custom chaos workflows using Litmus. You will use ChaosHub and asset discovery to create a custom Workflow.</p>
 <h2 is-upgraded>What you will learn</h2>
 <ul>
 <li>What is Chaos Hub</li>
@@ -50,39 +50,42 @@
       </google-codelab-step>
     
       <google-codelab-step label="Configure Project" duration="1">
-        <p>In this section, you will use the Litmus ChaosCenter dashboard to set up your chaos project, and prepare for chaos workflow execution.</p>
-<h2 is-upgraded>Access and Login to Litmus ChaosCenter Dashboard</h2>
-<p>Obtain the service endpoint of the litmus-frontend service, either via nodePort or load balancer URL, and open on your preferred browser. In the case of the former, use the external IP of any one of the cluster nodes with the assigned nodePort.</p>
+        <p>In this section, you will use the Chaos Center dashboard to set up a chaos project, and prepare for chaos workflow execution.</p>
+<h2 is-upgraded>Access and Login to Chaos Center Dashboard</h2>
+<p>Obtain the service endpoint of the litmus-frontend service, either via nodePort or load balancer URL, and open on your preferred browser. If former, use the external IP of any cluster nodes with the assigned nodePort.</p>
 <pre><code>kubectl get svc -n litmus
 NAME                            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)                         AGE
 litmusportal-frontend-service   NodePort    10.40.9.102    &lt;none&gt;        9091:31616/TCP                  12m
 litmusportal-server-service     NodePort    10.40.10.186   &lt;none&gt;        9002:31242/TCP,9003:32073/TCP   12m
 mongo-service                   ClusterIP   10.40.7.121    &lt;none&gt;        27017/TCP                       12m</code></pre>
-<p>Use the default credentials - username/password: <strong>admin/litmus</strong> to login.</p>
-<p class="image-container"><img style="width: 624.00px" src="img/177e6d580e032937.png"></p>
+<p>Use the default credentials to login. <br/>
+  Username: admin <br/>
+  Password: litmus
+</p>
+<p class="image-container"><img style="width: 624.00px" src="img/2b60560b4abb124f.png"></p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Chaos Hub" duration="5">
         <h2 is-upgraded>What is Chaos Hub?</h2>
-<p>Litmus Chaos Hubs allows you to connect to your Public Choas Hubs pulled directly from your Github repos, you can then customize the experiments, orchestrate workflows, and use them in the ChaosCenter as custom workflows.</p>
-<p>Initially, there is one Chaos Hub present which is the <a href="https://hub.litmuschaos.io/" target="_blank">Litmus Chaos Hub</a>. This hub contains experiments from <a href="https://hub.litmuschaos.io/" target="_blank">https://hub.litmuschaos.io/</a>. You can use this default Hub or connect to a new external hub.</p>
+<p>Litmus Chaos Hubs allows you to connect to your Public Choas Hubs pulled directly from your Github repos. You can then customize the experiments, orchestrate workflows, and use them in the portal as custom workflows.</p>
+<p>Initially, there is one Chaos Hub present, the <a href="https://hub.litmuschaos.io/" target="_blank">Litmus Chaos Hub</a>. This hub contains experiments from <a href="https://hub.litmuschaos.io/" target="_blank">https://hub.litmuschaos.io/</a>. You can use this default Hub or connect to a new external hub.</p>
 <h2 is-upgraded>Connecting to a Chaos Hub on a public GitHub repository</h2>
-<p>Navigate to the Chaos Hub tab on the ChaosCenter and click the <strong>Connect New Hub</strong> button.</p>
-<p class="image-container"><img style="width: 624.00px" src="img/734d168ee985ba64.png"></p>
-<p>Here, you will be presented with a form to enter the name of the Chaos Hub. You will need to provide a name, select public, and type in the URL of the Github repo you want to add as well as its corresponding branch.</p>
-<p class="image-container"><img style="width: 624.00px" src="img/c15e070931dfee9a.png"></p>
-<p>Here we would be using a fork of the <a href="https://github.com/litmuschaos/chaos-charts" target="_blank">Chaos Hub</a> which is a public repo for our example. You can find this fork <a href="https://github.com/Gbahdeyboh/chaos-charts" target="_blank">here</a>.</p>
-<p>First, give the Hub a name of <strong>MyHub</strong>, then type in the repo URL <strong>https://github.com/Gbahdeyboh/chaos-charts</strong> and the branch <strong>master</strong>. Then click the <strong>Submit</strong> button. You should observe that you now have two hubs, <strong>MyHub</strong> and <strong>Chaos Hub</strong>.</p>
-<p class="image-container"><img style="width: 624.00px" src="img/3a20f416aa4cf4fe.png"></p>
-<p>Click on the <strong>MyHub</strong> Hub and view the available charts it has.</p>
-<p class="image-container"><img style="width: 624.00px" src="img/ee34c0172837b85.png"></p>
+<p>Navigate to the Chaos Hub tab on the portal and click the Connect New Hub button.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/67bc63e5d26263d2.png"></p>
+<p>Here, you will be presented with a form to add a Chaos Hub. You will need to provide a name, select public, and type in the URL of the Github repo you want to add and its corresponding branch.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/91b4ec97b1010ac.png"></p>
+<p>Here we would be using a fork of the <a href="https://github.com/litmuschaos/chaos-charts" target="_blank">Chaos Hub</a>, a public repo for this tutorial. You can find this fork <a href="https://github.com/Gbahdeyboh/chaos-charts" target="_blank">here</a>.</p>
+<p>First, give the Hub the name of MyHub, then type in the repo URL https://github.com/Gbahdeyboh/chaos-charts and the branch master. Then click the Submit button. You should have two hubs, MyHub and Chaos Hub.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/7b0bd4f044a714db.png"></p>
+<p>Click on the MyHub Hub and view the available charts it has.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/df8a4819325c5ffc.png"></p>
 <h2 is-upgraded>Connecting to a Chaos Hub on a private Github repository</h2>
-<p>Navigate to the Chaos Hub tab on the ChaosCenter and click the <strong>Connect New Hub</strong> button.</p>
-<p>Select private and provide the name of the Chaos Hub. Provide a name, select private and type in the URL of the Github repo you want to add as well as the corresponding branch.</p>
-<p class="image-container"><img style="width: 624.00px" src="img/183b147b7a8bd6ca.png"></p>
-<p>Because this is a private repo, you have to give the ChaosCenter access to it. This can be done by using any of the following.</p>
+<p>Navigate to the Chaos Hub tab on the portal and click the Connect New Hub button.</p>
+<p>Provide a name, select private and type in the URL of the Github repo you want to add and the corresponding branch.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/a2e0fb4b1600002e.png"></p>
+<p>Because this is a private repo, you have to give the chaos center access to it. This can be done by using any of the following.</p>
 <ul>
 <li>Access token.</li>
 <li>SSH key.</li>
@@ -90,8 +93,8 @@ mongo-service                   ClusterIP   10.40.7.121    &lt;none&gt;        2
 <h3 is-upgraded>Access token</h3>
 <p>To add an access token, navigate to <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a> and click on the <strong>Generate new token</strong> button.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/6f28b3bc0b4ff07f.png"></p>
-<p>Add a description to the note section of the token, then select scopes for the token. The scopes let GitHub know what permissions levels the token has, select the scopes you want but specifically give the token read access to your repositories and click on the <strong>Generate token button</strong>.</p>
-<p>Make sure you copy your token once it is added. You won&#39;t be able to copy it afterwards, you will need to generate a new one.</p>
+<p>Add a description to the note section of the token, then select scopes for the token. The scopes let GitHub know what permissions levels the token has, select the scopes you want but specifically give the token read access to your repositories and click on the Generate token button.</p>
+<p>Make sure you copy your token once it is added. You won&#39;t be able to copy it afterwards and will need to generate a new one.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/9b34549af6f1b8e2.png"></p>
 <p>Go back to the ChaosCenter and paste this token into the access token field, then click the <strong>Submit Now</strong> button.</p>
 <h3 is-upgraded>SSH key</h3>
@@ -100,31 +103,31 @@ mongo-service                   ClusterIP   10.40.7.121    &lt;none&gt;        2
 <p>Click the <strong>submit now</strong> button.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/52577463d597efb9.png"></p>
 <h2 is-upgraded>Exploring the Chaos Hub</h2>
-<p>After you have added a new hub, you can click on the hub name to explore the charts and workflows present in the hub.</p>
+<p>After adding a new hub, you can click on the hub name to explore the charts and workflows present in the hub.</p>
 <p>In the default Chaos Hub, there is a pre-defined workflows section and a chaos charts section. The pre-defined workflows allow you to quickly set up a simple workflow and execute it.</p>
-<p>You can now create your own custom workflows from experiments in the chaos charts!.</p>
+<p>You can now create custom workflows from experiments in the chaos charts!.</p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Creating a Custom Workflow" duration="0">
-        <p>In this section, you will create your own custom workflows from the hub we connected to in the last section.</p>
+        <p>In this section, you will create custom workflows from the hub we connected to in the last section.</p>
 <h2 is-upgraded>1) Select a Target Agent</h2>
-<p>First, navigate to the Workflows tab on the ChaosCenter and click the <strong>Schedule a workflow</strong> button. This will take you to the workflow page.</p>
-<p>You need to select a Target Agent to proceed, these agents consist of CRDs and the required resources to run a chaos workflow. While installing the Litmus ChaosCenter, a default agent named Self Agent is created. Select the Self Agent.</p>
-<p>Note: You may have to wait for the agent to be up and ready, after which you can move forward by again clicking on &#34;<strong>Next</strong>&#34;</p>
+<p>First, navigate to the Workflows tab on the portal and click the Schedule a workflow button. It will take you to the workflow page.</p>
+<p>You need to select a Target Agent to proceed, these agents consist of CRDs and the required resources to run a chaos workflow. While installing the Chaos Center, a default agent named Self Agent is created. Select the Self Agent.</p>
+<p>Note: You may have to wait for the agent to be up and ready, after which you can move forward by again clicking on &#34;Next&#34;</p>
 <h2 is-upgraded>2) Choose a Workflow</h2>
-<p>Here, you will see four different options from which you can create a workflow. For this tutorial, we will only care about the Create a new workflow using experiments from the MyHub option. Select this option.</p>
-<p>Then select the Hub you want to connect to which is MyHub and choose an experiment. Select the podtato-head experiment, this experiment injects a pod-delete fault into a sample microservice application. Click the <strong>Next</strong> button when done.</p>
+<p>Here, you will see four different options from which you can create a workflow. For this tutorial, we will only use the Create a new workflow using experiments from the MyHub option. Select this option.</p>
+<p>Then select the Hub you want to connect to which is MyHub and choose an experiment.Select the podtato-head experiment that will inject a pod-delete fault into a sample microservice application. Click the Next button when done.</p>
 <h2 is-upgraded>3) Workflow Settings</h2>
-<p>Here, you can change the name of the workflow and also provide a description to the workflow. This section also consists of information regarding the namespace where the workflow will be scheduled. Click next when done.</p>
+<p>Here, you can change the name of the workflow and also provide a description of the workflow. This section also consists of information regarding the namespace where the workflow will be scheduled. Click next when done.</p>
 <h2 is-upgraded>4) Tune Workflow</h2>
 <p>This section consists of all the information related to the chaos workflow. Some new and advanced features that are present in this section are :</p>
 <ul>
 <li>Workflow Visualization: This feature allows you to visualize the workflow even before scheduling it. This gives brief information related to the structure of workflow i.e if the experiments are present in a serial or parallel way.</li>
 <li>Workflow Table: This table contains the list of experiments present in the workflow. It also consists of some valuable information related to the target applications.</li>
-<li>Edit Yaml: With this option, you can view and make changes in the workflow manifest with a YAML editor.</li>
-<li>Revert Chaos: For custom workflows, you can enable or disable the revert step from the ChaosCenter. With the revert step enabled, a new functionality called podGC is also added which deletes the workflow pods after the completion of workflow as part of the clean-up process.</li>
+<li>Edit Yaml: With this option, you can view and change the workflow manifest with a YAML editor.</li>
+<li>Revert Chaos: For custom workflows, you can enable or disable the revert step from the portal. With the revert step enabled, a new functionality called podGC is also added which deletes the workflow pods after the completion of workflow as part of the clean-up process.</li>
 </ul>
 <p class="image-container"><img style="width: 624.00px" src="img/7e99334569ffd10.png"></p>
 <p>Don&#39;t care too much about the above if you do not understand it yet. Click the <strong>Next</strong> Button to proceed.</p>
@@ -134,7 +137,7 @@ mongo-service                   ClusterIP   10.40.7.121    &lt;none&gt;        2
 <p>Workflows can be scheduled in two ways;</p>
 <ul>
 <li>Schedule now: This option allows the workflow will start as soon as you schedule it.</li>
-<li>Recurring Schedule: This option will allow you to schedule the workflow in recurring ways. It converts a normal workflow to Cron workflow and a cron syntax is added in the workflow manifest. The following methods are available to schedule a workflow in recurring ways:</li>
+<li>Recurring Schedule: This option will allow you to schedule recurring workflows. It converts a normal workflow to Cron workflow by adding cron syntax in the workflow manifest. The following methods are available to schedule recurring workflows:</li>
 <li>Every Hour</li>
 <li>Every Day</li>
 <li>Every Week</li>
@@ -143,21 +146,17 @@ mongo-service                   ClusterIP   10.40.7.121    &lt;none&gt;        2
 <h2 is-upgraded>7) Verify and Commit</h2>
 <p>This is the final step in the workflow creation process. In this step, you can validate all the changes related to the workflow like the workflow name, the experiment weights, workflow description, workflow manifest, etc. Once you have verified all the changes, you can click the <strong>Finish</strong> button to start the schedule.</p>
 <h2 is-upgraded>8) Visualize and Analyze the workflow</h2>
-<p>You can now Visualize your workflow by following the step 5 and 6 of the <a href="https://litmuschaos.github.io/tutorials/tutorial-getting-started/index.html#4" target="_blank">Getting Started</a> Tutorial.</p>
-
+<p>You can now Visualize your workflow by following steps 5 and 6 of the <a href="https://litmuschaos.github.io/tutorials/tutorial-getting-started/index.html#4" target="_blank">Getting Started</a> Tutorial.</p>
 
       </google-codelab-step>
     
       <google-codelab-step label="Summary" duration="1">
-        <p>In this tutorial, we have covered the steps involved in connecting to a new hub, and scheduling a custom chaos workflow on Litmus ChaosCenter. To learn more about Litmus and the Litmus ChaosCenter, you can refer to Litmus <a href="https://litmusdocs-beta.netlify.app/docs" target="_blank">Documentation</a>.</p>
-
-
+        <p>In this tutorial, we have covered the steps involved in connecting to a new hub and scheduling a custom chaos workflow on Chaos Center. To learn more about Litmus and the Chaos Center, you can refer to Litmus <a href="https://litmusdocs-beta.netlify.app/docs" target="_blank">Documentation</a>.</p>
       </google-codelab-step>
     
       <google-codelab-step label="Feedback" duration="1">
         <p>Please visit us in our LitmusSlack Channel (in <a href="http://slack.kubernetes.io/" target="_blank">Kubernetes</a> workspace) and tell us how you like LitmusChaos and this tutorial! We are happy to hear your thoughts &amp; suggestions!</p>
 <p>Also, make sure to <a href="https://twitter.com/LitmusChaos" target="_blank">follow us on Twitter</a> to get the latest news on LitmusChaos, our tutorials, and the newest releases!</p>
-
 
       </google-codelab-step>
     

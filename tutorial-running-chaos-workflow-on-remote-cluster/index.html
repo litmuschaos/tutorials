@@ -30,7 +30,7 @@
       <google-codelab-step label="Introduction" duration="1">
         <p>Chaos workflows cannot only be scheduled on your default cluster, Litmus allows you to schedule chaos workflow on a remote cluster.</p>
 <p>In this tutorial, you will learn how to create chaos workflows on a remote cluster. </p>
-<p>First, you will learn to deploy your own remote cluster on GKE(Google Kubernetes Engine), then you will install a CLI tool called <a href="https://github.com/litmuschaos/litmusctl" target="_blank">litmusctl</a>. Next, you will use <a href="https://github.com/litmuschaos/litmusctl" target="_blank">litmusctl</a> to target this remote cluster agent. Finally, you will schedule a predefined workflow on this remote cluster.</p>
+<p>First, you will learn to deploy a remote cluster on GKE(Google Kubernetes Engine), then you will install a CLI tool called <a href="https://github.com/litmuschaos/litmusctl" target="_blank">litmusctl</a>. Next, you will use <a href="https://github.com/litmuschaos/litmusctl" target="_blank">litmusctl</a> to register this cluster as a target agent in ChaosCenter. Finally, you will schedule a predefined workflow on this remote cluster.</p>
 <h2 is-upgraded>What you will learn</h2>
 <ul>
 <li>How to deploy a remote cluster to GKE</li>
@@ -45,7 +45,7 @@
 <li>Access to Internet from Cluster</li>
 <li>Have <a href="https://litmuschaos.github.io/tutorials/tutorial-getting-started/index.html#1" target="_blank">Litmus 2.x.x </a>installed.</li>
 <li>A <a href="https://cloud.google.com/" target="_blank">Google Cloud Account</a></li>
-<li>A GCP project with enough privileges to access GKE.</li>
+<li>A GCP project with privileges to access GKE.</li>
 </ul>
 
 
@@ -53,37 +53,37 @@
     
       <google-codelab-step label="Create a Cluster on GKE" duration="10">
         <p>Google Kubernetes Engine(GKE) is a managed production-ready environment for running containerized applications.</p>
-<p>In this section, I will walk you through deploying your own Kubernetes cluster on GKE. After, you will install Litmus on this cluster and expose it to the public using an external IP. </p>
-<aside class="warning"><p><strong>Note:</strong> GCP gives free $300 credits to new accounts to try out the platform. However, if you have exhausted yours, you will need to add your card or payment details before you can proceed from this step. Don&#39;t fret, GCP will notify you before you&#39;re charged and it is often a very few $&#39;s if this is the only cluster you&#39;re creating. You should delete this cluster immediately it is no longer in use to avoid being charged.</p>
+<p>In this section, we will deploy a Kubernetes cluster on GKE. After that, you will install Litmus on this cluster and expose it to the public using an external IP. </p>
+<aside class="warning"><p><strong>Note:</strong> GCP gives free $300 credits to new accounts to try out the platform. However, if you have exhausted yours, you will need to add your card or payment details proceeding. Don&#39;t fret, GCP will notify you before charging and it is often a few $&#39;s if this is the only cluster you&#39;re creating. You should delete this cluster after it is no longer in use to avoid being charged.</p>
 </aside>
 <h2 is-upgraded>Enable the Kubernetes Engine API</h2>
-<p>Once you have a GCP account setup, head on to <a href="https://console.cloud.google.com/kubernetes" target="_blank">https://console.cloud.google.com/kubernetes</a>. If you haven&#39;t already, you should enable the Kubernetes Engine API.</p>
-<p class="image-container"><img style="width: 624.00px" src="img/7c05b2b30900eaa4.png"></p>
+<p>Once you have a GCP account setup, head on to <a href="https://console.cloud.google.com/kubernetes" target="_blank">https://console.cloud.google.com/kubernetes</a> to enable the Kubernetes Engine API.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/b713f808a9bb0fec.png"></p>
 <p>If you haven&#39;t already, you will be prompted to enable billing to proceed. </p>
-<p>Once the Kubernetes Engine API is enabled, you can then create a cluster on GKE. </p>
+<p>Once the Kubernetes Engine API is enabled, you can create a cluster on GKE. </p>
 <h2 is-upgraded>Create the cluster</h2>
 <p>Click the <strong>Create </strong>button at the top navigation bar. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/5a73fd8b7de10a46.png"></p>
 <p>Next, choose the Standard Cluster by clicking the <strong>Configure</strong> button next to that option. </p>
-<p class="image-container"><img style="width: 624.00px" src="img/9f060f53b9a1d05d.png"></p>
-<p>Here, you will see all the options you need to configure your Kubernetes cluster. You can choose to configure your own cluster if you&#39;re familiar with it or select the <strong>My first cluster </strong>option by the rightmost navigation.</p>
-<p class="image-container"><img style="width: 624.00px" src="img/92fa5ac3a155ad4b.png"></p>
-<p>The cluster might take a while to be created, it is trying to create the necessary resources for your cluster while undergoing a health check.</p>
-<p class="image-container"><img style="width: 624.00px" src="img/a406134a4ada365d.png"></p>
-<p>Now that your cluster has been created, you can, you can proceed to install litmus.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/74afe77c38c3da5b.png"></p>
+<p>Here, you will see all the options you need to configure your Kubernetes cluster. You can choose to configure your cluster if you&#39;re familiar with it or select the <strong>My first cluster </strong>option by the rightmost navigation.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/70ca0be9138d8836.png"></p>
+<p>The cluster might take a while to create as it is trying to create the necessary resources for your cluster while undergoing a health check.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/3867685e83ab4d00.png"></p>
+<p>Now that your cluster has been created, you can proceed to install litmus.</p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Install Litmus" duration="5">
-        <p>First, you need to connect to your cluster and gain access to its shell. Click on the name of the cluster to proceed. </p>
-<p class="image-container"><img style="width: 624.00px" src="img/ae8c608343b3ab0e.png"></p>
+        <p>First, you need to connect to your cluster and access its shell. Click on the name of the cluster to proceed.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/1875a88a92add9ec.png"></p>
 <p>Click on the <strong>connect shell</strong> button at the top, then click on the <strong>RUN IN CLOUD SHELL</strong> button.</p>
-<p class="image-container"><img style="width: 624.00px" src="img/402531bb0e3b84e9.png"></p>
-<p>This will open a cloud shell terminal in your console, a cloud SDK command would run in your terminal. This command will configure the Kubectl to configure itself for the cluster you just created. If prompted to Authorize, you should accept.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/14c1bff0958b090a.png"></p>
+<p>This will open a cloud shell terminal in your console and, a cloud SDK command will run in your terminal. This command will configure the Kubectl to configure itself for the cluster you just created. If prompted to Authorize, you should accept.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/2d42e00115a81a43.png"></p>
 <h2 is-upgraded>Install Litmus</h2>
-<p>Here, we would be following the steps given in this <a href="https://litmuschaos.github.io/tutorials/tutorial-getting-started/index.html#1" target="_blank">tutorial</a>. Specifically, we would be installing Litmus using kubectl. </p>
+<p>Here, we will be following the steps given in this <a href="https://litmuschaos.github.io/tutorials/tutorial-getting-started/index.html#1" target="_blank">tutorial</a>. Specifically, we would be installing Litmus using kubectl. </p>
 <h3 is-upgraded><strong>Create a namespace</strong></h3>
 <pre><code>kubectl create ns litmus</code></pre>
 <h3 is-upgraded><strong>Install Litmus</strong></h3>
@@ -95,7 +95,7 @@
 chaos-litmus-portal-mongo-6764cfdd59-c9r56     1/1     Running   0          2m6s
 chaos-litmus-portal-server-5ffbccbfff-dknv8    2/2     Running   0          2m6s</code></pre>
 <p>It might take a few minutes for all the pods to have a running state. Give it some time.</p>
-<h2 is-upgraded>Access the litmus portal</h2>
+<h2 is-upgraded>Access the Chaos Center</h2>
 <p>To access the litmus frontend, we need to know what service exposes this frontend. To get a list of running services in the litmus namespace, run the below command.</p>
 <pre><code>kubectl get svc -n litmus</code></pre>
 <pre><code>NAME                            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)                         AGE
@@ -103,31 +103,27 @@ litmusportal-frontend-service   NodePort    10.24.1.168    &lt;none&gt;        9
 litmusportal-server-service     NodePort    10.24.12.173   &lt;none&gt;        9002:32362/TCP,9003:31614/TCP   8h
 mongo-service                   ClusterIP   10.24.6.226    &lt;none&gt;        27017/TCP                       8h
 </code></pre>
-<p>From the above, we can see that as usual, the frontend is exposed via a NodePort service and it has a name of <strong><code>litmusportal-frontend-service.</code></strong> It exposes this service on a TCP port that looks something like <strong>9091:xxxxx/TCP </strong>where xxxxx is the corresponding node port of the service. </p>
+<p>From the above, we can see that the frontend is exposed via a NodePort service and it has the name of <strong><code>litmusportal-frontend-service.</code></strong> It exposes this service on a TCP port that looks something like <strong>9091:xxxxx/TCP </strong>where xxxxx is the corresponding node port of the service. </p>
 <p>To access the portal, we need to expose this port by using a firewall rule. We can do this by running this command:</p>
 <h3 is-upgraded><strong>Expose the node port</strong></h3>
 <pre><code>gcloud compute firewall-rules create frontend-service-rule --allow tcp:&lt;NODE_PORT&gt;</code></pre>
 <p>Replace the NODE_PORT in the command above with your service&#39;s node port. You should expose the firewall for both the <code>litmusportal-frontend-service</code> and the <code>litmusportal-server-service.</code></p>
-<h3 is-upgraded><strong>Expose the node port for litmusortal-frontend-service</strong></h3>
-<pre><code>gcloud compute firewall-rules create frontend-service-rule --allow tcp:32525</code></pre>
-<h3 is-upgraded><strong>Expose the node port for litmusortal-server-service</strong></h3>
-<pre><code>gcloud compute firewall-rules create frontend-service-rule --allow tcp:31614</code></pre>
-<p>You can now access the litmus portal, but first, you need to get the external IPs of your node.</p>
+<p>You can now access the Chaos Center, but first, you need to get the external IPs of your node.</p>
 <h3 is-upgraded><strong>Get node external IPs</strong></h3>
 <pre><code>kubectl get nodes -o wide</code></pre>
 <pre><code>INER-RUNTIME
 gke-litmus-cluster-default-pool-12e7a198-19wl   Ready    &lt;none&gt;   8h    v1.19.9-gke.1900   10.128.0.3    35.223.4.212     Container-Optimized OS from Google   5.4.89+          containerd://1.4.3
 gke-litmus-cluster-default-pool-12e7a198-b53p   Ready    &lt;none&gt;   8h    v1.19.9-gke.1900   10.128.0.4    35.193.229.195   Container-Optimized OS from Google   5.4.89+          containerd://1.4.3
 gke-litmus-cluster-default-pool-12e7a198-s13l   Ready    &lt;none&gt;   8h    v1.19.9-gke.1900   10.128.0.2    35.223.250.205   Container-Optimized OS from Google   5.4.89+          containerd://1.4.3</code></pre>
-<p>Copy the external IP of any of the above nodes and paste it into your browser&#39;s URL, followed by a :xxxxx where xxxxx corresponds to your node port. You should be presented with a screen showing the litmus portal&#39;s homepage. </p>
-<p class="image-container"><img style="width: 624.00px" src="img/a6a08f63a5866c34.png"></p>
+<p>Copy the external IP of any of the above nodes and paste it into your browser&#39;s URL, followed by a :xxxxx where xxxxx corresponds to your node port. You will be presented with a screen showing the Chaos Center&#39;s homepage. </p>
+<p class="image-container"><img style="width: 624.00px" src="img/87b9b8e024fbc621.png"></p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Install Litmusctl" duration="3">
         <h2 is-upgraded>What is litmusctl?</h2>
-<p><a href="https://github.com/litmuschaos/litmusctl" target="_blank">Litmusctl</a> is a LitmusChaos command-line tool that allows you to manage litmuschaos&#39;s agent plane. Litmusctl can be used to create agents, project, and manage multiple litmuschaos accounts. </p>
+<p><a href="https://github.com/litmuschaos/litmusctl" target="_blank">Litmusctl</a> is a LitmusChaos command-line tool that allows you to manage litmuschaos&#39; agent plane. Litmusctl can be used to create agents, project, and manage multiple litmuschaos accounts. </p>
 <p>Litmusctl has the following requirements:</p>
 <ul>
 <li>kubeconfig -  litmusctl needs the kubeconfig of the k8s cluster where we need to connect litmus agents. The CLI currently uses the default path of kubeconfig.</li>
@@ -135,7 +131,7 @@ gke-litmus-cluster-default-pool-12e7a198-s13l   Ready    &lt;none&gt;   8h    v1
 </ul>
 <p>Note that the above are corresponding to the target cluster and not the GKE cluster where the control plane is situated. </p>
 <p>Download the litmus binary corresponding to your OS from the table below. </p>
-<aside class="warning"><p><strong>Note:</strong> If you have Litmus the Beta8(and below)  version of Litmus Portal installed, you should install litmusctl v0.2.0. For higher versions, install litmusctl v0.3.0. This is because of some major security rules that were added in Beta9.</p>
+<aside class="warning"><p><strong>Note:</strong> If you have Litmus the Beta8(and below)  version of Chaos Center installed, you should install litmusctl v0.2.0. For higher, install litmusctl v0.3.0. This is because of some major security rules that were added in Beta9.</p>
 </aside>
 <table>
 <tr><td colspan="1" rowspan="1"><p><strong>Platforms</strong></p>
@@ -312,8 +308,8 @@ role.rbac.authorization.k8s.io/argo-aggregate-to-view created
 role.rbac.authorization.k8s.io/argo-role created
 rolebinding.rbac.authorization.k8s.io/argo-binding created
 
-💡Connecting agent to Litmus Portal.
-💡Connecting agent to Litmus Portal.
+💡Connecting agent to Chaos Center.
+💡Connecting agent to Chaos Center.
 🏃Agents running!!
 🚀Agent Connection Successful!! 🎉
 👉Litmus agents can be accessed here: http://34.132.48.214:32543/targets
@@ -325,24 +321,24 @@ rolebinding.rbac.authorization.k8s.io/argo-binding created
       </google-codelab-step>
     
       <google-codelab-step label="Schedule a workflow" duration="5">
-        <p>You can now proceed to schedule a workflow using the newly created Agent on the remote cluster. Navigate to the Workflows tab on the sidebar, then click the <strong>Schedule a workflow</strong> button. </p>
-<p class="image-container"><img style="width: 624.00px" src="img/8cbbf714316f2118.png"></p>
+        <p>You can now proceed to schedule a workflow using the newly created Agent on the remote cluster. Navigate to the Workflows tab on the sidebar, then click the Schedule a workflow button. </p>
+<p class="image-container"><img style="width: 624.00px" src="img/e70d2c3705e7d8c6.png"></p>
 <h2 is-upgraded>Select a target Agent</h2>
 <p>You need to select a Target Agent to proceed, you will see two options.</p>
 <ul>
 <li>Self Agent(Default)</li>
 <li>my-new-agent(Newly created agent)</li>
 </ul>
-<p>Select the latter, then click on the <strong>next</strong> button.</p>
+<p>Select the latter, then click on the Next button.</p>
 <p>Note: You may have to wait for the agent to be up and ready, after which you can move forward by again clicking on &#34;Next&#34; </p>
 <h2 is-upgraded>Select a workflow</h2>
-<p>Here, you will see four different options from which you can create a workflow from. For this tutorial, you should select the first option which creates a workflow from a predefined chaos workflow template. Then select the podtato-head experiment, this experiment injects a pod-delete fault into a sample microservice application. Click the <strong>Next</strong> button when done.</p>
-<p class="image-container"><img style="width: 624.00px" src="img/dfe517dc6ca6a345.png"></p>
+<p>Here, you will see four different options from which you can create a workflow. For this tutorial, you should select the first option which creates a workflow from a predefined chaos workflow template. Then select the podtato-head experiment, this experiment injects a pod-delete fault into a sample microservice application. Click the Next button when done.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/b8e6d74d405cf8bf.png"></p>
 <h2 is-upgraded>Describe the workflow</h2>
 <p>Here, you can give this workflow a name and a description or leave the default ones. Click <strong>next</strong> when done. <img style="width: 624.00px" src="img/7651ce7eeb67a1a.png"></p>
 <h2 is-upgraded>Tune the workflow</h2>
-<p>his section consists of all the information related to the chaos workflow. It contains a pictorial visualization of the workflow and an option to edit the workflow yaml file. </p>
-<p class="image-container"><img style="width: 624.00px" src="img/c1141be2b68628d1.png"></p>
+<p>This section consists of all the information related to the chaos workflow. It contains a pictorial visualization of the workflow and an option to edit the workflow yaml file. </p>
+<p class="image-container"><img style="width: 624.00px" src="img/71d949883c1d67cb.png"></p>
 <h2 is-upgraded>Reliability Score</h2>
 <p>You can assign weights to the experiments present in the workflow. These weights will be then used for the calculation of the resilience score after the workflow completion. By default, 10 points are assigned to each experiment. This can be altered as per your use-case. After selecting weights click on the <strong>Next</strong> Button.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/678a4761604882ce.png"></p>
@@ -350,7 +346,7 @@ rolebinding.rbac.authorization.k8s.io/argo-binding created
 <p>Workflows can be scheduled in two ways;</p>
 <ul>
 <li>Schedule now: This option allows the workflow will start as soon as you schedule it.</li>
-<li>Recurring Schedule: This option will allow you to schedule the workflow in recurring ways. It converts a normal workflow to Cron workflow and a cron syntax is added in the workflow manifest. The following methods are available to schedule a workflow in recurring ways:</li>
+<li>Recurring Schedule: This option will allow you to schedule recurring workflows. It converts a normal workflow to Cron workflow by adding cron syntax in the workflow manifest. The following methods are available to schedule recurring workflows:</li>
 <li>Every Hour</li>
 <li>Every Day</li>
 <li>Every Week</li>
@@ -359,24 +355,23 @@ rolebinding.rbac.authorization.k8s.io/argo-binding created
 <p>Select the<strong> Schedule now</strong> option and click <strong>next</strong>.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/27bfecc017f405fb.png"></p>
 <h2 is-upgraded>Verify and commit</h2>
-<p>Here, you can validate all the changes related to the workflow like the workflow name, the experiment weights, workflow description, workflow manifest, etc. Once you have verified all the changes, you can click the <strong>Finish</strong> button to start the schedule.</p>
-<p class="image-container"><img style="width: 624.00px" src="img/1d3d05f770d46a87.png"></p>
-<p>Click the <strong>go to workflow</strong> button to see the workflow in action. </p>
-<p class="image-container"><img style="width: 624.00px" src="img/129513148b3e12c2.png"></p>
+<p>Here, you can validate all the changes related to the workflow like the workflow name, the experiment weights, workflow description, workflow manifest, etc. Once you have verified all the changes, you can click the Finish button to start the schedule.</p>
+<p class="image-container"><img style="width: 624.00px" src="img/f28892b19ef1d984.png"></p>
+<p>Click the Go to workflow button to see the workflow in action. </p>
+<p class="image-container"><img style="width: 624.00px" src="img/e01fea5caa6d90ad.png"></p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Summary" duration="1">
-        <p>In this tutorial, you were introduced to how to create a remote cluster on Google Kubernetes Engine and deploy Litmus Portal on it. Then, you learned what <strong>litmusctl </strong>is and how to use it to create a new agent on a remote cluster. Lastly, you learned how you can schedule your own chaos on this remote cluster using the agent you created. </p>
+        <p>In this tutorial, you were introduced to how to create a remote cluster on Google Kubernetes Engine and deploy Chaos Center on it. Them, you learned what <strong>litmusctl </strong>is and how to use it to create a new agent on a remote cluster. Lastly, you learned how you can schedule your own chaos on this remote cluster using the agent you created. </p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Feedback" duration="1">
-        <p>Please visit us in our LitmusSlack Channel (in <a href="http://slack.kubernetes.io/" target="_blank">Kubernetes </a>workspace) and tell us how you like LitmusChaos and this tutorial! We are happy to hear your thoughts &amp; suggestions!</p>
-<p>Also, make sure to <a href="https://twitter.com/LitmusChaos" target="_blank">follow us on Twitter</a> to get the latest news on LitmusChaos, our tutorials and newest releases!</p>
-
+        <p>Please visit us in our LitmusSlack Channel (in <a href="http://slack.kubernetes.io/" target="_blank">Kubernetes</a> workspace) and tell us how you like LitmusChaos and this tutorial! We are happy to hear your thoughts &amp; suggestions!</p>
+<p>Also, make sure to <a href="https://twitter.com/LitmusChaos" target="_blank">follow us on Twitter</a> to get the latest news on LitmusChaos, our tutorials, and the newest releases!</p>
 
       </google-codelab-step>
     
