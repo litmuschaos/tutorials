@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
     .success {
       color: #1e8e3e;
@@ -58,20 +59,22 @@
 <li>Kubectl </li>
 </ul>
 <h3 is-upgraded><strong>Install Litmus using Helm</strong></h3>
-<p>1.Create a Litmus namespace in Kubernetes</p>
-<pre>kubectl create ns litmus</pre>
+<p>1.Create a Litmus namespace in Kubernetes </p>
+<pre><button onclick="copyText('kubectl create ns litmus')" style="float: right; border: none; background-color: transparent;" ><i class="fa fa-copy" style="font-size:x-large ; color: aliceblue;"></i></button>kubectl create ns litmus</pre> 
 <p>2.Add the Litmus Helm Repo</p>
-<pre>helm repo add litmuschaos https://litmuschaos.github.io/litmus-helm/</pre>
+<pre><button onclick="copyText('helm repo add litmuschaos https://litmuschaos.github.io/litmus-helm/')" style="float: right; border: none; background-color: transparent;" ><i class="fa fa-copy" style="font-size:x-large ; color: aliceblue;"></i></button>helm repo add litmuschaos https://litmuschaos.github.io/litmus-helm/</pre>
 <p>3.Install Litmus </p>
-<pre>helm install litmuschaos  --namespace litmus litmuschaos/litmus </pre>
+<pre><button onclick="copyText('helm install litmuschaos  --namespace litmus litmuschaos/litmus')" style="float: right; border: none; background-color: transparent;" ><i class="fa fa-copy" style="font-size:x-large ; color: aliceblue;"></i></button>helm install litmuschaos  --namespace litmus litmuschaos/litmus</pre>
 <h3 is-upgraded><strong>Install Litmus using Kubectl</strong></h3>
 <p>1.Create a Litmus namespace in Kubernetes</p>
-<pre>kubectl create ns litmus</pre>
+<pre><button onclick="copyText('kubectl create ns litmus')" style="float: right; border: none; background-color: transparent;" ><i class="fa fa-copy" style="font-size:x-large ; color: aliceblue;"></i></button>kubectl create ns litmus</pre>
 <p>2.Install Litmus from the manifest </p>
-<pre>kubectl apply -f https://litmuschaos.github.io/litmus/2.0.0/litmus-2.0.0.yaml</pre>
+<pre>kubectl create ns litmuskubectl apply -f https://litmuschaos.github.io/litmus/2.0.0/litmus-2.0.0.yaml
+  <button onclick="copyText('kubectl create ns litmuskubectl apply -f https://litmuschaos.github.io/litmus/2.0.0/litmus-2.0.0.yaml')" style="float: right; border: none; background-color: transparent;" ><i class="fa fa-copy" style="font-size:x-large ; color: aliceblue;"></i></button>
+</pre>
 <h3 is-upgraded><strong>Verify your Litmus Installation </strong></h3>
 <p>Check whether the Litmus control plane components comprising the Web-UI (frontend), GraphQL server &amp; MongoDB pods are created and running successfully. </p>
-<pre>kubectl get pods -n litmus</pre>
+<pre>  <button onclick="copyText('kubectl get pods -n litmus')" style="float: right; border: none; background-color: transparent;" ><i class="fa fa-copy" style="font-size:x-large ; color: aliceblue;"></i></button>kubectl get pods -n litmus</pre>
 <pre>chaos-litmus-portal-frontend-ff8b554dc-q5rl4   1/1     Running   0          2m6s
 chaos-litmus-portal-mongo-6764cfdd59-c9r56     1/1     Running   0          2m6s
 chaos-litmus-portal-server-5ffbccbfff-dknv8    2/2     Running   0          2m6s</pre>
@@ -84,7 +87,7 @@ chaos-litmus-portal-server-5ffbccbfff-dknv8    2/2     Running   0          2m6s
         <p>In this section, we will use the ChaosCenter dashboard to set up your first chaos project, verify the installation of agent services on the cluster and prepare for chaos workflow execution. </p>
 <h3 is-upgraded><strong>Access and Login to ChaosCenter Dashboard</strong></h3>
 <p>Obtain the service endpoint of the litmus-frontend service, either via nodePort or LoadBalancer URL and open on your preferred browser. In case of the former, use the external IP of any one of the cluster nodes with the assigned nodePort. </p>
-<pre>kubectl get svc -n litmus </pre>
+<pre><button onclick="copyText('kubectl get svc -n litmus')" style="float: right; border: none; background-color: transparent;" ><i class="fa fa-copy" style="font-size:x-large ; color: aliceblue;"></i></button>kubectl get svc -n litmus </pre>
 <pre>NAME                            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)                         AGE
 litmusportal-frontend-service   NodePort    10.40.9.102    &lt;none&gt;        9091:31616/TCP                  12m
 litmusportal-server-service     NodePort    10.40.10.186   &lt;none&gt;        9002:31242/TCP,9003:32073/TCP   12m
@@ -100,7 +103,7 @@ mongo-service                   ClusterIP   10.40.7.121    &lt;none&gt;        2
 <p class="image-container"><img style="width: 624.00px" src="img/home.png"></p>
 <h3 is-upgraded><strong>Verify Successful Registration of the Self Agent </strong></h3>
 <p>Once the project is created, the cluster is automagically registered as a chaos target via installation of Litmus Chaos Agents. This is represented as &#34;Self-Agent&#34; in the Agents console of the Chaos Center Dashboard. </p>
-<pre>kubectl get pods -n litmus</pre>
+<pre><button onclick="copyText('kubectl get pods -n litmus')" style="float: right; border: none; background-color: transparent;" ><i class="fa fa-copy" style="font-size:x-large ; color: aliceblue;"></i></button>kubectl get pods -n litmus</pre>
 <pre>NAME                                     READY   STATUS    RESTARTS   AGE
 argo-server-58cb64db7f-pmbnq             1/1     Running   0          5m32s
 chaos-exporter-547b59d887-4dm58          1/1     Running   0          5m27s
@@ -210,7 +213,7 @@ spec:
                  value: &#39;false&#39;</pre>
 <p class="image-container"><img style="width: 624.00px" src="img/workflow-running.png"></p>
 <p>Watch the action on the cluster where the podtato-head application replica is killed</p>
-<pre>kubectl get pods -n litmus </pre>
+<pre><button onclick="copyText('kubectl get pods -n litmus')" style="float: right; border: none; background-color: transparent;" ><i class="fa fa-copy" style="font-size:x-large ; color: aliceblue;"></i></button>kubectl get pods -n litmus </pre>
 <pre>NAME                                        READY   STATUS              RESTARTS   AGE
 chaos-exporter-6bb94bc74f-wkbmw             1/1     Running             0          40m
 chaos-operator-ce-6bc9c65776-642gl          1/1     Running             0          40m
@@ -263,12 +266,14 @@ workflow-controller-78dbff5b5d-xcthg        1/1     Running             0       
       </google-codelab-step>
     
   </google-codelab>
-
+  <script>
+    //function for working of copy button .
+  function copyText(cmd) {navigator.clipboard.writeText(cmd);}
+  </script>
   <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
   <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
   <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
   <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
   <script src="//support.google.com/inapp/api.js"></script>
-
 </body>
 </html>
