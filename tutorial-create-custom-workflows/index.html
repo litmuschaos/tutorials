@@ -42,7 +42,7 @@
 <ul>
 <li>Kubernetes 1.17 or later. Recommended sizing of at least: 2 vCPUs, 8GB memory, 10GB of disk space (for persistent volume creation)</li>
 <li>Helm3 or Kubectl</li>
-<li>Access to the Internet from Cluster (For Air-Gapped Environments refer to<a href="https://docs.litmuschaos.io/docs/user-guides/air-gapped/" target="_blank"> this guide</a>)</li>
+<li>Access to the Internet from Cluster</li>
 <li>Have <a href="https://litmuschaos.github.io/tutorials/tutorial-getting-started/index.html#1" target="_blank">Litmus 2.x.x </a>installed.</li>
 </ul>
 
@@ -50,8 +50,8 @@
       </google-codelab-step>
     
       <google-codelab-step label="Configure Project" duration="1">
-        <p>In this section, you will use the Chaos Center dashboard to set up a chaos project, and prepare for chaos workflow execution.</p>
-<h2 is-upgraded>Access and Login to Chaos Center Dashboard</h2>
+        <p>In this section, you will use the ChaosCenter dashboard to set up a chaos project, and prepare for chaos workflow execution.</p>
+<h2 is-upgraded>Access and Login to ChaosCenter Dashboard</h2>
 <p>Obtain the service endpoint of the litmus-frontend service, either via nodePort or load balancer URL, and open on your preferred browser. If former, use the external IP of any cluster nodes with the assigned nodePort.</p>
 <pre><code>kubectl get svc -n litmus
 NAME                            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)                         AGE
@@ -85,7 +85,7 @@ mongo-service                   ClusterIP   10.40.7.121    &lt;none&gt;        2
 <p>Navigate to the Chaos Hub tab on the portal and click the Connect New Hub button.</p>
 <p>Provide a name, select private and type in the URL of the Github repo you want to add and the corresponding branch.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/a2e0fb4b1600002e.png"></p>
-<p>Because this is a private repo, you have to give the chaos center access to it. This can be done by using any of the following.</p>
+<p>Because this is a private repo, you have to give the ChaosCenter access to it. This can be done by using any of the following.</p>
 <ul>
 <li>Access token.</li>
 <li>SSH key.</li>
@@ -114,7 +114,7 @@ mongo-service                   ClusterIP   10.40.7.121    &lt;none&gt;        2
         <p>In this section, you will create custom workflows from the hub we connected to in the last section.</p>
 <h2 is-upgraded>1) Select a Target Agent</h2>
 <p>First, navigate to the Workflows tab on the portal and click the Schedule a workflow button. It will take you to the workflow page.</p>
-<p>You need to select a Target Agent to proceed, these agents consist of CRDs and the required resources to run a chaos workflow. While installing the Chaos Center, a default agent named Self Agent is created. Select the Self Agent.</p>
+<p>You need to select a Target Agent to proceed, these agents consist of CRDs and the required resources to run a chaos workflow. While installing the ChaosCenter, a default agent named Self Agent is created. Select the Self Agent.</p>
 <p>Note: You may have to wait for the agent to be up and ready, after which you can move forward by again clicking on &#34;Next&#34;</p>
 <h2 is-upgraded>2) Choose a Workflow</h2>
 <p>Here, you will see four different options from which you can create a workflow. For this tutorial, we will only use the Create a new workflow using experiments from the MyHub option. Select this option.</p>
@@ -151,7 +151,7 @@ mongo-service                   ClusterIP   10.40.7.121    &lt;none&gt;        2
       </google-codelab-step>
     
       <google-codelab-step label="Summary" duration="1">
-        <p>In this tutorial, we have covered the steps involved in connecting to a new hub and scheduling a custom chaos workflow on Chaos Center. To learn more about Litmus and the Chaos Center, you can refer to Litmus <a href="https://litmusdocs-beta.netlify.app/docs" target="_blank">Documentation</a>.</p>
+        <p>In this tutorial, we have covered the steps involved in connecting to a new hub and scheduling a custom chaos workflow on ChaosCenter. To learn more about Litmus and the ChaosCenter, you can refer to Litmus <a href="https://litmusdocs-beta.netlify.app/docs" target="_blank">Documentation</a>.</p>
       </google-codelab-step>
     
       <google-codelab-step label="Feedback" duration="1">

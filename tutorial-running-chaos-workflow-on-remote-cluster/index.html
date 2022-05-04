@@ -95,7 +95,7 @@
 chaos-litmus-portal-mongo-6764cfdd59-c9r56     1/1     Running   0          2m6s
 chaos-litmus-portal-server-5ffbccbfff-dknv8    2/2     Running   0          2m6s</code></pre>
 <p>It might take a few minutes for all the pods to have a running state. Give it some time.</p>
-<h2 is-upgraded>Access the Chaos Center</h2>
+<h2 is-upgraded>Access the ChaosCenter</h2>
 <p>To access the litmus frontend, we need to know what service exposes this frontend. To get a list of running services in the litmus namespace, run the below command.</p>
 <pre><code>kubectl get svc -n litmus</code></pre>
 <pre><code>NAME                            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)                         AGE
@@ -108,14 +108,14 @@ mongo-service                   ClusterIP   10.24.6.226    &lt;none&gt;        2
 <h3 is-upgraded><strong>Expose the node port</strong></h3>
 <pre><code>gcloud compute firewall-rules create frontend-service-rule --allow tcp:&lt;NODE_PORT&gt;</code></pre>
 <p>Replace the NODE_PORT in the command above with your service&#39;s node port. You should expose the firewall for both the <code>litmusportal-frontend-service</code> and the <code>litmusportal-server-service.</code></p>
-<p>You can now access the Chaos Center, but first, you need to get the external IPs of your node.</p>
+<p>You can now access the ChaosCenter, but first, you need to get the external IPs of your node.</p>
 <h3 is-upgraded><strong>Get node external IPs</strong></h3>
 <pre><code>kubectl get nodes -o wide</code></pre>
 <pre><code>INER-RUNTIME
 gke-litmus-cluster-default-pool-12e7a198-19wl   Ready    &lt;none&gt;   8h    v1.19.9-gke.1900   10.128.0.3    35.223.4.212     Container-Optimized OS from Google   5.4.89+          containerd://1.4.3
 gke-litmus-cluster-default-pool-12e7a198-b53p   Ready    &lt;none&gt;   8h    v1.19.9-gke.1900   10.128.0.4    35.193.229.195   Container-Optimized OS from Google   5.4.89+          containerd://1.4.3
 gke-litmus-cluster-default-pool-12e7a198-s13l   Ready    &lt;none&gt;   8h    v1.19.9-gke.1900   10.128.0.2    35.223.250.205   Container-Optimized OS from Google   5.4.89+          containerd://1.4.3</code></pre>
-<p>Copy the external IP of any of the above nodes and paste it into your browser&#39;s URL, followed by a :xxxxx where xxxxx corresponds to your node port. You will be presented with a screen showing the Chaos Center&#39;s homepage. </p>
+<p>Copy the external IP of any of the above nodes and paste it into your browser&#39;s URL, followed by a :xxxxx where xxxxx corresponds to your node port. You will be presented with a screen showing the ChaosCenter&#39;s homepage. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/87b9b8e024fbc621.png"></p>
 
 
@@ -131,7 +131,7 @@ gke-litmus-cluster-default-pool-12e7a198-s13l   Ready    &lt;none&gt;   8h    v1
 </ul>
 <p>Note that the above are corresponding to the target cluster and not the GKE cluster where the control plane is situated. </p>
 <p>Download the litmus binary corresponding to your OS from the table below. </p>
-<aside class="warning"><p><strong>Note:</strong> If you have Litmus the Beta8(and below)  version of Chaos Center installed, you should install litmusctl v0.2.0. For higher, install litmusctl v0.3.0. This is because of some major security rules that were added in Beta9.</p>
+<aside class="warning"><p><strong>Note:</strong> If you have Litmus the Beta8(and below)  version of ChaosCenter installed, you should install litmusctl v0.2.0. For higher, install litmusctl v0.3.0. This is because of some major security rules that were added in Beta9.</p>
 </aside>
 <table>
 <tr><td colspan="1" rowspan="1"><p><strong>Platforms</strong></p>
@@ -308,8 +308,8 @@ role.rbac.authorization.k8s.io/argo-aggregate-to-view created
 role.rbac.authorization.k8s.io/argo-role created
 rolebinding.rbac.authorization.k8s.io/argo-binding created
 
-💡Connecting agent to Chaos Center.
-💡Connecting agent to Chaos Center.
+💡Connecting agent to ChaosCenter.
+💡Connecting agent to ChaosCenter.
 🏃Agents running!!
 🚀Agent Connection Successful!! 🎉
 👉Litmus agents can be accessed here: http://34.132.48.214:32543/targets
@@ -364,7 +364,7 @@ rolebinding.rbac.authorization.k8s.io/argo-binding created
       </google-codelab-step>
     
       <google-codelab-step label="Summary" duration="1">
-        <p>In this tutorial, you were introduced to how to create a remote cluster on Google Kubernetes Engine and deploy Chaos Center on it. Them, you learned what <strong>litmusctl </strong>is and how to use it to create a new agent on a remote cluster. Lastly, you learned how you can schedule your own chaos on this remote cluster using the agent you created. </p>
+        <p>In this tutorial, you were introduced to how to create a remote cluster on Google Kubernetes Engine and deploy ChaosCenter on it. Them, you learned what <strong>litmusctl </strong>is and how to use it to create a new agent on a remote cluster. Lastly, you learned how you can schedule your own chaos on this remote cluster using the agent you created. </p>
 
 
       </google-codelab-step>

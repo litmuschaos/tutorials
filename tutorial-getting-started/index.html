@@ -32,7 +32,7 @@
         <p class="image-container"><img style="width: 624.00px" src="img/81d45badec873175.png"></p>
 <p><strong>Last Updated:</strong> 2021-08-14</p>
 <h2 is-upgraded>Welcome </h2>
-<p>In this tutorial, you will get an overview of the chaos experimentation flow using the LitmusChaos framework. Before we get started, let us take a look at what you&#39;ll learn while you walk yourself through this tutorial</p>
+<p>In this tutorial, you will get an overview of the chaos experimentation flow using the LitmusChaos framework. Before we get started, let us take a look at what you&#39;ll learn while you walk yourself through this tutorial.</p>
 <h2 is-upgraded>What you will learn</h2>
 <ul>
 <li>How to install LitmusChaos</li>
@@ -46,7 +46,7 @@
 <ul>
 <li>Kubernetes 1.17 or later. Recommended sizing of at least: 2 vCPUs, 8GB memory, 10GB of disk space (for persistent volume creation)</li>
 <li>Helm3 or Kubectl</li>
-<li>Access to the internet from Cluster (For Air-Gapped Environments refer to this guide)</li>
+<li>Access to the internet from Cluster</li>
 </ul>
 
 
@@ -102,7 +102,7 @@ mongo-service                   ClusterIP   10.40.7.121    &lt;none&gt;        2
 <p>You have been assigned a default project with Owner permissions </p>
 <p class="image-container"><img style="width: 624.00px" src="img/home.png"></p>
 <h3 is-upgraded><strong>Verify Successful Registration of the Self Agent </strong></h3>
-<p>Once the project is created, the cluster is automagically registered as a chaos target via installation of Litmus Chaos Agents. This is represented as &#34;Self-Agent&#34; in the Agents console of the Chaos Center Dashboard. </p>
+<p>Once the project is created, the cluster is automagically registered as a chaos target via installation of Litmus Chaos Agents. This is represented as &#34;Self-Agent&#34; in the Agents console of the ChaosCenter Dashboard. </p>
 <pre><button onclick="copyText('kubectl get pods -n litmus')" style="float: right; border: none; background-color: transparent;" ><i class="fa fa-copy" style="font-size:x-large ; color: aliceblue;"></i></button>kubectl get pods -n litmus</pre>
 <pre>NAME                                     READY   STATUS    RESTARTS   AGE
 argo-server-58cb64db7f-pmbnq             1/1     Running   0          5m32s
@@ -129,7 +129,7 @@ workflow-controller-78fc7b6c6-w82m7      1/1     Running   0          5m32s</pre
 <li>(Optional) Clean up the chaos resources at the end of the experiment </li>
 </ul>
 <h3 is-upgraded><strong>Select predefined workflow </strong></h3>
-<p>Click the &#34;Schedule Workflow&#34; on the Chaos Center home page to get started: </p>
+<p>Click the &#34;Schedule Workflow&#34; on the ChaosCenter home page to get started: </p>
 <p class="image-container"><img style="width: 624.00px" src="img/279fccbd5cb3c17d.png"></p>
 <p>Select the &#34;Self-Agent&#34; as the target cluster for chaos execution </p>
 <p class="image-container"><img style="width: 624.00px" src="img/297754c0e942727f.png"></p>
