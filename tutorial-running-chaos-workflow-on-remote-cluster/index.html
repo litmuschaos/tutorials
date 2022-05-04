@@ -104,7 +104,7 @@ litmusportal-server-service     NodePort    10.24.12.173   &lt;none&gt;        9
 mongo-service                   ClusterIP   10.24.6.226    &lt;none&gt;        27017/TCP                       8h
 </code></pre>
 <p>From the above, we can see that the frontend is exposed via a NodePort service and it has the name of <strong><code>litmusportal-frontend-service.</code></strong> It exposes this service on a TCP port that looks something like <strong>9091:xxxxx/TCP </strong>where xxxxx is the corresponding node port of the service. </p>
-<p>To access the portal, we need to expose this port by using a firewall rule. We can do this by running this command:</p>
+<p>To access the ChaosCenter, we need to expose this port by using a firewall rule. We can do this by running this command:</p>
 <h3 is-upgraded><strong>Expose the node port</strong></h3>
 <pre><code>gcloud compute firewall-rules create frontend-service-rule --allow tcp:&lt;NODE_PORT&gt;</code></pre>
 <p>Replace the NODE_PORT in the command above with your service&#39;s node port. You should expose the firewall for both the <code>litmusportal-frontend-service</code> and the <code>litmusportal-server-service.</code></p>
@@ -216,105 +216,74 @@ gke-litmus-cluster-default-pool-12e7a198-s13l   Ready    &lt;none&gt;   8h    v1
       </google-codelab-step>
     
       <google-codelab-step label="Setup an external agent" duration="5">
-        <p>We can now use Litmusctl to create an external agent on the remote cluster. Open your terminal on your local Machine and run the command </p>
-<pre><code>litmusctl agent connect</code></pre>
-<p>You will be prompted to do the following</p>
-<h3 is-upgraded><strong>Login to the remote portal </strong></h3>
-<p>Type in your host IP, username, and password</p>
-<pre><code>🔥Connecting LitmusChaos agent
-📶Please enter LitmusChaos details --
-👉Host URL where litmus is installed: http://34.132.48.214:32543
-🤔Username [admin]: admin
-🙈Password:
-✅Login Successful!</code></pre>
-<h3 is-upgraded><strong>Select a Project</strong></h3>
-<pre><code>✨Projects List:
-1.  admin&#39;s project
-🔎Select Project: 1</code></pre>
-<pre><code>🏃Running prerequisites check....
-🔑role - ✅
-🔑rolebinding - ✅
-
-🌟Sufficient permissions. Connecting Agent</code></pre>
-<h3 is-upgraded><strong>Select an Agent</strong></h3>
-<p>Give your Agent a name and a description</p>
-<pre><code>🔗Enter the details of the agent ----
-🤷Agent Name: Self-Agent
-Self-Agent
-📘Connected agents list -----------
-
-- Self-Agent
-
--------------------------------------
-
-🤷Agent Name: my-new-agent</code></pre>
-<p class="image-container"><img alt="📘" style="width: 20.00px" src="img/fd8f9db71c579bbf.png"></p>
-<pre><code> Agent Description: This is a remote agent for testing</code></pre>
-<h3 is-upgraded><strong>Choose a platform</strong></h3>
-<p>Select the platform where your cluster is hosted. If not listed, select Others</p>
-<pre><code>📦Platform List
-1. AWS
-2. GKE
-3. Openshift
-4. Rancher
-5. Others
-🔎Select Platform [Others]: 2        </code></pre>
-<h3 is-upgraded><strong>Select an namespace</strong></h3>
-<pre><code>✉️Enter the namespace (existing) [litmus]: litmus-remote
-🔑Enter service account [litmus]:</code></pre>
-<h3 is-upgraded><strong>Summary</strong></h3>
-<pre><code>📌Summary --------------------------
-
-Agent Name:         my-new-agent
-Agent Description:  This is a remote agent for testing
-Platform Name:      GKE
-Namespace:          litmus-remote
-Service Account:    litmus (new)
-Installation Mode:  namespace</code></pre>
-<h3 is-upgraded><strong>Continue?</strong></h3>
-<pre><code>🤷 Do you want to continue with the above details? [Y/N]: y
-👍Continuing agent connection!!
-Applying YAML:
- http://34.132.48.214:32543/api/file/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbHVzdGVyX2lkIjoiMmU4ZTkzMGYtY2ZhZC00MzE5LTk3MDAtMWQ1NzJhNzM0NWNlIn0.LAPARi4Ec__Nj5M_slrfofaAO7wNYtQDhHFE_KcI7JE.yaml
-
- serviceaccount/litmus created
-configmap/workflow-controller-configmap created
-configmap/agent-config created
-deployment.apps/subscriber created
-deployment.apps/event-tracker created
-role.rbac.authorization.k8s.io/subscriber-role created
-rolebinding.rbac.authorization.k8s.io/subscriber-role-binding created
-serviceaccount/litmus-admin created
-role.rbac.authorization.k8s.io/litmus-admin created
-rolebinding.rbac.authorization.k8s.io/litmus-admin created
-serviceaccount/argo-chaos created
-role.rbac.authorization.k8s.io/chaos-role created
-rolebinding.rbac.authorization.k8s.io/chaos-role-binding created
-serviceaccount/event-tracker-sa created
-role.rbac.authorization.k8s.io/event-tracker-role created
-rolebinding.rbac.authorization.k8s.io/event-tracker-role-binding created
-service/workflow-controller-metrics created
-deployment.apps/workflow-controller created
-deployment.apps/chaos-operator-ce created
-deployment.apps/chaos-exporter created
-service/chaos-exporter created
-serviceaccount/litmus-namespace-scope created
-role.rbac.authorization.k8s.io/litmus-namespace-scope created
-rolebinding.rbac.authorization.k8s.io/litmus-namespace-scope created
-serviceaccount/argo created
-role.rbac.authorization.k8s.io/argo-aggregate-to-admin created
-role.rbac.authorization.k8s.io/argo-aggregate-to-edit created
-role.rbac.authorization.k8s.io/argo-aggregate-to-view created
-role.rbac.authorization.k8s.io/argo-role created
-rolebinding.rbac.authorization.k8s.io/argo-binding created
-
-💡Connecting agent to ChaosCenter.
-💡Connecting agent to ChaosCenter.
-🏃Agents running!!
-🚀Agent Connection Successful!! 🎉
-👉Litmus agents can be accessed here: http://34.132.48.214:32543/targets
+        <p>The external agent can be setup using either the <a href="https://docs.litmuschaos.io/docs/litmusctl/usage-interactive-mode">interactive mode</a> or the <a href="https://docs.litmuschaos.io/docs/litmusctl/usage-non-interactive-mode">non-interactive mode</a>. Here, we will be using the non-interactive mode of setup.</p>
+        <p>We can now use Litmusctl to create an external agent on the remote cluster. Open your terminal on your local Machine and run the following command. Give the ChaosCenter URL (including the port, if present) for endpoint, and your account username and password accordingly.</p>
+<pre><code>litmusctl config set-account --endpoint="" --username="" --password=""</code></pre>
+<p>Then, we can create an agent in a cluster mode.</p>
+<p>Note: To get project-id, you can refer to your project in the ChaosCenter navbar and obtain its ID or use "litmusctl get projects" command.</p>
+<pre><code>litmusctl create agent --agent-name="" --project-id="" --non-interactive</code></pre>
+<pre><code>
+  🏃 Running prerequisites check....
+  🔑 clusterrole ✅
+  🔑 clusterrolebinding ✅
+  🌟 Sufficient permissions. Installing the Agent...
+  
+  📌 Summary 
+  Agent Name: my-agent
+  Agent Description: ---
+  Agent SSL/TLS Skip: false
+  Platform Name: Others
+  Namespace:  litmus (new)
+  Service Account:  litmus (new)
+  
+  Installation Mode: cluster
+  Applying YAML:
+  http://25.184.70.242:9091/api/file/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbHVzdGVyX2lkIjoiZWQ2ZDhhM2ItZDIyMS00ZDI1LTgwMGQtYjBiNzljMjQxMzJkIn0.eYIY4I-WuVp1FZvRcP6yBLL4JY-IFV42r0dB5AjkHV4.yaml
+  namespace/litmus created
+  serviceaccount/litmus created
+  serviceaccount/litmus-admin created
+  clusterrole.rbac.authorization.k8s.io/litmus-admin unchanged
+  clusterrolebinding.rbac.authorization.k8s.io/litmus-admin unchanged
+  serviceaccount/argo-chaos created
+  clusterrole.rbac.authorization.k8s.io/chaos-cluster-role unchanged
+  clusterrolebinding.rbac.authorization.k8s.io/chaos-cluster-role-binding unchanged
+  clusterrole.rbac.authorization.k8s.io/subscriber-cluster-role unchanged
+  clusterrolebinding.rbac.authorization.k8s.io/subscriber-cluster-role-binding unchanged
+  serviceaccount/event-tracker-sa created
+  clusterrole.rbac.authorization.k8s.io/event-tracker-cluster-role unchanged
+  clusterrolebinding.rbac.authorization.k8s.io/event-tracker-clusterole-binding unchanged
+  deployment.apps/chaos-operator-ce created
+  deployment.apps/chaos-exporter created
+  service/chaos-exporter created
+  configmap/agent-config created
+  secret/agent-secret created
+  deployment.apps/subscriber created
+  deployment.apps/event-tracker created
+  service/workflow-controller-metrics created
+  deployment.apps/workflow-controller created
+  serviceaccount/litmus-cluster-scope created
+  clusterrole.rbac.authorization.k8s.io/litmus-cluster-scope unchanged
+  clusterrolebinding.rbac.authorization.k8s.io/litmus-cluster-scope unchanged
+  customresourcedefinition.apiextensions.k8s.io/clusterworkflowtemplates.argoproj.io unchanged
+  customresourcedefinition.apiextensions.k8s.io/cronworkflows.argoproj.io unchanged
+  customresourcedefinition.apiextensions.k8s.io/workflows.argoproj.io unchanged
+  customresourcedefinition.apiextensions.k8s.io/workflowtemplates.argoproj.io unchanged
+  customresourcedefinition.apiextensions.k8s.io/workflowtasksets.argoproj.io unchanged
+  serviceaccount/argo created
+  clusterrole.rbac.authorization.k8s.io/argo-cluster-role unchanged
+  clusterrolebinding.rbac.authorization.k8s.io/argo-binding unchanged
+  configmap/workflow-controller-configmap created
+  customresourcedefinition.apiextensions.k8s.io/chaosengines.litmuschaos.io configured
+  customresourcedefinition.apiextensions.k8s.io/chaosexperiments.litmuschaos.io configured
+  customresourcedefinition.apiextensions.k8s.io/chaosresults.litmuschaos.io unchanged
+  customresourcedefinition.apiextensions.k8s.io/eventtrackerpolicies.eventtracker.litmuschaos.io configured
+  💡 Connecting agent to Litmus Portal.
+  🏃 Agents are running!!
+  
+  🚀 Agent Connection Successful!! 🎉
+  👉 Litmus agents can be accessed here: http://25.184.70.242:9091/targets
 </code></pre>
-<p>Navigate to the IP address printed in your terminal at the end, it should take you to the Agents tab on your remote portal. You should observe that your new Agent has been added to your list of Agents. </p>
+<p>Navigate to the IP address printed in your terminal at the end, it should take you to the Agents tab on your remote ChaosCenter. You should observe that your new Agent has been added to your list of Agents. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/d3263e66fb3b1b83.png"></p>
 
 

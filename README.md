@@ -15,7 +15,7 @@ repository stating what is missing.
   </tr>
   <tr>
     <td>LitmusChaos: Getting Started</td>
-    <td>Installation of Litmus, Portal Set Up, Chaos Execution</td>
+    <td>Installation of Litmus, ChaosCenter Set Up, Chaos Execution</td>
     <td><a href="https://litmuschaos.github.io/tutorials/tutorial-getting-started/index.html#0">Click Here</a></td>
   </tr>
   <tr>

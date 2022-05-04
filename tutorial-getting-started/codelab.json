@@ -8,7 +8,7 @@
   "duration": 0,
   "title": "LitmusChaos: Getting Started",
   "authors": "Karthik S",
-  "summary": "In this codelab, you will install LitmusChaos using Helm, setup a chaos project on the Litmus Portal, execute your first chaos workflow to subject a sample application to a pod kill fault and view the result of the experiment.",
+  "summary": "In this codelab, you will install LitmusChaos using Helm, setup a chaos project on the ChaosCenter, execute your first chaos workflow to subject a sample application to a pod kill fault and view the result of the experiment.",
   "source": "1yMHoitNa7PpHhnHuKR-OPllp6wRa-Wc7MpD8y5pq8v8",
   "theme": "web",
   "status": [
