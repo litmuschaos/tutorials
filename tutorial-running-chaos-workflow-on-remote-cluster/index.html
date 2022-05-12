@@ -130,73 +130,80 @@ gke-litmus-cluster-default-pool-12e7a198-s13l   Ready    &lt;none&gt;   8h    v1
 <li>kubectl - litmusctl is using kubectl under the hood to apply the manifest. To install kubectl, follow: <a href="https://kubernetes.io/docs/tasks/tools/#kubectl" target="_blank">kubectl</a></li>
 </ul>
 <p>Note that the above are corresponding to the target cluster and not the GKE cluster where the control plane is situated. </p>
-<p>Download the litmus binary corresponding to your OS from the table below. </p>
-<aside class="warning"><p><strong>Note:</strong> If you have Litmus the Beta8(and below)  version of ChaosCenter installed, you should install litmusctl v0.2.0. For higher, install litmusctl v0.3.0. This is because of some major security rules that were added in Beta9.</p>
+<p>Download the litmusctl binary corresponding to your OS from the table below: </p>
+<aside class="warning"><p><strong>Note:</strong> If you have Litmus Beta8 (and below) version of ChaosCenter installed, you should install litmusctl v0.2.0. For higher, you can install litmusctl v0.9.0. This is because of some major security rules that were added in Beta9.</p>
 </aside>
 <table>
-<tr><td colspan="1" rowspan="1"><p><strong>Platforms</strong></p>
-</td><td colspan="1" rowspan="1"><p><strong>v0.5.0</strong></p>
-</td><td colspan="1" rowspan="1"><p><strong>v0.4.0</strong></p>
-</td><td colspan="1" rowspan="1"><p><strong>v0.3.0</strong></p>
-</td><td colspan="1" rowspan="1"><p><strong>v0.2.0</strong></p>
-</td><td colspan="1" rowspan="1"><p><strong>master(Unreleased)</strong></p>
-</td></tr>
-<tr><td colspan="1" rowspan="1"><p>litmusctl-darwin-amd64 (MacOS)</p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-v0.5.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-v0.4.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-v0.3.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-v0.2.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-master.tar.gz" target="_blank">Click here</a></p>
-</td></tr>
-<tr><td colspan="1" rowspan="1"><p>litmusctl-linux-386</p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-v0.5.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-v0.4.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-v0.3.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-v0.2.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-master.tar.gz" target="_blank">Click here</a></p>
-</td></tr>
-<tr><td colspan="1" rowspan="1"><p>litmusctl-linux-amd64</p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-v0.5.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-v0.4.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-v0.3.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-v0.2.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-master.tar.gz" target="_blank">Click here</a></p>
-</td></tr>
-<tr><td colspan="1" rowspan="1"><p>litmusctl-linux-arm</p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-v0.5.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-v0.4.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-v0.3.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-v0.2.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-master.tar.gz" target="_blank">Click here</a></p>
-</td></tr>
-<tr><td colspan="1" rowspan="1"><p>litmusctl-linux-arm64</p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-v0.5.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-v0.4.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-v0.3.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-v0.2.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-master.tar.gz" target="_blank">Click here</a></p>
-</td></tr>
-<tr><td colspan="1" rowspan="1"><p>litmusctl-windows-386</p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-v0.5.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-v0.4.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-v0.3.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-v0.2.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-master.tar.gz" target="_blank">Click here</a></p>
-</td></tr>
-<tr><td colspan="1" rowspan="1"><p>litmusctl-windows-amd64</p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-v0.5.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-v0.4.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-v0.3.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-v0.2.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-master.tar.gz" target="_blank">Click here</a></p>
-</td></tr>
-<tr><td colspan="1" rowspan="1"><p>litmusctl-windows-arm</p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-v0.5.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-v0.4.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-v0.3.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-v0.2.0.tar.gz" target="_blank">Click here</a></p>
-</td><td colspan="1" rowspan="1"><p><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-master.tar.gz" target="_blank">Click here</a></p>
-</td></tr>
+  <th>Platforms</th>
+  <th>v0.9.0</th>
+  <th>v0.7.0</th>
+  <th>v0.6.0</th>
+  <th>v0.5.0</th>
+  <th>master(Unreleased)</th>
+  <tr>
+    <td>litmusctl-darwin-amd64 (MacOS)</td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-v0.9.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-v0.7.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-v0.6.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-v0.5.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-master.tar.gz">Click here</a></td>
+  </tr>
+  <tr>
+    <td>litmusctl-linux-386</td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-v0.9.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-v0.7.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-v0.6.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-v0.5.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-master.tar.gz">Click here</a></td>
+  </tr>
+  <tr>
+    <td>litmusctl-linux-amd64</td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-v0.9.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-v0.7.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-v0.6.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-v0.5.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-master.tar.gz">Click here</a></td>
+  </tr>
+  <tr>
+    <td>litmusctl-linux-arm</td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-v0.9.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-v0.7.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-v0.6.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-v0.5.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-master.tar.gz">Click here</a></td>
+  </tr>
+  <tr>
+    <td>litmusctl-linux-arm64</td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-v0.9.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-v0.7.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-v0.6.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-v0.5.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-master.tar.gz">Click here</a></td>
+  </tr>
+  <tr>
+    <td>litmusctl-windows-386</td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-v0.9.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-v0.7.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-v0.6.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-v0.5.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-master.tar.gz">Click here</a></td>
+  </tr>
+   <tr>
+    <td>litmusctl-windows-amd64</td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-v0.9.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-v0.7.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-v0.6.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-v0.5.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-master.tar.gz">Click here</a></td>
+  </tr>
+  <tr>
+    <td>litmusctl-windows-arm</td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-v0.9.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-v0.7.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-v0.6.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-v0.5.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-master.tar.gz">Click here</a></td>
+  </tr>
 </table>
 <h3 is-upgraded>Linux/MacOS</h3>
 <h3 is-upgraded><strong>Extract the binary</strong></h3>
