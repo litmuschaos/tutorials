@@ -35,12 +35,12 @@
 <li>What Gitops is.</li>
 <li>How to connect a new chaos hub to a Github repository.</li>
 </ul>
-<p>In this tutorial, you would first go over what Gitops is, why it is useful and the different types of Gitops. Next, you would create a remote chaos hub repository on Github by forking an already existing repository. Then, you will learn how to connect this remote repository to Chaos Center using an access token or an ssh key.</p>
+<p>In this tutorial, you would first go over what Gitops is, why it is useful and the different types of Gitops. Next, you would create a remote chaos hub repository on Github by forking an already existing repository. Then, you will learn how to connect this remote repository to ChaosCenter using an access token or an ssh key.</p>
 <h2 is-upgraded>Pre-Requisites</h2>
 <ul>
 <li>Minikube 1.2.0 or later. Recommended sizing of at least: 2 CPUs, 8GB memory, 10GB of disk space (for persistent volume creation)</li>
 <li>Helm3 or Kubectl</li>
-<li>Access to the Internet from Cluster (For Air-Gapped Environments refer to this guide)</li>
+<li>Access to the Internet from Cluster</li>
 <li>Have <a href="https://litmuschaos.github.io/tutorials/tutorial-getting-started/index.html#1" target="_blank">Litmus 2.x.x </a>installed.</li>
 <li>Basic Understanding of Litmus.</li>
 </ul>
@@ -49,9 +49,9 @@
       </google-codelab-step>
     
       <google-codelab-step label="What is Gitops" duration="1">
-        <p>Gitops was released in Litmus v2.0 Beta1. In Litmus, Gitops enables you to configure a single source of truth for your chaos workflows and experiments, such that any changes made to either the artifacts stored in the configured git repository or the portal will automatically sync with each other. This allows you to create and execute workflows directly from git.</p>
+        <p>Gitops was released in Litmus v2.0 Beta1. In Litmus, Gitops enables you to configure a single source of truth for your chaos workflows and experiments, such that any changes made to either the artifacts stored in the configured git repository or the ChaosCenter will automatically sync with each other. This allows you to create and execute workflows directly from git.</p>
 <p>The two types of Gitops we have are mainly frontend and backend Gitops however, this tutorial will only be focusing on the frontend gitops. </p>
-<p>Frontend Gitops enables you to connect your portal with any git repository and the portal will sync all your workflow manifests with that git repository. You can then make changes directly on Github and it will reflect on the portal as well.</p>
+<p>Frontend Gitops enables you to connect your ChaosCenter with any git repository and the ChaosCenter will sync all your workflow manifests with that git repository. You can then make changes directly on Github and it will reflect on the ChaosCenter as well.</p>
 
 
       </google-codelab-step>
@@ -103,14 +103,14 @@
 <h2 is-upgraded>Verifying Gitops</h2>
 <p>Navigate back to your repository and reload to observe that Litmus has automatically pushed a commit to your repository.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/a48790796d422a4c.png"></p>
-<p>To further verify that this is working as expected, <a href="https://litmuschaos.github.io/tutorials/tutorial-getting-started/index.html#3" target="_blank">schedule a new workflow</a> on your Portal. You will notice that immediately after the workflow is scheduled, Litmus automatically pushes this workflow manifest to your designated Gitops repository.</p>
+<p>To further verify that this is working as expected, <a href="https://litmuschaos.github.io/tutorials/tutorial-getting-started/index.html#3" target="_blank">schedule a new workflow</a> on your ChaosCenter. You will notice that immediately after the workflow is scheduled, Litmus automatically pushes this workflow manifest to your designated Gitops repository.</p>
 <p>If this workflow is edited on Github, it will be updated on the ChaosCenter making it a single source of truth for all your workflows.</p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Summary" duration="1">
-        <p>In this tutorial, we covered what Gitops is and why it is useful. We showed how you can connect your Chaos Center to a remote Github repository using two different Gitops method -- Access Tokens, and SSH. To learn more about Litmus and the Chaos Center, you can refer to Litmus <a href="https://litmusdocs-beta.netlify.app/docs" target="_blank">Documentation</a>.</p>
+        <p>In this tutorial, we covered what Gitops is and why it is useful. We showed how you can connect your ChaosCenter to a remote Github repository using two different Gitops method -- Access Tokens, and SSH. To learn more about Litmus and the ChaosCenter, you can refer to Litmus <a href="https://litmusdocs-beta.netlify.app/docs" target="_blank">Documentation</a>.</p>
 
 
       </google-codelab-step>
