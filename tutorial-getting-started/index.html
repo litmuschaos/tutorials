@@ -69,29 +69,33 @@
 <p>1.Create a Litmus namespace in Kubernetes</p>
 <pre><button onclick="copyText('kubectl create ns litmus')" style="float: right; border: none; background-color: transparent;" ><i class="fa fa-copy" style="font-size:x-large ; color: aliceblue;"></i></button>kubectl create ns litmus</pre>
 <p>2.Install Litmus from the manifest </p>
-<pre>kubectl create ns litmuskubectl apply -f https://litmuschaos.github.io/litmus/2.0.0/litmus-2.0.0.yaml
-  <button onclick="copyText('kubectl create ns litmuskubectl apply -f https://litmuschaos.github.io/litmus/2.0.0/litmus-2.0.0.yaml')" style="float: right; border: none; background-color: transparent;" ><i class="fa fa-copy" style="font-size:x-large ; color: aliceblue;"></i></button>
+<pre>kubectl apply -f https://litmuschaos.github.io/litmus/2.12.0/litmus-2.12.0.yaml
+  <button onclick="copyText('kubectl apply -f https://litmuschaos.github.io/litmus/2.12.0/litmus-2.12.0.yaml')" style="float: right; border: none; background-color: transparent;" ><i class="fa fa-copy" style="font-size:x-large ; color: aliceblue;"></i></button>
 </pre>
 <h3 is-upgraded><strong>Verify your Litmus Installation </strong></h3>
 <p>Check whether the Litmus control plane components comprising the Web-UI (frontend), GraphQL server &amp; MongoDB pods are created and running successfully. </p>
 <pre>  <button onclick="copyText('kubectl get pods -n litmus')" style="float: right; border: none; background-color: transparent;" ><i class="fa fa-copy" style="font-size:x-large ; color: aliceblue;"></i></button>kubectl get pods -n litmus</pre>
-<pre>chaos-litmus-portal-frontend-ff8b554dc-q5rl4   1/1     Running   0          2m6s
-chaos-litmus-portal-mongo-6764cfdd59-c9r56     1/1     Running   0          2m6s
-chaos-litmus-portal-server-5ffbccbfff-dknv8    2/2     Running   0          2m6s</pre>
-<p><strong>Note</strong>: It might take a couple of minutes for the installations to enter the running state. </p>
+<pre>NAME                                        READY   STATUS    RESTARTS   AGE
+litmusportal-auth-server-7594bf7c46-td8jv   1/1     Running   0          47m
+litmusportal-frontend-5fb5bb84f7-tcf95      1/1     Running   0          47m
+litmusportal-server-858584d5b9-r8kkn        1/1     Running   0          47m
+mongo-0                                     1/1     Running   0          47m</pre>
+<p><strong>Note</strong>: It might take a couple of minutes for the components to enter the running state. </p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Configure Project" duration="0">
-        <p>In this section, we will use the ChaosCenter dashboard to set up your first chaos project, verify the installation of delegate services on the cluster and prepare for chaos scenario execution. </p>
+        <p>In this section, we will use the ChaosCenter dashboard to set up your first chaos project, verify the installation of chaos delegate services on the cluster and prepare for chaos scenario execution. </p>
 <h3 is-upgraded><strong>Access and Login to ChaosCenter Dashboard</strong></h3>
 <p>Obtain the service endpoint of the litmus-frontend service, either via nodePort or LoadBalancer URL and open on your preferred browser. In case of the former, use the external IP of any one of the cluster nodes with the assigned nodePort. </p>
 <pre><button onclick="copyText('kubectl get svc -n litmus')" style="float: right; border: none; background-color: transparent;" ><i class="fa fa-copy" style="font-size:x-large ; color: aliceblue;"></i></button>kubectl get svc -n litmus </pre>
-<pre>NAME                            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)                         AGE
-litmusportal-frontend-service   NodePort    10.40.9.102    &lt;none&gt;        9091:31616/TCP                  12m
-litmusportal-server-service     NodePort    10.40.10.186   &lt;none&gt;        9002:31242/TCP,9003:32073/TCP   12m
-mongo-service                   ClusterIP   10.40.7.121    &lt;none&gt;        27017/TCP                       12m</pre>
+<pre>NAME                               TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)                         AGE
+litmusportal-auth-server-service   NodePort       10.76.20.219   &lt;none&gt;           9003:31241/TCP,3030:31248/TCP   49m
+litmusportal-frontend-service      LoadBalancer   10.76.21.27    34.136.203.195   9091:32733/TCP                  49m
+litmusportal-server-service        NodePort       10.76.23.74    &lt;none&gt;           9002:30707/TCP,8000:30327/TCP   49m
+mongo-headless-service             ClusterIP      None           &lt;none&gt;           27017/TCP                       49m
+mongo-service                      ClusterIP      10.76.26.27    &lt;none&gt;           27017/TCP                       49m</pre>
 <p>Use the default credentials to login. <br/>
   Username: admin <br/>
   Password: litmus
@@ -101,19 +105,19 @@ mongo-service                   ClusterIP   10.40.7.121    &lt;none&gt;        2
 <p class="image-container"><img style="width: 624.00px" src="img/getStarted.png"></p>
 <p>You have been assigned a default project with Owner permissions </p>
 <p class="image-container"><img style="width: 624.00px" src="img/home.png"></p>
-<h3 is-upgraded><strong>Verify Successful Registration of the Self Agent </strong></h3>
-<p>Once the project is created, the cluster is automagically registered as a chaos target via installation of Litmus Chaos Delegates. This is represented as &#34;Self-Agent&#34; in the Delegates console of the ChaosCenter Dashboard. </p>
+<h3 is-upgraded><strong>Verify Successful Registration of the Self Chaos Delegate </strong></h3>
+<p>Once the project is created, the cluster is automagically registered as a chaos target via installation of Litmus Chaos Agents. This is represented as &#34;Self-Chaos Delegate&#34; in the Agents console of the ChaosCenter Dashboard. </p>
 <pre><button onclick="copyText('kubectl get pods -n litmus')" style="float: right; border: none; background-color: transparent;" ><i class="fa fa-copy" style="font-size:x-large ; color: aliceblue;"></i></button>kubectl get pods -n litmus</pre>
-<pre>NAME                                     READY   STATUS    RESTARTS   AGE
-argo-server-58cb64db7f-pmbnq             1/1     Running   0          5m32s
-chaos-exporter-547b59d887-4dm58          1/1     Running   0          5m27s
-chaos-operator-ce-84ddc8f5d7-l8c6d       1/1     Running   0          5m27s
-event-tracker-5bc478cbd7-xlflb           1/1     Running   0          5m28s
-litmusportal-frontend-698bcb686f-xm4q5   1/1     Running   0          15m
-litmusportal-server-5bb94f65d7-llzng     2/2     Running   1          15m
-mongo-0                                  1/1     Running   0          15m
-subscriber-958948965-qbx29               1/1     Running   0          5m30s
-workflow-controller-78fc7b6c6-w82m7      1/1     Running   0          5m32s</pre>
+<pre>NAME                                        READY   STATUS    RESTARTS   AGE
+chaos-exporter-567c7cc8b-96pkf              1/1     Running   0          36m
+chaos-operator-ce-89b4475f6-smnnl           1/1     Running   0          36m
+event-tracker-64566957b7-ks5pm              1/1     Running   0          36m
+litmusportal-auth-server-7594bf7c46-td8jv   1/1     Running   0          47m
+litmusportal-frontend-5fb5bb84f7-tcf95      1/1     Running   0          47m
+litmusportal-server-858584d5b9-r8kkn        1/1     Running   0          47m
+mongo-0                                     1/1     Running   0          47m
+subscriber-7b7c598677-d2lf9                 1/1     Running   0          36m
+workflow-controller-5c7fc6fcdd-st7n4        1/1     Running   0          36m</pre>
 <p class="image-container"><img style="width: 624.00px" src="img/delegates.png"></p>
 <p>At this point, we are ready to run chaos experiments! </p>
 
@@ -121,35 +125,35 @@ workflow-controller-78fc7b6c6-w82m7      1/1     Running   0          5m32s</pre
       </google-codelab-step>
     
       <google-codelab-step label="Run Chaos Scenario" duration="0">
-        <p>In this section, we will execute a pre-defined chaos scenario to inject a pod-delete/kill fault on a sample microservices application. The scenario is configured to perform the following actions: </p>
+        <p>In this section, we will execute a pre-defined chaos scenario to inject a pod-delete/kill fault on a sample microservices application. The chaos scenario is configured to perform the following actions: </p>
 <ul>
 <li>Install the podtato-head hello service application</li>
 <li>Inject the pod-kill fault </li>
 <li>Verify the availability of the service through the chaos duration using probes</li>
 <li>(Optional) Clean up the chaos resources at the end of the experiment </li>
 </ul>
-<h3 is-upgraded><strong>Select predefined scenario </strong></h3>
-<p>Click the &#34;Schedule scenario&#34; on the ChaosCenter home page to get started: </p>
+<h3 is-upgraded><strong>Select predefined chaos scenario </strong></h3>
+<p>Click the &#34;Schedule Chaos Scenario&#34; on the ChaosCenter home page to get started: </p>
 <p class="image-container"><img style="width: 624.00px" src="img/279fccbd5cb3c17d.png"></p>
 <p>Select the &#34;Self-Agent&#34; as the target cluster for chaos execution </p>
 <p class="image-container"><img style="width: 624.00px" src="img/297754c0e942727f.png"></p>
-<p>Select the option to create a new scenario from pre-defined chaos scenario templates. Amongst the available templates, select the &#34;podtato-head-chaos&#34; option.</p>
+<p>Select the option to create a new chaos scenario from pre-defined chaos scenario templates. Amongst the available templates, select the &#34;podtato-head-chaos&#34; option.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/1015bd4eefd9bf97.png"></p>
 <p>View the description of the chaos scenario </p>
 <p class="image-container"><img style="width: 624.00px" src="img/bbee7b2929080acc.png"></p>
-<h3 is-upgraded><strong>Preview the Scenario Steps </strong></h3>
+<h3 is-upgraded><strong>Preview the Chaos Scenario Steps </strong></h3>
 <p>View the preview of the chaos scenario.</p>
-<p> (Optional) You could also edit the scenario YAML depending upon your need at this stage</p>
+<p> (Optional) You could also edit the chaos scenario YAML depending upon your need at this stage</p>
 <p class="image-container"><img style="width: 624.00px" src="img/e456843387f5719c.png"></p>
-<h3 is-upgraded><strong>(Optional) Preview the Scenario Steps </strong></h3>
-<p>Assign weights to the chaos experiments that are part of the scenario using the slider. This is useful when there are multiple experiments in the scenario. These weights influence the &#34;Resilience Score&#34; calculation for the chaos scenario. </p>
+<h3 is-upgraded><strong>(Optional) Preview the Chaos Scenario Steps </strong></h3>
+<p>Assign weights to the chaos experiments that are part of the chaos scenario using the slider. This is useful when there are multiple experiments in the chaos scenario. These weights influence the &#34;Resilience Score&#34; calculation for the chaos scenario. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/4c73a234fbbddb5.png"></p>
 <h3 is-upgraded>Schedule the Chaos Scenario </h3>
 <p>Schedule the chaos scenario for immediate and one-time execution</p>
 <p class="image-container"><img style="width: 624.00px" src="img/32e14fc71892855d.png"></p>
 <p>Click on &#34;Finish&#34; to launch the Chaos Scenario. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/verify-commit-screen.png"></p>
-<p>The scenario has started running now</p>
+<p>The chaos scenario has started running now</p>
 <p class="image-container"><img style="width: 624.00px" src="img/b16ad3b2612f615.png"></p>
 
 
@@ -157,11 +161,11 @@ workflow-controller-78fc7b6c6-w82m7      1/1     Running   0          5m32s</pre
     
       <google-codelab-step label="Visualize Chaos Scenario" duration="0">
         <p><strong>Check the Chaos Scenario Progress</strong></p>
-<p>Click on &#34;Show the scenario&#34; graph to check the progress of the scenario steps. </p>
+<p>Click on &#34;Show the chaos scenario&#34; graph to check the progress of the chaos scenario steps. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/scenario-runs.png"></p>
 <p>Each chaos scenario consists of a set of well-defined steps. The most common amongst them involve installing the ChaosExperiment template (consisting of low-level details of the fault to be executed) and ChaosEngine custom resource (maps a given application instance to the fault along with the specification of steady-state hypothesis). The latter triggers the creation of chaos pods.</p>
 <p>In the current example, litmus deploys a sample multi-replica hello-service application before going on to pull the <a href="https://hub.litmuschaos.io/generic/pod-delete" target="_blank">pod-delete</a> ChaosExperiment template. In the next step, it creates the ChaosEngine to launch the chaos injection via dedicated pods. </p>
-<p>The ChaosEngine spec embedded into the scenario spec looks like this: </p>
+<p>The ChaosEngine spec embedded into the chaos scenario spec looks like this: </p>
 <pre>apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
@@ -219,6 +223,7 @@ chaos-exporter-6bb94bc74f-wkbmw             1/1     Running             0       
 chaos-operator-ce-6bc9c65776-642gl          1/1     Running             0          40m
 event-tracker-c8c7cdfb5-tkmqd               1/1     Running             0          40m
 litmusportal-frontend-5c96c9468c-84bb8      1/1     Running             0          40m
+litmusportal-auth-server-7594bf7c46-td8jv   1/1     Running             0          47m
 litmusportal-server-6cb8456cb-lh2s9         2/2     Running             0          40m
 mongo-0                                     1/1     Running             0          40m
 pod-delete-fgnx23-zvght                     1/1     Running             0          26s

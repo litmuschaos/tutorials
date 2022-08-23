@@ -97,29 +97,29 @@
       <google-codelab-step label="Adding Probes to your Experiment" duration="0">
         <p>Probes were introduced in Litmus version 1.8 with a declarative approach in mind, Litmus version 2.x even takes this approach a step further by making it visual with the Litmus ChaosCenter. </p>
 <p>In this section, you will learn how you can add probes to an experiment using the Litmus ChaosCenter. You will add an HTTP probe to a pod-delete experiment. </p>
-<h2 is-upgraded>Create a scenario</h2>
-<p>First, you need to log in to your litmus ChaosCenter and create a scenario.</p>
-<p>First, navigate to the Scenarios tab on the ChaosCenter and click the Schedule a scenario button. This will take you to the scenario page.</p>
-<p>You need to select a Target Delegate to proceed, these delegates consist of CRDs and the required resources to run a chaos scenario. While installing the Litmus ChaosCenter, a default delegate named Self Agent is created. Select the Self Agent.</p>
-<p>Then, you will see four different options from which you can create a scenario. For this tutorial, we will only care about the Create a new scenario from one of the pre-defined chaos scenario templates options. Select this option, select MyHub and choose the potato-head experiment.</p>
+<h2 is-upgraded>Create a chaos scenario</h2>
+<p>First, you need to log in to your litmus ChaosCenter and create a chaos scenario.</p>
+<p>First, navigate to the Chaos Scenarios tab on the ChaosCenter and click the Schedule a chaos scenario button. This will take you to the chaos scenario page.</p>
+<p>You need to select a Target Chaos Delegate to proceed, these chaos delegates consist of CRDs and the required resources to run a chaos scenario. While installing the Litmus ChaosCenter, a default chaos delegate named Self Agent is created. Select the Self Agent.</p>
+<p>Then, you will see four different options from which you can create a chaos scenario. For this tutorial, we will only care about the Create a new chaos scenario from one of the pre-defined chaos scenario templates options. Select this option, select ChaosHub and choose the potato-head experiment.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/61c6cf4e3f286c77.png"></p>
 <p>Click Next to proceed.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/315cb413ca8cb592.png"></p>
 <p>Edit the description and name, if necessary, and click next.</p>
 <h2 is-upgraded>Add a new experiment</h2>
-<p>Because we are using a predefined scenario, you will see an option to select and already added experiment. Select this experiment(podtato-main-pod-delete-chaos)</p>
+<p>Because we are using a predefined chaos scenario, you will see an option to select and already added experiment. Select this experiment(podtato-main-pod-delete-chaos)</p>
 <p class="image-container"><img style="width: 624.00px" src="img/d704ff3122392f2f.png"></p>
 <h2 is-upgraded>Induce a Probe</h2>
 <p>When you click on an experiment, you&#39;re faced with four sections:</p>
 <ul>
-<li>General</li>
 <li>Target Application</li>
-<li>Defining the steady-state</li>
-<li>Tune Experiment</li>
+<li>Define the steady state for this application</li>
+<li>Tune Chaos Experiment</li>
+<li>Advance ChaosEngine Configuration</li>
 </ul>
 <p class="image-container"><img style="width: 624.00px" src="img/d6ba0f15fb47e689.png"></p>
-<p>For now, we only care about the third option, click next two times without editing the contents of the first two options, so we can define a steady-state for our hypothesis.</p>
-<p>Because we are using a pre-defined scenario, a steady-state hypothesis has been pre-defined for us. Let us examine this hypothesis.</p>
+<p>For now, we only care about the second option, click next one time without editing the contents of the first option, so we can define a steady-state for our hypothesis.</p>
+<p>Because we are using a pre-defined chaos scenario, a steady-state hypothesis has been pre-defined for us. Let us examine this hypothesis.</p>
 <p>This probe has a check called check-podtato-main-access-url, if you click on the &#34;show details&#34; button, you will see that it checks a url and verifies if an http get call against the url is going to return a status of 200.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/9875429e4a77cd7.png"></p>
 <p>If you click on the show properties button, you will see that it does this request every one second and retries failed requests only once.</p>
@@ -130,12 +130,12 @@
       </google-codelab-step>
     
       <google-codelab-step label="Reliability Score and Schedule" duration="0">
-        <p>You can assign weights to the experiments present in the scenario. These weights will be then used for the calculation of the resilience score after the scenario completion. By default, 10 points are assigned to each experiment. This can be altered as per your use case. After selecting weights click on the Next Button.</p>
+        <p>You can assign weights to the experiments present in the chaos scenario. These weights will be then used for the calculation of the resilience score after the chaos scenario completion. By default, 10 points are assigned to each experiment. This can be altered as per your use case. After selecting weights click on the Next Button.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/678a4761604882ce.png"></p>
-<p>Scenarios can also be scheduled in two ways;</p>
+<p>Chaos Scenarios can also be scheduled in two ways;</p>
 <ul>
-<li>Schedule now: This option allows the scenario will start as soon as you schedule it.</li>
-<li>Recurring Schedule: This option will allow you to schedule the scenario in recurring ways. It converts a normal scenario to Cron scenario and a cron syntax is added in the scenario manifest. The following methods are available to schedule a scenario in recurring ways:</li>
+<li>Schedule now: This option allows the chaos scenario will start as soon as you schedule it.</li>
+<li>Recurring Schedule: This option will allow you to schedule the chaos scenario in recurring ways. It converts a normal chaos scenario to Cron chaos scenario and a cron syntax is added in the chaos scenario manifest. The following methods are available to schedule a chaos scenario in recurring ways:</li>
 <li>Every Hour</li>
 <li>Every Day</li>
 <li>Every Week</li>
@@ -144,14 +144,14 @@
 <p>Select the<strong> Schedule now</strong> option and click next.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/27bfecc017f405fb.png"></p>
 <h2 is-upgraded>Verify and commit</h2>
-<p>Here, you can validate all the changes related to the scenario like the scenario name, the experiment weights, scenario description, scenario manifest, etc. Once you have verified all the changes, you can click the Finish button to start the schedule.</p>
+<p>Here, you can validate all the changes related to the chaos scenario like the chaos scenario name, the experiment weights, chaos scenario description, chaos scenario manifest, etc. Once you have verified all the changes, you can click the Finish button to start the schedule.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/1d3d05f770d46a87.png"></p>
-<p>Click the go-to scenario button to see the scenario in action. </p>
+<p>Click the go-to chaos scenario button to see the chaos scenario in action. </p>
 <p class="image-container"><img style="width: 695.51px" src="img/f2f231fb489d0d7a.png"></p>
 <p class="image-container"><img style="width: 793.70px" src="img/310faa14f876d961.png"></p>
-<p>The scenario will have a status of pending while it is still running, click on the three vertical dots beside the scenario and view the scenario.</p>
+<p>The chaos scenario will have a status of pending while it is still running, click on the three vertical dots beside the chaos scenario and view the chaos scenario.</p>
 <p class="image-container"><img style="width: 774.44px" src="img/e902a93e13f0a104.png"></p>
-<p>Keep observing the scenario and over time, you will see the probes being induced into the system as shown below. </p>
+<p>Keep observing the chaos scenario and over time, you will see the probes being induced into the system as shown below. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/4cdb39d942a0ae82.png"></p>
 <p>Let&#39;s confirm this, click on the <strong>pod-delete </strong>in the flow diagram above, then select <strong>Chaos Results. </strong>You should see the below.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/a93b1019f907b155.png"></p>
@@ -163,7 +163,7 @@
     
       <google-codelab-step label="Summary" duration="1">
         <p>In this tutorial, you were introduced to how to the concept of hypothesis in chaos engineering and why it is important that this hypothesis is built around the steady-state of the application. You then learned about Litmus probes, their different types and modes, and how to use them.</p>
-<p>You were also able to observe at the end of the experiment that our probes on the scenario met the steady state hypothesis of our application, causing the experiment to pass. </p>
+<p>You were also able to observe at the end of the experiment that our probes on the chaos scenario met the steady state hypothesis of our application, causing the experiment to pass. </p>
 
 
       </google-codelab-step>

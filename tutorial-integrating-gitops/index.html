@@ -29,7 +29,7 @@
     
       <google-codelab-step label="Introduction" duration="1">
         <h2 is-upgraded>Welcome</h2>
-<p>In this tutorial, you will learn how to integrate your Litmus ChaosCenter with Gitops, how to create remote experiments scenarios on Github and have them synced automatically with your local cluster.</p>
+<p>In this tutorial, you will learn how to integrate your Litmus ChaosCenter with Gitops, how to create remote experiments chaos scenarios on Github and have them synced automatically with your local cluster.</p>
 <h2 is-upgraded>What you will learn</h2>
 <ul>
 <li>What Gitops is.</li>
@@ -49,9 +49,9 @@
       </google-codelab-step>
     
       <google-codelab-step label="What is Gitops" duration="1">
-        <p>Gitops was released in Litmus v2.0 Beta1. In Litmus, Gitops enables you to configure a single source of truth for your chaos scenarios and experiments, such that any changes made to either the artifacts stored in the configured git repository or the ChaosCenter will automatically sync with each other. This allows you to create and execute scenarios directly from git.</p>
+        <p>Gitops was released in Litmus v2.0 Beta1. In Litmus, Gitops enables you to configure a single source of truth for your Chaos Scenarios and experiments, such that any changes made to either the artifacts stored in the configured git repository or the ChaosCenter will automatically sync with each other. This allows you to create and execute chaos scenarios directly from git.</p>
 <p>The two types of Gitops we have are mainly frontend and backend Gitops however, this tutorial will only be focusing on the frontend gitops. </p>
-<p>Frontend Gitops enables you to connect your ChaosCenter with any git repository and the ChaosCenter will sync all your scenario manifests with that git repository. You can then make changes directly on Github and it will reflect on the ChaosCenter as well.</p>
+<p>Frontend Gitops enables you to connect your ChaosCenter with any git repository and the ChaosCenter will sync all your chaos scenario manifests with that git repository. You can then make changes directly on Github and it will reflect on the ChaosCenter as well.</p>
 
 
       </google-codelab-step>
@@ -103,8 +103,8 @@
 <h2 is-upgraded>Verifying Gitops</h2>
 <p>Navigate back to your repository and reload to observe that Litmus has automatically pushed a commit to your repository.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/a48790796d422a4c.png"></p>
-<p>To further verify that this is working as expected, <a href="https://litmuschaos.github.io/tutorials/tutorial-getting-started/index.html#3" target="_blank">schedule a new scenario</a> on your ChaosCenter. You will notice that immediately after the scenario is scheduled, Litmus automatically pushes this scenario manifest to your designated Gitops repository.</p>
-<p>If this scenario is edited on Github, it will be updated on the ChaosCenter making it a single source of truth for all your scenarios.</p>
+<p>To further verify that this is working as expected, <a href="https://litmuschaos.github.io/tutorials/tutorial-getting-started/index.html#3" target="_blank">schedule a new chaos scenario</a> on your ChaosCenter. You will notice that immediately after the chaos scenario is scheduled, Litmus automatically pushes this chaos scenario manifest to your designated Gitops repository.</p>
+<p>If this chaos scenario is edited on Github, it will be updated on the ChaosCenter making it a single source of truth for all your chaos scenarios.</p>
 
 
       </google-codelab-step>

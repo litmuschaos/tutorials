@@ -20,12 +20,12 @@ repository stating what is missing.
   </tr>
   <tr>
     <td>Creating Custom Chaos Scenarios</td>
-    <td>Usage MyHub and Asset Discovery to create Custom Scenarios</td>
-    <td><a href="https://litmuschaos.github.io/tutorials/tutorial-create-custom-scenarios/index.html#0">Click Here</a></td>
+    <td>Usage ChaosHub and Asset Discovery to create Custom Chaos Scenarios</td>
+    <td><a href="https://litmuschaos.github.io/tutorials/tutorial-create-custom-chaos-scenarios/index.html#0">Click Here</a></td>
   </tr>
   <tr>
     <td>Running Chaos Scenarios On Remote Clusters</td>
-    <td>External Agent Set Up with LitmusCtl</td>
+    <td>External Chaos Delegate Set Up with LitmusCtl</td>
     <td>
       <a href="https://litmuschaos.github.io/tutorials/tutorial-running-chaos-scenario-on-remote-cluster/index.html#0">Click Here</a>
     </td>
