@@ -54,10 +54,12 @@
 <h2 is-upgraded>Access and Login to ChaosCenter Dashboard</h2>
 <p>Obtain the service endpoint of the litmus-frontend service, either via nodePort or load balancer URL, and open on your preferred browser. If former, use the external IP of any cluster nodes with the assigned nodePort.</p>
 <pre><code>kubectl get svc -n litmus
-NAME                            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)                         AGE
-litmusportal-frontend-service   NodePort    10.40.9.102    &lt;none&gt;        9091:31616/TCP                  12m
-litmusportal-server-service     NodePort    10.40.10.186   &lt;none&gt;        9002:31242/TCP,9003:32073/TCP   12m
-mongo-service                   ClusterIP   10.40.7.121    &lt;none&gt;        27017/TCP                       12m</code></pre>
+  NAME                               TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)                         AGE
+  litmus-auth-server-service         NodePort    10.76.20.219   &lt;none&gt;        9003:31241/TCP,3030:31248/TCP   35s
+  litmus-frontend-service            NodePort    10.76.21.27    &lt;none&gt;        9091:32733/TCP                  39s
+  litmus-server-service              NodePort    10.76.23.74    &lt;none&gt;        9002:30707/TCP,8000:30327/TCP   37s
+  mongo-headless-service             ClusterIP   None           &lt;none&gt;        27017/TCP                       32s
+  mongo-service                      ClusterIP   10.76.26.27    &lt;none&gt;        27017/TCP                       33s</code></pre>
 <p>Use the default credentials to login. <br/>
   Username: admin <br/>
   Password: litmus
