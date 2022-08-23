@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Running Chaos Workflows on Remote Clusters</title>
+  <title>Running Chaos Scenarios on Remote Clusters</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,20 +23,20 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="your-first-pwapp"
-                  title="Running Chaos Workflows on Remote Clusters"
+                  title="Running Chaos Scenarios on Remote Clusters"
                   environment="web"
                   feedback-link="">
     
       <google-codelab-step label="Introduction" duration="1">
-        <p>Chaos workflows cannot only be scheduled on your default cluster, Litmus allows you to schedule chaos workflow on a remote cluster.</p>
-<p>In this tutorial, you will learn how to create chaos workflows on a remote cluster. </p>
-<p>First, you will learn to deploy a remote cluster on GKE(Google Kubernetes Engine), then you will install a CLI tool called <a href="https://github.com/litmuschaos/litmusctl" target="_blank">litmusctl</a>. Next, you will use <a href="https://github.com/litmuschaos/litmusctl" target="_blank">litmusctl</a> to register this cluster as a target agent in ChaosCenter. Finally, you will schedule a predefined workflow on this remote cluster.</p>
+        <p>Chaos Scenarios cannot only be scheduled on your default cluster, Litmus allows you to schedule chaos scenario on a remote cluster.</p>
+<p>In this tutorial, you will learn how to create Chaos Scenarios on a remote cluster. </p>
+<p>First, you will learn to deploy a remote cluster on GKE(Google Kubernetes Engine), then you will install a CLI tool called <a href="https://github.com/litmuschaos/litmusctl" target="_blank">litmusctl</a>. Next, you will use <a href="https://github.com/litmuschaos/litmusctl" target="_blank">litmusctl</a> to register this cluster as a target chaos delegate in ChaosCenter. Finally, you will schedule a predefined chaos scenario on this remote cluster.</p>
 <h2 is-upgraded>What you will learn</h2>
 <ul>
 <li>How to deploy a remote cluster to GKE</li>
 <li>Litmusctl</li>
-<li>How to connect to an external Agent</li>
-<li>How to schedule a workflow on a remote cluster</li>
+<li>How to connect to an external Chaos Delegate</li>
+<li>How to schedule a chaos scenario on a remote cluster</li>
 </ul>
 <h2 is-upgraded>Prerequisites</h2>
 <ul>
@@ -87,21 +87,25 @@
 <h3 is-upgraded><strong>Create a namespace</strong></h3>
 <pre><code>kubectl create ns litmus</code></pre>
 <h3 is-upgraded><strong>Install Litmus</strong></h3>
-<pre><code>kubectl apply -f kubectl apply -f https://raw.githubusercontent.com/litmuschaos/litmus/master/mkdocs/docs/2.2.0/litmus-2.2.0.yaml</code></pre>
+<pre><code>kubectl apply -f https://raw.githubusercontent.com/litmuschaos/litmus/master/mkdocs/docs/2.12.0/litmus-2.12.0.yaml</code></pre>
 <p>Check if the Litmus control plane components comprising the Web-UI (frontend), GraphQL server &amp; MongoDB pods are created and running successfully.</p>
 <h3 is-upgraded><strong>Verify Installation</strong></h3>
 <pre><code>kubectl get pods -n litmus</code></pre>
-<pre><code>chaos-litmus-portal-frontend-ff8b554dc-q5rl4   1/1     Running   0          2m6s
-chaos-litmus-portal-mongo-6764cfdd59-c9r56     1/1     Running   0          2m6s
-chaos-litmus-portal-server-5ffbccbfff-dknv8    2/2     Running   0          2m6s</code></pre>
+<pre><code>NAME                                        READY   STATUS    RESTARTS   AGE
+litmusportal-auth-server-7594bf7c46-td8jv   1/1     Running   0          47m
+litmusportal-frontend-5fb5bb84f7-tcf95      1/1     Running   0          47m
+litmusportal-server-858584d5b9-r8kkn        1/1     Running   0          47m
+mongo-0                                     1/1     Running   0          47m</code></pre>
 <p>It might take a few minutes for all the pods to have a running state. Give it some time.</p>
 <h2 is-upgraded>Access the ChaosCenter</h2>
 <p>To access the litmus frontend, we need to know what service exposes this frontend. To get a list of running services in the litmus namespace, run the below command.</p>
 <pre><code>kubectl get svc -n litmus</code></pre>
-<pre><code>NAME                            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)                         AGE
-litmusportal-frontend-service   NodePort    10.24.1.168    &lt;none&gt;        9091:32525/TCP                  8h
-litmusportal-server-service     NodePort    10.24.12.173   &lt;none&gt;        9002:32362/TCP,9003:31614/TCP   8h
-mongo-service                   ClusterIP   10.24.6.226    &lt;none&gt;        27017/TCP                       8h
+<pre><code>NAME                               TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)                         AGE
+litmusportal-auth-server-service   NodePort       10.76.20.219   &lt;none&gt;           9003:31241/TCP,3030:31248/TCP   49m
+litmusportal-frontend-service      LoadBalancer   10.76.21.27    34.136.203.195   9091:32733/TCP                  49m
+litmusportal-server-service        NodePort       10.76.23.74    &lt;none&gt;           9002:30707/TCP,8000:30327/TCP   49m
+mongo-headless-service             ClusterIP      None           &lt;none&gt;           27017/TCP                       49m
+mongo-service                      ClusterIP      10.76.26.27    &lt;none&gt;           27017/TCP                       49m
 </code></pre>
 <p>From the above, we can see that the frontend is exposed via a NodePort service and it has the name of <strong><code>litmusportal-frontend-service.</code></strong> It exposes this service on a TCP port that looks something like <strong>9091:xxxxx/TCP </strong>where xxxxx is the corresponding node port of the service. </p>
 <p>To access the ChaosCenter, we need to expose this port by using a firewall rule. We can do this by running this command:</p>
@@ -123,85 +127,102 @@ gke-litmus-cluster-default-pool-12e7a198-s13l   Ready    &lt;none&gt;   8h    v1
     
       <google-codelab-step label="Install Litmusctl" duration="3">
         <h2 is-upgraded>What is litmusctl?</h2>
-<p><a href="https://github.com/litmuschaos/litmusctl" target="_blank">Litmusctl</a> is a LitmusChaos command-line tool that allows you to manage litmuschaos&#39; agent plane. Litmusctl can be used to create agents, project, and manage multiple litmuschaos accounts. </p>
+<p><a href="https://github.com/litmuschaos/litmusctl" target="_blank">Litmusctl</a> is a LitmusChaos command-line tool that allows you to manage litmuschaos&#39;s chaos delegate plane. Litmusctl can be used to create chaos delegates, project, and manage multiple litmuschaos accounts. </p>
 <p>Litmusctl has the following requirements:</p>
 <ul>
-<li>kubeconfig -  litmusctl needs the kubeconfig of the k8s cluster where we need to connect litmus agents. The CLI currently uses the default path of kubeconfig.</li>
+<li>kubeconfig -  litmusctl needs the kubeconfig of the k8s cluster where we need to connect litmus chaos delegates. The CLI currently uses the default path of kubeconfig.</li>
 <li>kubectl - litmusctl is using kubectl under the hood to apply the manifest. To install kubectl, follow: <a href="https://kubernetes.io/docs/tasks/tools/#kubectl" target="_blank">kubectl</a></li>
 </ul>
 <p>Note that the above are corresponding to the target cluster and not the GKE cluster where the control plane is situated. </p>
 <p>Download the litmusctl binary corresponding to your OS from the table below: </p>
-<aside class="warning"><p><strong>Note:</strong> If you have Litmus Beta8 (and below) version of ChaosCenter installed, you should install litmusctl v0.2.0. For higher, you can install litmusctl v0.9.0. This is because of some major security rules that were added in Beta9.</p>
-</aside>
+
 <table>
   <th>Platforms</th>
+  <th>0.12.0</th>
+  <th>v0.11.0</th>
+  <th>v0.10.0</th>
   <th>v0.9.0</th>
+  <th>v0.8.0</th>
   <th>v0.7.0</th>
-  <th>v0.6.0</th>
-  <th>v0.5.0</th>
   <th>master(Unreleased)</th>
   <tr>
     <td>litmusctl-darwin-amd64 (MacOS)</td>
+     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-0.12.0.tar.gz">Click here</a></td>
+     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-v0.11.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-v0.10.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-v0.9.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-v0.8.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-v0.7.0.tar.gz">Click here</a></td>
-    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-v0.6.0.tar.gz">Click here</a></td>
-    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-v0.5.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-darwin-amd64-master.tar.gz">Click here</a></td>
   </tr>
   <tr>
     <td>litmusctl-linux-386</td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-0.12.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-v0.11.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-v0.10.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-v0.9.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-v0.8.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-v0.7.0.tar.gz">Click here</a></td>
-    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-v0.6.0.tar.gz">Click here</a></td>
-    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-v0.5.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-386-master.tar.gz">Click here</a></td>
   </tr>
   <tr>
     <td>litmusctl-linux-amd64</td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-0.12.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-v0.11.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-v0.10.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-v0.9.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-v0.8.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-v0.7.0.tar.gz">Click here</a></td>
-    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-v0.6.0.tar.gz">Click here</a></td>
-    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-v0.5.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-amd64-master.tar.gz">Click here</a></td>
   </tr>
   <tr>
     <td>litmusctl-linux-arm</td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-0.12.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-v0.11.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-v0.10.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-v0.9.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-v0.8.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-v0.7.0.tar.gz">Click here</a></td>
-    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-v0.6.0.tar.gz">Click here</a></td>
-    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-v0.5.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm-master.tar.gz">Click here</a></td>
   </tr>
   <tr>
     <td>litmusctl-linux-arm64</td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-0.12.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-v0.11.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-v0.10.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-v0.9.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-v0.8.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-v0.7.0.tar.gz">Click here</a></td>
-    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-v0.6.0.tar.gz">Click here</a></td>
-    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-v0.5.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-linux-arm64-master.tar.gz">Click here</a></td>
   </tr>
   <tr>
     <td>litmusctl-windows-386</td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-0.12.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-v0.11.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-v0.10.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-v0.9.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-v0.8.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-v0.7.0.tar.gz">Click here</a></td>
-    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-v0.6.0.tar.gz">Click here</a></td>
-    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-v0.5.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-386-master.tar.gz">Click here</a></td>
   </tr>
    <tr>
     <td>litmusctl-windows-amd64</td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-0.12.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-v0.11.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-v0.10.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-v0.9.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-v0.8.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-v0.7.0.tar.gz">Click here</a></td>
-    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-v0.6.0.tar.gz">Click here</a></td>
-    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-v0.5.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-amd64-master.tar.gz">Click here</a></td>
   </tr>
   <tr>
     <td>litmusctl-windows-arm</td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-0.12.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-v0.11.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-v0.10.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-v0.9.0.tar.gz">Click here</a></td>
+    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-v0.8.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-v0.7.0.tar.gz">Click here</a></td>
-    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-v0.6.0.tar.gz">Click here</a></td>
-    <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-v0.5.0.tar.gz">Click here</a></td>
     <td><a href="https://litmusctl-production-bucket.s3.amazonaws.com/litmusctl-windows-arm-master.tar.gz">Click here</a></td>
   </tr>
 </table>
@@ -222,23 +243,23 @@ gke-litmus-cluster-default-pool-12e7a198-s13l   Ready    &lt;none&gt;   8h    v1
 
       </google-codelab-step>
     
-      <google-codelab-step label="Setup an external agent" duration="5">
-        <p>The external agent can be setup using either the <a href="https://docs.litmuschaos.io/docs/litmusctl/usage-interactive-mode">interactive mode</a> or the <a href="https://docs.litmuschaos.io/docs/litmusctl/usage-non-interactive-mode">non-interactive mode</a>. Here, we will be using the non-interactive mode of setup.</p>
-        <p>We can now use Litmusctl to create an external agent on the remote cluster. Open your terminal on your local Machine and run the following command. Give the ChaosCenter URL (including the port, if present) for endpoint, and your account username and password accordingly.</p>
+      <google-codelab-step label="Setup an external chaos delegate" duration="5">
+        <p>The external chaos delegate can be setup using either the <a href="https://docs.litmuschaos.io/docs/litmusctl/usage-interactive-mode">interactive mode</a> or the <a href="https://docs.litmuschaos.io/docs/litmusctl/usage-non-interactive-mode">non-interactive mode</a>. Here, we will be using the non-interactive mode of setup.</p>
+        <p>We can now use Litmusctl to create an external chaos delegate on the remote cluster. Open your terminal on your local Machine and run the following command. Give the ChaosCenter URL (including the port, if present) for endpoint, and your account username and password accordingly.</p>
 <pre><code>litmusctl config set-account --endpoint="" --username="" --password=""</code></pre>
-<p>Then, we can create an agent in a cluster mode.</p>
+<p>Then, we can create an chaos delegate in a cluster mode.</p>
 <p>Note: To get project-id, you can refer to your project in the ChaosCenter navbar and obtain its ID or use "litmusctl get projects" command.</p>
-<pre><code>litmusctl create agent --agent-name="" --project-id="" --non-interactive</code></pre>
+<pre><code>litmusctl connect chaos-delegate --name="" --project-id="" --non-interactive</code></pre>
 <pre><code>
   🏃 Running prerequisites check....
   🔑 clusterrole ✅
   🔑 clusterrolebinding ✅
-  🌟 Sufficient permissions. Installing the Agent...
+  🌟 Sufficient permissions. Installing the Chaos Delegate...
   
   📌 Summary 
-  Agent Name: my-agent
-  Agent Description: ---
-  Agent SSL/TLS Skip: false
+  Chaos Delegate Name: my-chaos-delegate
+  Chaos Delegate Description: ---
+  Chaos Delegate SSL/TLS Skip: false
   Platform Name: Others
   Namespace:  litmus (new)
   Service Account:  litmus (new)
@@ -262,67 +283,67 @@ gke-litmus-cluster-default-pool-12e7a198-s13l   Ready    &lt;none&gt;   8h    v1
   deployment.apps/chaos-operator-ce created
   deployment.apps/chaos-exporter created
   service/chaos-exporter created
-  configmap/agent-config created
-  secret/agent-secret created
+  configmap/chaos delegate-config created
+  secret/chaos delegate-secret created
   deployment.apps/subscriber created
   deployment.apps/event-tracker created
-  service/workflow-controller-metrics created
-  deployment.apps/workflow-controller created
+  service/chaos scenario-controller-metrics created
+  deployment.apps/chaos scenario-controller created
   serviceaccount/litmus-cluster-scope created
   clusterrole.rbac.authorization.k8s.io/litmus-cluster-scope unchanged
   clusterrolebinding.rbac.authorization.k8s.io/litmus-cluster-scope unchanged
   customresourcedefinition.apiextensions.k8s.io/clusterworkflowtemplates.argoproj.io unchanged
   customresourcedefinition.apiextensions.k8s.io/cronworkflows.argoproj.io unchanged
-  customresourcedefinition.apiextensions.k8s.io/workflows.argoproj.io unchanged
+  customresourcedefinition.apiextensions.k8s.io/chaos scenarios.argoproj.io unchanged
   customresourcedefinition.apiextensions.k8s.io/workflowtemplates.argoproj.io unchanged
   customresourcedefinition.apiextensions.k8s.io/workflowtasksets.argoproj.io unchanged
   serviceaccount/argo created
   clusterrole.rbac.authorization.k8s.io/argo-cluster-role unchanged
   clusterrolebinding.rbac.authorization.k8s.io/argo-binding unchanged
-  configmap/workflow-controller-configmap created
+  configmap/chaos scenario-controller-configmap created
   customresourcedefinition.apiextensions.k8s.io/chaosengines.litmuschaos.io configured
   customresourcedefinition.apiextensions.k8s.io/chaosexperiments.litmuschaos.io configured
   customresourcedefinition.apiextensions.k8s.io/chaosresults.litmuschaos.io unchanged
   customresourcedefinition.apiextensions.k8s.io/eventtrackerpolicies.eventtracker.litmuschaos.io configured
-  💡 Connecting agent to Litmus Portal.
+  💡 Connecting chaos delegate to Litmus Portal.
   🏃 Agents are running!!
   
-  🚀 Agent Connection Successful!! 🎉
-  👉 Litmus agents can be accessed here: http://25.184.70.242:9091/targets
+  🚀 Chaos Delegate Connection Successful!! 🎉
+  👉 Litmus chaos delegates can be accessed here: http://25.184.70.242:9091/targets
 </code></pre>
-<p>Navigate to the IP address printed in your terminal at the end, it should take you to the Agents tab on your remote ChaosCenter. You should observe that your new Agent has been added to your list of Agents. </p>
+<p>Navigate to the IP address printed in your terminal at the end, it should take you to the Chaos Delegates tab on your remote ChaosCenter. You should observe that your new Chaos Delegate has been added to your list of Chaos Delegates. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/d3263e66fb3b1b83.png"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Schedule a workflow" duration="5">
-        <p>You can now proceed to schedule a workflow using the newly created Agent on the remote cluster. Navigate to the Workflows tab on the sidebar, then click the Schedule a workflow button. </p>
+      <google-codelab-step label="Schedule a chaos scenario" duration="5">
+        <p>You can now proceed to schedule a chaos scenario using the newly created Chaos Delegate on the remote cluster. Navigate to the Chaos Scenarios tab on the sidebar, then click the Schedule a chaos scenario button. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/8cbbf714316f2118.png"></p>
-<h2 is-upgraded>Select a target Agent</h2>
-<p>You need to select a Target Agent to proceed, you will see two options.</p>
+<h2 is-upgraded>Select a target Chaos Delegate</h2>
+<p>You need to select a Target Chaos Delegate to proceed, you will see two options.</p>
 <ul>
-<li>Self Agent(Default)</li>
-<li>my-new-agent(Newly created agent)</li>
+<li>Self-Agent(Default)</li>
+<li>my-chaos-delegate(Newly created chaos delegate)</li>
 </ul>
 <p>Select the latter, then click on the Next button.</p>
-<p>Note: You may have to wait for the agent to be up and ready, after which you can move forward by again clicking on &#34;Next&#34; </p>
-<h2 is-upgraded>Select a workflow</h2>
-<p>Here, you will see four different options from which you can create a workflow. For this tutorial, you should select the first option which creates a workflow from a predefined chaos workflow template. Then select the podtato-head experiment, this experiment injects a pod-delete fault into a sample microservice application. Click the Next button when done.</p>
+<p>Note: You may have to wait for the chaos delegate to be up and ready, after which you can move forward by again clicking on &#34;Next&#34; </p>
+<h2 is-upgraded>Select a chaos scenario</h2>
+<p>Here, you will see four different options from which you can create a chaos scenario. For this tutorial, you should select the first option which creates a chaos scenario from a predefined chaos scenario template. Then select the podtato-head experiment, this experiment injects a pod-delete fault into a sample microservice application. Click the Next button when done.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/dfe517dc6ca6a345.png"></p>
-<h2 is-upgraded>Describe the workflow</h2>
-<p>Here, you can give this workflow a name and a description or leave the default ones. Click <strong>next</strong> when done. <img style="width: 624.00px" src="img/7651ce7eeb67a1a.png"></p>
-<h2 is-upgraded>Tune the workflow</h2>
-<p>This section consists of all the information related to the chaos workflow. It contains a pictorial visualization of the workflow and an option to edit the workflow yaml file. </p>
+<h2 is-upgraded>Describe the chaos scenario</h2>
+<p>Here, you can give this chaos scenario a name and a description or leave the default ones. Click <strong>next</strong> when done. <img style="width: 624.00px" src="img/7651ce7eeb67a1a.png"></p>
+<h2 is-upgraded>Tune the chaos scenario</h2>
+<p>This section consists of all the information related to the chaos scenario. It contains a pictorial visualization of the chaos scenario and an option to edit the chaos scenario yaml file. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/c1141be2b68628d1.png"></p>
 <h2 is-upgraded>Reliability Score</h2>
-<p>You can assign weights to the experiments present in the workflow. These weights will be then used for the calculation of the resilience score after the workflow completion. By default, 10 points are assigned to each experiment. This can be altered as per your use-case. After selecting weights click on the <strong>Next</strong> Button.</p>
+<p>You can assign weights to the experiments present in the chaos scenario. These weights will be then used for the calculation of the resilience score after the chaos scenario completion. By default, 10 points are assigned to each experiment. This can be altered as per your use-case. After selecting weights click on the <strong>Next</strong> Button.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/678a4761604882ce.png"></p>
 <h2 is-upgraded>Schedule</h2>
-<p>Workflows can be scheduled in two ways;</p>
+<p>Chaos Scenarios can be scheduled in two ways;</p>
 <ul>
-<li>Schedule now: This option allows the workflow will start as soon as you schedule it.</li>
-<li>Recurring Schedule: This option will allow you to schedule recurring workflows. It converts a normal workflow to Cron workflow by adding cron syntax in the workflow manifest. The following methods are available to schedule recurring workflows:</li>
+<li>Schedule now: This option allows the chaos scenario will start as soon as you schedule it.</li>
+<li>Recurring Schedule: This option will allow you to schedule recurring chaos scenarios. It converts a normal chaos scenario to Cron chaos scenario by adding cron syntax in the chaos scenario manifest. The following methods are available to schedule recurring chaos scenarios:</li>
 <li>Every Hour</li>
 <li>Every Day</li>
 <li>Every Week</li>
@@ -331,16 +352,16 @@ gke-litmus-cluster-default-pool-12e7a198-s13l   Ready    &lt;none&gt;   8h    v1
 <p>Select the<strong> Schedule now</strong> option and click <strong>next</strong>.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/27bfecc017f405fb.png"></p>
 <h2 is-upgraded>Verify and commit</h2>
-<p>Here, you can validate all the changes related to the workflow like the workflow name, the experiment weights, workflow description, workflow manifest, etc. Once you have verified all the changes, you can click the Finish button to start the schedule.</p>
+<p>Here, you can validate all the changes related to the chaos scenario like the chaos scenario name, the experiment weights, chaos scenario description, chaos scenario manifest, etc. Once you have verified all the changes, you can click the Finish button to start the schedule.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/1d3d05f770d46a87.png"></p>
-<p>Click the Go to workflow button to see the workflow in action. </p>
+<p>Click the Go to chaos scenario button to see the chaos scenario in action. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/129513148b3e12c2.png"></p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Summary" duration="1">
-        <p>In this tutorial, you were introduced to how to create a remote cluster on Google Kubernetes Engine and deploy ChaosCenter on it. Them, you learned what <strong>litmusctl </strong>is and how to use it to create a new agent on a remote cluster. Lastly, you learned how you can schedule your own chaos on this remote cluster using the agent you created. </p>
+        <p>In this tutorial, you were introduced to how to create a remote cluster on Google Kubernetes Engine and deploy ChaosCenter on it. Them, you learned what <strong>litmusctl </strong>is and how to use it to create a new chaos delegate on a remote cluster. Lastly, you learned how you can schedule your own chaos on this remote cluster using the chaos delegate you created. </p>
 
 
       </google-codelab-step>
