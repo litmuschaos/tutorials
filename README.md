@@ -21,7 +21,7 @@ repository stating what is missing.
   <tr>
     <td>Creating Custom Chaos Workflows</td>
     <td>Usage MyHub and Asset Discovery to create Custom Workflows</td>
-    <td><a href="https://litmuschaos.github.io/tutorials/tutorial-create-custom-workflows/index.html#0">Click Here</a></td>
+    <td><a href="https://litmuschaos.github.io/tutorials/tutorial-create-custom-scenarios/index.html#0">Click Here</a></td>
   </tr>
   <tr>
     <td>Running Chaos Workflows On Remote Clusters</td>

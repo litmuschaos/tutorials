@@ -6,9 +6,9 @@
   "updated": "2021-11-15T00:08:35Z",
   "id": "",
   "duration": 9,
-  "title": "Creating Custom Chaos Workflows",
+  "title": "Creating Custom Chaos Scenarios",
   "authors": "Gbadebo Bello",
-  "summary": "In this tutorial, you will learn how to create your own custom chaos workflows using Litmus. You will use Chaos Hub and asset discovery to create your own custom Workflow.",
+  "summary": "In this tutorial, you will learn how to create your own custom chaos scenarios using Litmus. You will use ChaosHub and asset discovery to create your own custom Scenario.",
   "source": "1J_7dCndfNXn01YdB8Qk_rZ6_u04MdGgMrTTBf5CFXkc",
   "theme": "web",
   "status": [
