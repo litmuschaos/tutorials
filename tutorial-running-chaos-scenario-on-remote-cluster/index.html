@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Running Chaos Workflows on Remote Clusters</title>
+  <title>Running Chaos Scenarios on Remote Clusters</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -23,20 +23,20 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="your-first-pwapp"
-                  title="Running Chaos Workflows on Remote Clusters"
+                  title="Running Chaos Scenarios on Remote Clusters"
                   environment="web"
                   feedback-link="">
     
       <google-codelab-step label="Introduction" duration="1">
-        <p>Chaos workflows cannot only be scheduled on your default cluster, Litmus allows you to schedule chaos workflow on a remote cluster.</p>
-<p>In this tutorial, you will learn how to create chaos workflows on a remote cluster. </p>
-<p>First, you will learn to deploy a remote cluster on GKE(Google Kubernetes Engine), then you will install a CLI tool called <a href="https://github.com/litmuschaos/litmusctl" target="_blank">litmusctl</a>. Next, you will use <a href="https://github.com/litmuschaos/litmusctl" target="_blank">litmusctl</a> to register this cluster as a target agent in ChaosCenter. Finally, you will schedule a predefined workflow on this remote cluster.</p>
+        <p>Chaos scenarios cannot only be scheduled on your default cluster, Litmus allows you to schedule chaos scenario on a remote cluster.</p>
+<p>In this tutorial, you will learn how to create chaos scenarios on a remote cluster. </p>
+<p>First, you will learn to deploy a remote cluster on GKE(Google Kubernetes Engine), then you will install a CLI tool called <a href="https://github.com/litmuschaos/litmusctl" target="_blank">litmusctl</a>. Next, you will use <a href="https://github.com/litmuschaos/litmusctl" target="_blank">litmusctl</a> to register this cluster as a target delegate in ChaosCenter. Finally, you will schedule a predefined scenario on this remote cluster.</p>
 <h2 is-upgraded>What you will learn</h2>
 <ul>
 <li>How to deploy a remote cluster to GKE</li>
 <li>Litmusctl</li>
-<li>How to connect to an external Agent</li>
-<li>How to schedule a workflow on a remote cluster</li>
+<li>How to connect to an external Delegate</li>
+<li>How to schedule a scenario on a remote cluster</li>
 </ul>
 <h2 is-upgraded>Prerequisites</h2>
 <ul>
@@ -123,10 +123,10 @@ gke-litmus-cluster-default-pool-12e7a198-s13l   Ready    &lt;none&gt;   8h    v1
     
       <google-codelab-step label="Install Litmusctl" duration="3">
         <h2 is-upgraded>What is litmusctl?</h2>
-<p><a href="https://github.com/litmuschaos/litmusctl" target="_blank">Litmusctl</a> is a LitmusChaos command-line tool that allows you to manage litmuschaos&#39; agent plane. Litmusctl can be used to create agents, project, and manage multiple litmuschaos accounts. </p>
+<p><a href="https://github.com/litmuschaos/litmusctl" target="_blank">Litmusctl</a> is a LitmusChaos command-line tool that allows you to manage litmuschaos&#39; delegate plane. Litmusctl can be used to create delegates, project, and manage multiple litmuschaos accounts. </p>
 <p>Litmusctl has the following requirements:</p>
 <ul>
-<li>kubeconfig -  litmusctl needs the kubeconfig of the k8s cluster where we need to connect litmus agents. The CLI currently uses the default path of kubeconfig.</li>
+<li>kubeconfig -  litmusctl needs the kubeconfig of the k8s cluster where we need to connect litmus delegates. The CLI currently uses the default path of kubeconfig.</li>
 <li>kubectl - litmusctl is using kubectl under the hood to apply the manifest. To install kubectl, follow: <a href="https://kubernetes.io/docs/tasks/tools/#kubectl" target="_blank">kubectl</a></li>
 </ul>
 <p>Note that the above are corresponding to the target cluster and not the GKE cluster where the control plane is situated. </p>
@@ -222,11 +222,11 @@ gke-litmus-cluster-default-pool-12e7a198-s13l   Ready    &lt;none&gt;   8h    v1
 
       </google-codelab-step>
     
-      <google-codelab-step label="Setup an external agent" duration="5">
-        <p>The external agent can be setup using either the <a href="https://docs.litmuschaos.io/docs/litmusctl/usage-interactive-mode">interactive mode</a> or the <a href="https://docs.litmuschaos.io/docs/litmusctl/usage-non-interactive-mode">non-interactive mode</a>. Here, we will be using the non-interactive mode of setup.</p>
-        <p>We can now use Litmusctl to create an external agent on the remote cluster. Open your terminal on your local Machine and run the following command. Give the ChaosCenter URL (including the port, if present) for endpoint, and your account username and password accordingly.</p>
+      <google-codelab-step label="Setup an external delegate" duration="5">
+        <p>The external delegate can be setup using either the <a href="https://docs.litmuschaos.io/docs/litmusctl/usage-interactive-mode">interactive mode</a> or the <a href="https://docs.litmuschaos.io/docs/litmusctl/usage-non-interactive-mode">non-interactive mode</a>. Here, we will be using the non-interactive mode of setup.</p>
+        <p>We can now use Litmusctl to create an external delegate on the remote cluster. Open your terminal on your local Machine and run the following command. Give the ChaosCenter URL (including the port, if present) for endpoint, and your account username and password accordingly.</p>
 <pre><code>litmusctl config set-account --endpoint="" --username="" --password=""</code></pre>
-<p>Then, we can create an agent in a cluster mode.</p>
+<p>Then, we can create an delegate in a cluster mode.</p>
 <p>Note: To get project-id, you can refer to your project in the ChaosCenter navbar and obtain its ID or use "litmusctl get projects" command.</p>
 <pre><code>litmusctl create agent --agent-name="" --project-id="" --non-interactive</code></pre>
 <pre><code>
@@ -236,7 +236,7 @@ gke-litmus-cluster-default-pool-12e7a198-s13l   Ready    &lt;none&gt;   8h    v1
   🌟 Sufficient permissions. Installing the Agent...
   
   📌 Summary 
-  Agent Name: my-agent
+  Agent Name: chaos-delegate-01
   Agent Description: ---
   Agent SSL/TLS Skip: false
   Platform Name: Others
@@ -290,39 +290,39 @@ gke-litmus-cluster-default-pool-12e7a198-s13l   Ready    &lt;none&gt;   8h    v1
   🚀 Agent Connection Successful!! 🎉
   👉 Litmus agents can be accessed here: http://25.184.70.242:9091/targets
 </code></pre>
-<p>Navigate to the IP address printed in your terminal at the end, it should take you to the Agents tab on your remote ChaosCenter. You should observe that your new Agent has been added to your list of Agents. </p>
+<p>Navigate to the IP address printed in your terminal at the end, it should take you to the Delegates tab on your remote ChaosCenter. You should observe that your new Delegate has been added to your list of Delegates. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/d3263e66fb3b1b83.png"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Schedule a workflow" duration="5">
-        <p>You can now proceed to schedule a workflow using the newly created Agent on the remote cluster. Navigate to the Workflows tab on the sidebar, then click the Schedule a workflow button. </p>
+      <google-codelab-step label="Schedule a chaos scenario" duration="5">
+        <p>You can now proceed to schedule a scenario using the newly created Delegate on the remote cluster. Navigate to the scenarios tab on the sidebar, then click the Schedule a scenario button. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/8cbbf714316f2118.png"></p>
-<h2 is-upgraded>Select a target Agent</h2>
-<p>You need to select a Target Agent to proceed, you will see two options.</p>
+<h2 is-upgraded>Select a target Delegate</h2>
+<p>You need to select a Target Delegate to proceed, you will see two options.</p>
 <ul>
 <li>Self Agent(Default)</li>
-<li>my-new-agent(Newly created agent)</li>
+<li>chaos-delegate-01(Newly created delegate)</li>
 </ul>
 <p>Select the latter, then click on the Next button.</p>
-<p>Note: You may have to wait for the agent to be up and ready, after which you can move forward by again clicking on &#34;Next&#34; </p>
-<h2 is-upgraded>Select a workflow</h2>
-<p>Here, you will see four different options from which you can create a workflow. For this tutorial, you should select the first option which creates a workflow from a predefined chaos workflow template. Then select the podtato-head experiment, this experiment injects a pod-delete fault into a sample microservice application. Click the Next button when done.</p>
+<p>Note: You may have to wait for the delegate to be up and ready, after which you can move forward by again clicking on &#34;Next&#34; </p>
+<h2 is-upgraded>Select a scenario</h2>
+<p>Here, you will see four different options from which you can create a scenario. For this tutorial, you should select the first option which creates a scenario from a predefined chaos scenario template. Then select the podtato-head experiment, this experiment injects a pod-delete fault into a sample microservice application. Click the Next button when done.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/dfe517dc6ca6a345.png"></p>
-<h2 is-upgraded>Describe the workflow</h2>
-<p>Here, you can give this workflow a name and a description or leave the default ones. Click <strong>next</strong> when done. <img style="width: 624.00px" src="img/7651ce7eeb67a1a.png"></p>
-<h2 is-upgraded>Tune the workflow</h2>
-<p>This section consists of all the information related to the chaos workflow. It contains a pictorial visualization of the workflow and an option to edit the workflow yaml file. </p>
+<h2 is-upgraded>Describe the scenario</h2>
+<p>Here, you can give this scenario a name and a description or leave the default ones. Click <strong>next</strong> when done. <img style="width: 624.00px" src="img/7651ce7eeb67a1a.png"></p>
+<h2 is-upgraded>Tune the scenario</h2>
+<p>This section consists of all the information related to the chaos scenario. It contains a pictorial visualization of the scenario and an option to edit the scenario yaml file. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/c1141be2b68628d1.png"></p>
 <h2 is-upgraded>Reliability Score</h2>
-<p>You can assign weights to the experiments present in the workflow. These weights will be then used for the calculation of the resilience score after the workflow completion. By default, 10 points are assigned to each experiment. This can be altered as per your use-case. After selecting weights click on the <strong>Next</strong> Button.</p>
+<p>You can assign weights to the experiments present in the scenario. These weights will be then used for the calculation of the resilience score after the scenario completion. By default, 10 points are assigned to each experiment. This can be altered as per your use-case. After selecting weights click on the <strong>Next</strong> Button.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/678a4761604882ce.png"></p>
 <h2 is-upgraded>Schedule</h2>
-<p>Workflows can be scheduled in two ways;</p>
+<p>scenarios can be scheduled in two ways;</p>
 <ul>
-<li>Schedule now: This option allows the workflow will start as soon as you schedule it.</li>
-<li>Recurring Schedule: This option will allow you to schedule recurring workflows. It converts a normal workflow to Cron workflow by adding cron syntax in the workflow manifest. The following methods are available to schedule recurring workflows:</li>
+<li>Schedule now: This option allows the scenario will start as soon as you schedule it.</li>
+<li>Recurring Schedule: This option will allow you to schedule recurring scenarios. It converts a normal scenario to Cron scenario by adding cron syntax in the scenario manifest. The following methods are available to schedule recurring scenarios:</li>
 <li>Every Hour</li>
 <li>Every Day</li>
 <li>Every Week</li>
@@ -331,16 +331,16 @@ gke-litmus-cluster-default-pool-12e7a198-s13l   Ready    &lt;none&gt;   8h    v1
 <p>Select the<strong> Schedule now</strong> option and click <strong>next</strong>.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/27bfecc017f405fb.png"></p>
 <h2 is-upgraded>Verify and commit</h2>
-<p>Here, you can validate all the changes related to the workflow like the workflow name, the experiment weights, workflow description, workflow manifest, etc. Once you have verified all the changes, you can click the Finish button to start the schedule.</p>
+<p>Here, you can validate all the changes related to the scenario like the scenario name, the experiment weights, scenario description, scenario manifest, etc. Once you have verified all the changes, you can click the Finish button to start the schedule.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/1d3d05f770d46a87.png"></p>
-<p>Click the Go to workflow button to see the workflow in action. </p>
+<p>Click the Go to scenario button to see the scenario in action. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/129513148b3e12c2.png"></p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Summary" duration="1">
-        <p>In this tutorial, you were introduced to how to create a remote cluster on Google Kubernetes Engine and deploy ChaosCenter on it. Them, you learned what <strong>litmusctl </strong>is and how to use it to create a new agent on a remote cluster. Lastly, you learned how you can schedule your own chaos on this remote cluster using the agent you created. </p>
+        <p>In this tutorial, you were introduced to how to create a remote cluster on Google Kubernetes Engine and deploy ChaosCenter on it. Them, you learned what <strong>litmusctl </strong>is and how to use it to create a new delegate on a remote cluster. Lastly, you learned how you can schedule your own chaos on this remote cluster using the delegate you created. </p>
 
 
       </google-codelab-step>

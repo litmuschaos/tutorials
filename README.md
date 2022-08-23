@@ -19,15 +19,15 @@ repository stating what is missing.
     <td><a href="https://litmuschaos.github.io/tutorials/tutorial-getting-started/index.html#0">Click Here</a></td>
   </tr>
   <tr>
-    <td>Creating Custom Chaos Workflows</td>
-    <td>Usage MyHub and Asset Discovery to create Custom Workflows</td>
+    <td>Creating Custom Chaos Scenarios</td>
+    <td>Usage MyHub and Asset Discovery to create Custom Scenarios</td>
     <td><a href="https://litmuschaos.github.io/tutorials/tutorial-create-custom-scenarios/index.html#0">Click Here</a></td>
   </tr>
   <tr>
-    <td>Running Chaos Workflows On Remote Clusters</td>
+    <td>Running Chaos Scenarios On Remote Clusters</td>
     <td>External Agent Set Up with LitmusCtl</td>
     <td>
-      <a href="https://litmuschaos.github.io/tutorials/tutorial-running-chaos-workflow-on-remote-cluster/index.html#0">Click Here</a>
+      <a href="https://litmuschaos.github.io/tutorials/tutorial-running-chaos-scenario-on-remote-cluster/index.html#0">Click Here</a>
     </td>
   </tr>
   <tr>
@@ -36,15 +36,8 @@ repository stating what is missing.
     <td><a href="https://litmuschaos.github.io/tutorials/tutorial-defining-steady-state-hypothesis/index.html#0">Click Here</a></td>
   </tr>
   <tr>
-    <td>Observing Chaos Impact On Services</td>
-    <td>Instrument Grafana Dashboards with LitmusChaos Prometheus Metrics</td>
-    <td>
-    <a href="https://litmuschaos.github.io/tutorials/tutorials-observing-chaos-impact-on-services/index.html#0">Click Here</a>
-    </td>
-  </tr>
-  <tr>
     <td>Integrating with GitOps</td>
-    <td>Usage of Git as Golden Copy for Chaos Workflows and Automated Trigger of Chaos </td>
+    <td>Usage of Git as Golden Copy for Chaos Scenarios and Automated Trigger of Chaos </td>
     <td><a href="https://litmuschaos.github.io/tutorials/tutorial-integrating-gitops/index.html#0">Click Here</a></td>
   </tr>
   <tr>

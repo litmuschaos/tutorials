@@ -37,7 +37,7 @@
 <ul>
 <li>How to install LitmusChaos</li>
 <li>How to set up a chaos project on the ChaosCenter</li>
-<li>How to execute a predefined chaos workflow</li>
+<li>How to execute a predefined chaos scenario</li>
 <li>How to visualize the chaos experiment progress</li>
 <li>How to view and analyze the results of the chaos experiment </li>
 </ul>
@@ -84,7 +84,7 @@ chaos-litmus-portal-server-5ffbccbfff-dknv8    2/2     Running   0          2m6s
       </google-codelab-step>
     
       <google-codelab-step label="Configure Project" duration="0">
-        <p>In this section, we will use the ChaosCenter dashboard to set up your first chaos project, verify the installation of agent services on the cluster and prepare for chaos workflow execution. </p>
+        <p>In this section, we will use the ChaosCenter dashboard to set up your first chaos project, verify the installation of delegate services on the cluster and prepare for chaos scenario execution. </p>
 <h3 is-upgraded><strong>Access and Login to ChaosCenter Dashboard</strong></h3>
 <p>Obtain the service endpoint of the litmus-frontend service, either via nodePort or LoadBalancer URL and open on your preferred browser. In case of the former, use the external IP of any one of the cluster nodes with the assigned nodePort. </p>
 <pre><button onclick="copyText('kubectl get svc -n litmus')" style="float: right; border: none; background-color: transparent;" ><i class="fa fa-copy" style="font-size:x-large ; color: aliceblue;"></i></button>kubectl get svc -n litmus </pre>
@@ -102,7 +102,7 @@ mongo-service                   ClusterIP   10.40.7.121    &lt;none&gt;        2
 <p>You have been assigned a default project with Owner permissions </p>
 <p class="image-container"><img style="width: 624.00px" src="img/home.png"></p>
 <h3 is-upgraded><strong>Verify Successful Registration of the Self Agent </strong></h3>
-<p>Once the project is created, the cluster is automagically registered as a chaos target via installation of Litmus Chaos Agents. This is represented as &#34;Self-Agent&#34; in the Agents console of the ChaosCenter Dashboard. </p>
+<p>Once the project is created, the cluster is automagically registered as a chaos target via installation of Litmus Chaos Delegates. This is represented as &#34;Self-Agent&#34; in the Delegates console of the ChaosCenter Dashboard. </p>
 <pre><button onclick="copyText('kubectl get pods -n litmus')" style="float: right; border: none; background-color: transparent;" ><i class="fa fa-copy" style="font-size:x-large ; color: aliceblue;"></i></button>kubectl get pods -n litmus</pre>
 <pre>NAME                                     READY   STATUS    RESTARTS   AGE
 argo-server-58cb64db7f-pmbnq             1/1     Running   0          5m32s
@@ -114,54 +114,54 @@ litmusportal-server-5bb94f65d7-llzng     2/2     Running   1          15m
 mongo-0                                  1/1     Running   0          15m
 subscriber-958948965-qbx29               1/1     Running   0          5m30s
 workflow-controller-78fc7b6c6-w82m7      1/1     Running   0          5m32s</pre>
-<p class="image-container"><img style="width: 624.00px" src="img/agents.png"></p>
+<p class="image-container"><img style="width: 624.00px" src="img/delegates.png"></p>
 <p>At this point, we are ready to run chaos experiments! </p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Run Chaos Workflow" duration="0">
-        <p>In this section, we will execute a pre-defined chaos workflow to inject a pod-delete/kill fault on a sample microservices application. The workflow is configured to perform the following actions: </p>
+      <google-codelab-step label="Run Chaos Scenario" duration="0">
+        <p>In this section, we will execute a pre-defined chaos scenario to inject a pod-delete/kill fault on a sample microservices application. The scenario is configured to perform the following actions: </p>
 <ul>
 <li>Install the podtato-head hello service application</li>
 <li>Inject the pod-kill fault </li>
 <li>Verify the availability of the service through the chaos duration using probes</li>
 <li>(Optional) Clean up the chaos resources at the end of the experiment </li>
 </ul>
-<h3 is-upgraded><strong>Select predefined workflow </strong></h3>
-<p>Click the &#34;Schedule Workflow&#34; on the ChaosCenter home page to get started: </p>
+<h3 is-upgraded><strong>Select predefined scenario </strong></h3>
+<p>Click the &#34;Schedule scenario&#34; on the ChaosCenter home page to get started: </p>
 <p class="image-container"><img style="width: 624.00px" src="img/279fccbd5cb3c17d.png"></p>
 <p>Select the &#34;Self-Agent&#34; as the target cluster for chaos execution </p>
 <p class="image-container"><img style="width: 624.00px" src="img/297754c0e942727f.png"></p>
-<p>Select the option to create a new workflow from pre-defined chaos workflow templates. Amongst the available templates, select the &#34;podtato-head-chaos&#34; option.</p>
+<p>Select the option to create a new scenario from pre-defined chaos scenario templates. Amongst the available templates, select the &#34;podtato-head-chaos&#34; option.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/1015bd4eefd9bf97.png"></p>
-<p>View the description of the chaos workflow </p>
+<p>View the description of the chaos scenario </p>
 <p class="image-container"><img style="width: 624.00px" src="img/bbee7b2929080acc.png"></p>
-<h3 is-upgraded><strong>Preview the Workflow Steps </strong></h3>
-<p>View the preview of the chaos workflow.</p>
-<p> (Optional) You could also edit the workflow YAML depending upon your need at this stage</p>
+<h3 is-upgraded><strong>Preview the Scenario Steps </strong></h3>
+<p>View the preview of the chaos scenario.</p>
+<p> (Optional) You could also edit the scenario YAML depending upon your need at this stage</p>
 <p class="image-container"><img style="width: 624.00px" src="img/e456843387f5719c.png"></p>
-<h3 is-upgraded><strong>(Optional) Preview the Workflow Steps </strong></h3>
-<p>Assign weights to the chaos experiments that are part of the workflow using the slider. This is useful when there are multiple experiments in the workflow. These weights influence the &#34;Resilience Score&#34; calculation for the chaos workflow. </p>
+<h3 is-upgraded><strong>(Optional) Preview the Scenario Steps </strong></h3>
+<p>Assign weights to the chaos experiments that are part of the scenario using the slider. This is useful when there are multiple experiments in the scenario. These weights influence the &#34;Resilience Score&#34; calculation for the chaos scenario. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/4c73a234fbbddb5.png"></p>
-<h3 is-upgraded>Schedule the Chaos Workflow </h3>
-<p>Schedule the chaos workflow for immediate and one-time execution</p>
+<h3 is-upgraded>Schedule the Chaos Scenario </h3>
+<p>Schedule the chaos scenario for immediate and one-time execution</p>
 <p class="image-container"><img style="width: 624.00px" src="img/32e14fc71892855d.png"></p>
-<p>Click on &#34;Finish&#34; to launch the Chaos Workflow. </p>
+<p>Click on &#34;Finish&#34; to launch the Chaos Scenario. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/verify-commit-screen.png"></p>
-<p>The workflow has started running now</p>
+<p>The scenario has started running now</p>
 <p class="image-container"><img style="width: 624.00px" src="img/b16ad3b2612f615.png"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Visualize Chaos Workflow" duration="0">
-        <p><strong>Check the Chaos Workflow Progress</strong></p>
-<p>Click on &#34;Show the workflow&#34; graph to check the progress of the workflow steps. </p>
-<p class="image-container"><img style="width: 624.00px" src="img/workflow-runs.png"></p>
-<p>Each chaos workflow consists of a set of well-defined steps. The most common amongst them involve installing the ChaosExperiment template (consisting of low-level details of the fault to be executed) and ChaosEngine custom resource (maps a given application instance to the fault along with the specification of steady-state hypothesis). The latter triggers the creation of chaos pods.</p>
+      <google-codelab-step label="Visualize Chaos Scenario" duration="0">
+        <p><strong>Check the Chaos Scenario Progress</strong></p>
+<p>Click on &#34;Show the scenario&#34; graph to check the progress of the scenario steps. </p>
+<p class="image-container"><img style="width: 624.00px" src="img/scenario-runs.png"></p>
+<p>Each chaos scenario consists of a set of well-defined steps. The most common amongst them involve installing the ChaosExperiment template (consisting of low-level details of the fault to be executed) and ChaosEngine custom resource (maps a given application instance to the fault along with the specification of steady-state hypothesis). The latter triggers the creation of chaos pods.</p>
 <p>In the current example, litmus deploys a sample multi-replica hello-service application before going on to pull the <a href="https://hub.litmuschaos.io/generic/pod-delete" target="_blank">pod-delete</a> ChaosExperiment template. In the next step, it creates the ChaosEngine to launch the chaos injection via dedicated pods. </p>
-<p>The ChaosEngine spec embedded into the workflow spec looks like this: </p>
+<p>The ChaosEngine spec embedded into the scenario spec looks like this: </p>
 <pre>apiVersion: litmuschaos.io/v1alpha1
 kind: ChaosEngine
 metadata:
@@ -211,7 +211,7 @@ spec:
                # pod failures without &#39;--force&#39; &amp; default terminationGracePeriodSeconds
                - name: FORCE
                  value: &#39;false&#39;</pre>
-<p class="image-container"><img style="width: 624.00px" src="img/workflow-running.png"></p>
+<p class="image-container"><img style="width: 624.00px" src="img/scenario-running.png"></p>
 <p>Watch the action on the cluster where the podtato-head application replica is killed</p>
 <pre><button onclick="copyText('kubectl get pods -n litmus')" style="float: right; border: none; background-color: transparent;" ><i class="fa fa-copy" style="font-size:x-large ; color: aliceblue;"></i></button>kubectl get pods -n litmus </pre>
 <pre>NAME                                        READY   STATUS              RESTARTS   AGE
@@ -238,19 +238,19 @@ podtato-right-leg-68bb97548f-j2p26          1/1     Running             0       
 subscriber-75bd7565cf-shl7t                 1/1     Running             1          40m
 workflow-controller-78dbff5b5d-xcthg        1/1     Running             0          40m</pre>
 <p>Once the experiment completes, the chaos resources (ChaosEngine CR &amp; accompanying chaos pods) are removed as part of a &#34;revert-chaos&#34; step. The sample application is also removed from the cluster. </p>
-<p class="image-container"><img style="width: 624.00px" src="img/workflow-completed.png"></p>
+<p class="image-container"><img style="width: 624.00px" src="img/scenario-completed.png"></p>
 <p><strong>View the Experiment Results </strong></p>
-<p>The workflow dashboard can be used to view the results of the chaos experiment. Click on the &#34;pod-delete&#34; node on the graph to launch a results console. Click on the &#34;Chaos Results&#34; tab to view the details around success/failure of the steady-state hypothesis constraints (podtato-head website availability through pod deletion period) and the experiment verdict. </p>
-<p class="image-container"><img style="width: 624.00px" src="img/workflow-chaosresults.png"></p>
+<p>The scenario dashboard can be used to view the results of the chaos experiment. Click on the &#34;pod-delete&#34; node on the graph to launch a results console. Click on the &#34;Chaos Results&#34; tab to view the details around success/failure of the steady-state hypothesis constraints (podtato-head website availability through pod deletion period) and the experiment verdict. </p>
+<p class="image-container"><img style="width: 624.00px" src="img/scenario-chaosresults.png"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Analyze Chaos Workflow" duration="0">
-        <p>Check the Resilience Score achieved for the chaos workflow by clicking on &#34;Show the analytics&#34;. </p>
-        <p class="image-container"><img style="width: 624.00px" src="img/workflow-run-completed.png"></p>
-        <p>The analytics view also provides details of successful v/s failed experiments that were part of the workflow. </p>
-        <p class="image-container"><img style="width: 624.00px" src="img/workflow-analytics.png"></p>
+      <google-codelab-step label="Analyze Chaos Scenario" duration="0">
+        <p>Check the Resilience Score achieved for the chaos scenario by clicking on &#34;Show the analytics&#34;. </p>
+        <p class="image-container"><img style="width: 624.00px" src="img/scenario-run-completed.png"></p>
+        <p>The analytics view also provides details of successful v/s failed experiments that were part of the scenario. </p>
+        <p class="image-container"><img style="width: 624.00px" src="img/scenario-analytics.png"></p>
       </google-codelab-step>
     
       <google-codelab-step label="Summary" duration="0">
