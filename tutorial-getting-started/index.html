@@ -118,7 +118,7 @@ litmusportal-server-858584d5b9-r8kkn        1/1     Running   0          47m
 mongo-0                                     1/1     Running   0          47m
 subscriber-7b7c598677-d2lf9                 1/1     Running   0          36m
 workflow-controller-5c7fc6fcdd-st7n4        1/1     Running   0          36m</pre>
-<p class="image-container"><img style="width: 624.00px" src="img/agents.png"></p>
+<p class="image-container"><img style="width: 624.00px" src="img/delegates.png"></p>
 <p>At this point, we are ready to run chaos experiments! </p>
 
 
@@ -162,7 +162,7 @@ workflow-controller-5c7fc6fcdd-st7n4        1/1     Running   0          36m</pr
       <google-codelab-step label="Visualize Chaos Scenario" duration="0">
         <p><strong>Check the Chaos Scenario Progress</strong></p>
 <p>Click on &#34;Show the chaos scenario&#34; graph to check the progress of the chaos scenario steps. </p>
-<p class="image-container"><img style="width: 624.00px" src="img/workflow-runs.png"></p>
+<p class="image-container"><img style="width: 624.00px" src="img/scenario-runs.png"></p>
 <p>Each chaos scenario consists of a set of well-defined steps. The most common amongst them involve installing the ChaosExperiment template (consisting of low-level details of the fault to be executed) and ChaosEngine custom resource (maps a given application instance to the fault along with the specification of steady-state hypothesis). The latter triggers the creation of chaos pods.</p>
 <p>In the current example, litmus deploys a sample multi-replica hello-service application before going on to pull the <a href="https://hub.litmuschaos.io/generic/pod-delete" target="_blank">pod-delete</a> ChaosExperiment template. In the next step, it creates the ChaosEngine to launch the chaos injection via dedicated pods. </p>
 <p>The ChaosEngine spec embedded into the chaos scenario spec looks like this: </p>
@@ -215,7 +215,7 @@ spec:
                # pod failures without &#39;--force&#39; &amp; default terminationGracePeriodSeconds
                - name: FORCE
                  value: &#39;false&#39;</pre>
-<p class="image-container"><img style="width: 624.00px" src="img/workflow-running.png"></p>
+<p class="image-container"><img style="width: 624.00px" src="img/scenario-running.png"></p>
 <p>Watch the action on the cluster where the podtato-head application replica is killed</p>
 <pre><button onclick="copyText('kubectl get pods -n litmus')" style="float: right; border: none; background-color: transparent;" ><i class="fa fa-copy" style="font-size:x-large ; color: aliceblue;"></i></button>kubectl get pods -n litmus </pre>
 <pre>NAME                                        READY   STATUS              RESTARTS   AGE
@@ -243,19 +243,19 @@ podtato-right-leg-68bb97548f-j2p26          1/1     Running             0       
 subscriber-75bd7565cf-shl7t                 1/1     Running             1          40m
 workflow-controller-78dbff5b5d-xcthg        1/1     Running             0          40m</pre>
 <p>Once the experiment completes, the chaos resources (ChaosEngine CR &amp; accompanying chaos pods) are removed as part of a &#34;revert-chaos&#34; step. The sample application is also removed from the cluster. </p>
-<p class="image-container"><img style="width: 624.00px" src="img/workflow-completed.png"></p>
+<p class="image-container"><img style="width: 624.00px" src="img/scenario-completed.png"></p>
 <p><strong>View the Experiment Results </strong></p>
-<p>The chaos scenario dashboard can be used to view the results of the chaos experiment. Click on the &#34;pod-delete&#34; node on the graph to launch a results console. Click on the &#34;Chaos Results&#34; tab to view the details around success/failure of the steady-state hypothesis constraints (podtato-head website availability through pod deletion period) and the experiment verdict. </p>
-<p class="image-container"><img style="width: 624.00px" src="img/workflow-chaosresults.png"></p>
+<p>The scenario dashboard can be used to view the results of the chaos experiment. Click on the &#34;pod-delete&#34; node on the graph to launch a results console. Click on the &#34;Chaos Results&#34; tab to view the details around success/failure of the steady-state hypothesis constraints (podtato-head website availability through pod deletion period) and the experiment verdict. </p>
+<p class="image-container"><img style="width: 624.00px" src="img/scenario-chaosresults.png"></p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Analyze Chaos Scenario" duration="0">
-        <p>Check the Resilience Score achieved for the chaos scenario by clicking on &#34;Show the statistics&#34;. </p>
-        <p class="image-container"><img style="width: 624.00px" src="img/workflow-run-completed.png"></p>
-        <p>The analytics view also provides details of successful v/s failed experiments that were part of the chaos scenario. </p>
-        <p class="image-container"><img style="width: 624.00px" src="img/workflow-analytics.png"></p>
+        <p>Check the Resilience Score achieved for the chaos scenario by clicking on &#34;Show the analytics&#34;. </p>
+        <p class="image-container"><img style="width: 624.00px" src="img/scenario-run-completed.png"></p>
+        <p>The analytics view also provides details of successful v/s failed experiments that were part of the scenario. </p>
+        <p class="image-container"><img style="width: 624.00px" src="img/scenario-analytics.png"></p>
       </google-codelab-step>
     
       <google-codelab-step label="Summary" duration="0">

@@ -257,9 +257,9 @@ gke-litmus-cluster-default-pool-12e7a198-s13l   Ready    &lt;none&gt;   8h    v1
   🌟 Sufficient permissions. Installing the Chaos Delegate...
   
   📌 Summary 
-  Chaos Delegate Name: my-chaos-delegate
-  Chaos Delegate Description: ---
-  Chaos Delegate SSL/TLS Skip: false
+  Agent Name: chaos-delegate-01
+  Agent Description: ---
+  Agent SSL/TLS Skip: false
   Platform Name: Others
   Namespace:  litmus (new)
   Service Account:  litmus (new)
@@ -318,32 +318,32 @@ gke-litmus-cluster-default-pool-12e7a198-s13l   Ready    &lt;none&gt;   8h    v1
       </google-codelab-step>
     
       <google-codelab-step label="Schedule a chaos scenario" duration="5">
-        <p>You can now proceed to schedule a chaos scenario using the newly created Chaos Delegate on the remote cluster. Navigate to the Chaos Scenarios tab on the sidebar, then click the Schedule a chaos scenario button. </p>
+        <p>You can now proceed to schedule a scenario using the newly created Delegate on the remote cluster. Navigate to the scenarios tab on the sidebar, then click the Schedule a scenario button. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/8cbbf714316f2118.png"></p>
-<h2 is-upgraded>Select a target Chaos Delegate</h2>
-<p>You need to select a Target Chaos Delegate to proceed, you will see two options.</p>
+<h2 is-upgraded>Select a target Delegate</h2>
+<p>You need to select a Target Delegate to proceed, you will see two options.</p>
 <ul>
-<li>Self-Agent(Default)</li>
-<li>my-chaos-delegate(Newly created chaos delegate)</li>
+<li>Self Agent(Default)</li>
+<li>chaos-delegate-01(Newly created delegate)</li>
 </ul>
 <p>Select the latter, then click on the Next button.</p>
-<p>Note: You may have to wait for the chaos delegate to be up and ready, after which you can move forward by again clicking on &#34;Next&#34; </p>
-<h2 is-upgraded>Select a chaos scenario</h2>
-<p>Here, you will see four different options from which you can create a chaos scenario. For this tutorial, you should select the first option which creates a chaos scenario from a predefined chaos scenario template. Then select the podtato-head experiment, this experiment injects a pod-delete fault into a sample microservice application. Click the Next button when done.</p>
+<p>Note: You may have to wait for the delegate to be up and ready, after which you can move forward by again clicking on &#34;Next&#34; </p>
+<h2 is-upgraded>Select a scenario</h2>
+<p>Here, you will see four different options from which you can create a scenario. For this tutorial, you should select the first option which creates a scenario from a predefined chaos scenario template. Then select the podtato-head experiment, this experiment injects a pod-delete fault into a sample microservice application. Click the Next button when done.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/dfe517dc6ca6a345.png"></p>
-<h2 is-upgraded>Describe the chaos scenario</h2>
-<p>Here, you can give this chaos scenario a name and a description or leave the default ones. Click <strong>next</strong> when done. <img style="width: 624.00px" src="img/7651ce7eeb67a1a.png"></p>
-<h2 is-upgraded>Tune the chaos scenario</h2>
-<p>This section consists of all the information related to the chaos scenario. It contains a pictorial visualization of the chaos scenario and an option to edit the chaos scenario yaml file. </p>
+<h2 is-upgraded>Describe the scenario</h2>
+<p>Here, you can give this scenario a name and a description or leave the default ones. Click <strong>next</strong> when done. <img style="width: 624.00px" src="img/7651ce7eeb67a1a.png"></p>
+<h2 is-upgraded>Tune the scenario</h2>
+<p>This section consists of all the information related to the chaos scenario. It contains a pictorial visualization of the scenario and an option to edit the scenario yaml file. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/c1141be2b68628d1.png"></p>
 <h2 is-upgraded>Reliability Score</h2>
-<p>You can assign weights to the experiments present in the chaos scenario. These weights will be then used for the calculation of the resilience score after the chaos scenario completion. By default, 10 points are assigned to each experiment. This can be altered as per your use-case. After selecting weights click on the <strong>Next</strong> Button.</p>
+<p>You can assign weights to the experiments present in the scenario. These weights will be then used for the calculation of the resilience score after the scenario completion. By default, 10 points are assigned to each experiment. This can be altered as per your use-case. After selecting weights click on the <strong>Next</strong> Button.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/678a4761604882ce.png"></p>
 <h2 is-upgraded>Schedule</h2>
-<p>Chaos Scenarios can be scheduled in two ways;</p>
+<p>scenarios can be scheduled in two ways;</p>
 <ul>
-<li>Schedule now: This option allows the chaos scenario will start as soon as you schedule it.</li>
-<li>Recurring Schedule: This option will allow you to schedule recurring chaos scenarios. It converts a normal chaos scenario to Cron chaos scenario by adding cron syntax in the chaos scenario manifest. The following methods are available to schedule recurring chaos scenarios:</li>
+<li>Schedule now: This option allows the scenario will start as soon as you schedule it.</li>
+<li>Recurring Schedule: This option will allow you to schedule recurring scenarios. It converts a normal scenario to Cron scenario by adding cron syntax in the scenario manifest. The following methods are available to schedule recurring scenarios:</li>
 <li>Every Hour</li>
 <li>Every Day</li>
 <li>Every Week</li>

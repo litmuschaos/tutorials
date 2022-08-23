@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Creating Custom Chaos Scenarios</title>
+  <title>Creating Custom Chaos scenarios</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
@@ -29,13 +29,13 @@
     
       <google-codelab-step label="Introduction" duration="1">
         <h2 is-upgraded>Welcome</h2>
-<p>In this tutorial, you will learn how to create custom Chaos Scenarios using Litmus. You will use ChaosHub and asset discovery to create a custom Chaos Scenario.</p>
+<p>In this tutorial, you will learn how to create custom chaos scenarios using Litmus. You will use ChaosHub and asset discovery to create a custom scenario.</p>
 <h2 is-upgraded>What you will learn</h2>
 <ul>
-<li>What is ChaosHub</li>
-<li>How to use ChaosHub</li>
-<li>How to connect to a new ChaosHub</li>
-<li>Create a custom chaos scenario using ChaosHub</li>
+<li>What is Chaos Hub</li>
+<li>How to use Chaos Hub</li>
+<li>How to connect to a new Chaos Hub</li>
+<li>Create a custom scenario using Chaos Hub</li>
 </ul>
 <p>In this tutorial, you will inject a pod-delete fault against a sample microservices application called podtato-head and verify if the service continues to be available through the chaos duration.</p>
 <h2 is-upgraded>Pre-Requisites</h2>
@@ -54,12 +54,10 @@
 <h2 is-upgraded>Access and Login to ChaosCenter Dashboard</h2>
 <p>Obtain the service endpoint of the litmus-frontend service, either via nodePort or load balancer URL, and open on your preferred browser. If former, use the external IP of any cluster nodes with the assigned nodePort.</p>
 <pre><code>kubectl get svc -n litmus
-NAME                               TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)                         AGE
-litmus-auth-server-service         NodePort    10.76.20.219   &lt;none&gt;        9003:31241/TCP,3030:31248/TCP   35s
-litmus-frontend-service            NodePort    10.76.21.27    &lt;none&gt;        9091:32733/TCP                  39s
-litmus-server-service              NodePort    10.76.23.74    &lt;none&gt;        9002:30707/TCP,8000:30327/TCP   37s
-mongo-headless-service             ClusterIP   None           &lt;none&gt;        27017/TCP                       32s
-mongo-service                      ClusterIP   10.76.26.27    &lt;none&gt;        27017/TCP                       33s</code></pre>
+NAME                            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)                         AGE
+litmusportal-frontend-service   NodePort    10.40.9.102    &lt;none&gt;        9091:31616/TCP                  12m
+litmusportal-server-service     NodePort    10.40.10.186   &lt;none&gt;        9002:31242/TCP,9003:32073/TCP   12m
+mongo-service                   ClusterIP   10.40.7.121    &lt;none&gt;        27017/TCP                       12m</code></pre>
 <p>Use the default credentials to login. <br/>
   Username: admin <br/>
   Password: litmus
@@ -69,22 +67,22 @@ mongo-service                      ClusterIP   10.76.26.27    &lt;none&gt;      
 
       </google-codelab-step>
     
-      <google-codelab-step label="ChaosHub" duration="5">
-        <h2 is-upgraded>What is ChaosHub?</h2>
-<p>Litmus Chaos Hubs allows you to connect to your Public Choas Hubs pulled directly from your Github repos. You can then customize the experiments, orchestrate chaos scenarios, and use them in the ChaosCenter as custom chaos scenarios.</p>
-<p>Initially, there is one ChaosHub present, the <a href="https://hub.litmuschaos.io/" target="_blank">Litmus ChaosHub</a>. This hub contains experiments from <a href="https://hub.litmuschaos.io/" target="_blank">https://hub.litmuschaos.io/</a>. You can use this default Hub or connect to a new external hub.</p>
-<h2 is-upgraded>Connecting to a ChaosHub on a public GitHub repository</h2>
-<p>Navigate to the ChaosHub tab on the ChaosCenter and click the Connect New Hub button.</p>
+      <google-codelab-step label="Chaos Hub" duration="5">
+        <h2 is-upgraded>What is Chaos Hub?</h2>
+<p>Litmus Chaos Hubs allows you to connect to your Public Chaos Hubs pulled directly from your Github repos. You can then customize the experiments, orchestrate scenarios, and use them in the ChaosCenter as custom scenarios.</p>
+<p>Initially, there is one Chaos Hub present, the <a href="https://hub.litmuschaos.io/" target="_blank">Litmus Chaos Hub</a>. This hub contains experiments from <a href="https://hub.litmuschaos.io/" target="_blank">https://hub.litmuschaos.io/</a>. You can use this default Hub or connect to a new external hub.</p>
+<h2 is-upgraded>Connecting to a Chaos Hub on a public GitHub repository</h2>
+<p>Navigate to the Chaos Hub tab on the ChaosCenter and click the Connect New Hub button.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/67bc63e5d26263d2.png"></p>
-<p>Here, you will be presented with a form to add a ChaosHub. You will need to provide a name, select public, and type in the URL of the Github repo you want to add and its corresponding branch.</p>
+<p>Here, you will be presented with a form to add a Chaos Hub. You will need to provide a name, select public, and type in the URL of the Github repo you want to add and its corresponding branch.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/91b4ec97b1010ac.png"></p>
-<p>Here we would be using a fork of the <a href="https://github.com/litmuschaos/chaos-charts" target="_blank">ChaosHub</a>, a public repo for this tutorial. You can find this fork <a href="https://github.com/Gbahdeyboh/chaos-charts" target="_blank">here</a>.</p>
-<p>First, give the Hub the name of ChaosHub, then type in the repo URL https://github.com/Gbahdeyboh/chaos-charts and the branch master. Then click the Submit button. You should have two hubs, ChaosHub and ChaosHub.</p>
+<p>Here we would be using a fork of the <a href="https://github.com/litmuschaos/chaos-charts" target="_blank">Chaos Hub</a>, a public repo for this tutorial. You can find this fork <a href="https://github.com/Gbahdeyboh/chaos-charts" target="_blank">here</a>.</p>
+<p>First, give the Hub the name of MyHub, then type in the repo URL https://github.com/Gbahdeyboh/chaos-charts and the branch master. Then click the Submit button. You should have two hubs, MyHub and Chaos Hub.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/7b0bd4f044a714db.png"></p>
-<p>Click on the ChaosHub Hub and view the available charts it has.</p>
+<p>Click on the MyHub Hub and view the available experiments it has.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/df8a4819325c5ffc.png"></p>
-<h2 is-upgraded>Connecting to a ChaosHub on a private Github repository</h2>
-<p>Navigate to the ChaosHub tab on the ChaosCenter and click the Connect New Hub button.</p>
+<h2 is-upgraded>Connecting to a Chaos Hub on a private Github repository</h2>
+<p>Navigate to the Chaos Hub tab on the ChaosCenter and click the Connect New Hub button.</p>
 <p>Provide a name, select private and type in the URL of the Github repo you want to add and the corresponding branch.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/a2e0fb4b1600002e.png"></p>
 <p>Because this is a private repo, you have to give the ChaosCenter access to it. This can be done by using any of the following.</p>
@@ -104,51 +102,51 @@ mongo-service                      ClusterIP   10.76.26.27    &lt;none&gt;      
 <p>You will see a new SSH key button, click it, add a title and paste in your SSH key and click the Add SSH key button.</p>
 <p>Click the <strong>submit now</strong> button.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/52577463d597efb9.png"></p>
-<h2 is-upgraded>Exploring the ChaosHub</h2>
-<p>After adding a new hub, you can click on the hub name to explore the charts and chaos scenarios present in the hub.</p>
-<p>In the default ChaosHub, there is a pre-defined chaos scenarios section and a chaos charts section. The pre-defined chaos scenarios allow you to quickly set up a simple chaos scenario and execute it.</p>
-<p>You can now create custom chaos scenarios from experiments in the chaos charts!.</p>
+<h2 is-upgraded>Exploring the Chaos Hub</h2>
+<p>After adding a new hub, you can click on the hub name to explore the experiment and scenarios present in the hub.</p>
+<p>In the default Chaos Hub, there is a pre-defined scenarios section and a experiment section. The pre-defined scenarios allow you to quickly set up a simple scenario and execute it.</p>
+<p>You can now create custom scenarios from experiments in the experiment.</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Creating a Custom Chaos Scenario" duration="0">
-        <p>In this section, you will create custom chaos scenarios from the hub we connected to in the last section.</p>
-<h2 is-upgraded>1) Select a Target Chaos Delegate</h2>
-<p>First, navigate to the Chaos Scenarios tab on the ChaosCenter and click the Schedule a chaos scenario button. It will take you to the chaos scenario page.</p>
-<p>You need to select a Target Chaos Delegate to proceed, these chaos delegates consist of CRDs and the required resources to run a chaos scenario. While installing the ChaosCenter, a default chaos delegate named Self Chaos Delegate is created. Select the Self Chaos Delegate.</p>
-<p>Note: You may have to wait for the chaos delegate to be up and ready, after which you can move forward by again clicking on &#34;Next&#34;</p>
-<h2 is-upgraded>2) Choose a Chaos Scenario</h2>
-<p>Here, you will see four different options from which you can create a chaos scenario. For this tutorial, we will only use the Create a new chaos scenario using experiments from the ChaosHub option. Select this option.</p>
-<p>Then select the Hub you want to connect to which is ChaosHub and choose an experiment.Select the podtato-head experiment that will inject a pod-delete fault into a sample microservice application. Click the Next button when done.</p>
-<h2 is-upgraded>3) Chaos Scenario Settings</h2>
-<p>Here, you can change the name of the chaos scenario and also provide a description of the chaos scenario. This section also consists of information regarding the namespace where the chaos scenario will be scheduled. Click next when done.</p>
-<h2 is-upgraded>4) Tune Chaos Scenario</h2>
+      <google-codelab-step label="Creating a Custom Scenario" duration="0">
+        <p>In this section, you will create custom scenarios from the hub we connected to in the last section.</p>
+<h2 is-upgraded>1) Select a Target Delegate</h2>
+<p>First, navigate to the Scenarios tab on the ChaosCenter and click the Schedule a scenario button. It will take you to the scenario page.</p>
+<p>You need to select a Target Delegate to proceed, these delegates consist of CRDs and the required resources to run a chaos scenario. While installing the ChaosCenter, a default delegate named Self Delegate is created. Select the Self Delegate.</p>
+<p>Note: You may have to wait for the delegate to be up and ready, after which you can move forward by again clicking on &#34;Next&#34;</p>
+<h2 is-upgraded>2) Choose a Scenario</h2>
+<p>Here, you will see four different options from which you can create a scenario. For this tutorial, we will only use the Create a new scenario using experiments from the MyHub option. Select this option.</p>
+<p>Then select the Hub you want to connect to which is MyHub and choose an experiment.Select the podtato-head experiment that will inject a pod-delete fault into a sample microservice application. Click the Next button when done.</p>
+<h2 is-upgraded>3) Scenario Settings</h2>
+<p>Here, you can change the name of the scenario and also provide a description of the scenario. This section also consists of information regarding the namespace where the scenario will be scheduled. Click next when done.</p>
+<h2 is-upgraded>4) Tune Scenario</h2>
 <p>This section consists of all the information related to the chaos scenario. Some new and advanced features that are present in this section are :</p>
 <ul>
-<li>Chaos Scenario Visualization: This feature allows you to visualize the chaos scenario even before scheduling it. This gives brief information related to the structure of chaos scenario i.e if the experiments are present in a serial or parallel way.</li>
-<li>Chaos Scenario Table: This table contains the list of experiments present in the chaos scenario. It also consists of some valuable information related to the target applications.</li>
-<li>Edit Yaml: With this option, you can view and change the chaos scenario manifest with a YAML editor.</li>
-<li>Revert Chaos: For custom chaos scenarios, you can enable or disable the revert step from the ChaosCenter. With the revert step enabled, a new functionality called podGC is also added which deletes the chaos scenario pods after the completion of chaos scenario as part of the clean-up process.</li>
+<li>Scenario Visualization: This feature allows you to visualize the scenario even before scheduling it. This gives brief information related to the structure of scenario i.e if the experiments are present in a serial or parallel way.</li>
+<li>Scenario Table: This table contains the list of experiments present in the scenario. It also consists of some valuable information related to the target applications.</li>
+<li>Edit Yaml: With this option, you can view and change the scenario manifest with a YAML editor.</li>
+<li>Revert Chaos: For custom scenarios, you can enable or disable the revert step from the ChaosCenter. With the revert step enabled, a new functionality called podGC is also added which deletes the scenario pods after the completion of scenario as part of the clean-up process.</li>
 </ul>
 <p class="image-container"><img style="width: 624.00px" src="img/7e99334569ffd10.png"></p>
 <p>Don&#39;t care too much about the above if you do not understand it yet. Click the <strong>Next</strong> Button to proceed.</p>
 <h2 is-upgraded>5) Reliability Score</h2>
-<p>You can assign weights to the experiments present in the chaos scenario. These weights will be then used for the calculation of the resilience score after the chaos scenario completion. By default, 10 points are assigned to each experiment. This can be altered as per your use case. After selecting weights click on the <strong>Next</strong> Button.</p>
+<p>You can assign weights to the experiments present in the scenario. These weights will be then used for the calculation of the resilience score after the scenario completion. By default, 10 points are assigned to each experiment. This can be altered as per your use case. After selecting weights click on the <strong>Next</strong> Button.</p>
 <h2 is-upgraded>6) Schedule</h2>
-<p>Chaos Scenarios can be scheduled in two ways;</p>
+<p>scenarios can be scheduled in two ways;</p>
 <ul>
-<li>Schedule now: This option allows the chaos scenario will start as soon as you schedule it.</li>
-<li>Recurring Schedule: This option will allow you to schedule recurring chaos scenarios. It converts a normal chaos scenario to Cron chaos scenario by adding cron syntax in the chaos scenario manifest. The following methods are available to schedule recurring chaos scenarios:</li>
+<li>Schedule now: This option allows the scenario will start as soon as you schedule it.</li>
+<li>Recurring Schedule: This option will allow you to schedule recurring scenarios. It converts a normal scenario to Cron scenario by adding cron syntax in the scenario manifest. The following methods are available to schedule recurring scenarios:</li>
 <li>Every Hour</li>
 <li>Every Day</li>
 <li>Every Week</li>
 <li>Every Month</li>
 </ul>
 <h2 is-upgraded>7) Verify and Commit</h2>
-<p>This is the final step in the chaos scenario creation process. In this step, you can validate all the changes related to the chaos scenario like the chaos scenario name, the experiment weights, chaos scenario description, chaos scenario manifest, etc. Once you have verified all the changes, you can click the <strong>Finish</strong> button to start the schedule.</p>
-<h2 is-upgraded>8) Visualize and Analyze the chaos scenario</h2>
-<p>You can now Visualize your chaos scenario by following steps 5 and 6 of the <a href="https://litmuschaos.github.io/tutorials/tutorial-getting-started/index.html#4" target="_blank">Getting Started</a> Tutorial.</p>
+<p>This is the final step in the scenario creation process. In this step, you can validate all the changes related to the scenario like the scenario name, the experiment weights, scenario description, scenario manifest, etc. Once you have verified all the changes, you can click the <strong>Finish</strong> button to start the schedule.</p>
+<h2 is-upgraded>8) Visualize and Analyze the scenario</h2>
+<p>You can now Visualize your scenario by following steps 5 and 6 of the <a href="https://litmuschaos.github.io/tutorials/tutorial-getting-started/index.html#4" target="_blank">Getting Started</a> Tutorial.</p>
 
       </google-codelab-step>
     
