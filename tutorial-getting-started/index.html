@@ -44,7 +44,9 @@
 <p>In this tutorial, we will inject a pod-delete fault against a sample microservices application called <a href="https://github.com/cncf/podtato-head" target="_blank">podtato-head</a> and verify if the service continues to be available through the chaos duration. </p>
 <h2 is-upgraded>Pre-Requisites</h2>
 <ul>
-<li>Kubernetes 1.17 or later. Recommended sizing of at least: 2 vCPUs, 8GB memory, 10GB of disk space (for persistent volume creation)</li>
+<li>Kubernetes 1.18 or later. Recommended sizing of at least: 2 vCPUs, 8GB memory, 10GB of disk space (for persistent volume creation)</li>
+<li>A Persistent volume: Recommend to have a Persistent volume(PV) of 20GB, You can start with 1GB for test purposes as well. This PV is used as persistent storage to store the chaos config and chaos-metrics in the Portal. By default, litmus install would use the default storage class to allocate the PV. If your cluster don't have storage-class then use the local PV for example you can use <a href="https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml">this</a>.
+<li>Review the resource/sizing requirements: Make sure you have resource available for deploying <a href="https://docs.litmuschaos.io/docs/user-guides/chaoscenter-cluster-scope-installation#resource-requirements-of-control-plane-components">control plane</a> and <a href="https://docs.litmuschaos.io/docs/user-guides/chaosagents-installation#resource-requiremenets-for-agents-plane-components">execution plane</a> with some buffer.</li>
 <li>Helm3 or Kubectl</li>
 <li>Access to the internet from Cluster</li>
 </ul>
@@ -106,7 +108,7 @@ mongo-service                      ClusterIP      10.76.26.27    &lt;none&gt;   
 <p>You have been assigned a default project with Owner permissions </p>
 <p class="image-container"><img style="width: 624.00px" src="img/home.png"></p>
 <h3 is-upgraded><strong>Verify Successful Registration of the Self Chaos Delegate </strong></h3>
-<p>Once the project is created, the cluster is automagically registered as a chaos target via installation of Litmus Chaos Agents. This is represented as &#34;Self-Chaos Delegate&#34; in the Agents console of the ChaosCenter Dashboard. </p>
+<p>Once the project is created, the cluster is automagically registered as a chaos target via installation of Chaos Delegate. This is represented as &#34;Self-Agent &#34; in the Delegate console of the ChaosCenter Dashboard. </p>
 <pre><button onclick="copyText('kubectl get pods -n litmus')" style="float: right; border: none; background-color: transparent;" ><i class="fa fa-copy" style="font-size:x-large ; color: aliceblue;"></i></button>kubectl get pods -n litmus</pre>
 <pre>NAME                                        READY   STATUS    RESTARTS   AGE
 chaos-exporter-567c7cc8b-96pkf              1/1     Running   0          36m
@@ -137,7 +139,7 @@ workflow-controller-5c7fc6fcdd-st7n4        1/1     Running   0          36m</pr
 <p class="image-container"><img style="width: 624.00px" src="img/279fccbd5cb3c17d.png"></p>
 <p>Select the &#34;Self-Agent&#34; as the target cluster for chaos execution </p>
 <p class="image-container"><img style="width: 624.00px" src="img/297754c0e942727f.png"></p>
-<p>Select the option to create a new chaos scenario from pre-defined chaos scenario templates. Amongst the available templates, select the &#34;podtato-head-chaos&#34; option.</p>
+<p>Select the option to create a new chaos scenario from pre-defined chaos scenario templates. Amongst the available templates, select the &#34;podtato-head&#34; option.</p>
 <p class="image-container"><img style="width: 624.00px" src="img/1015bd4eefd9bf97.png"></p>
 <p>View the description of the chaos scenario </p>
 <p class="image-container"><img style="width: 624.00px" src="img/bbee7b2929080acc.png"></p>
@@ -145,6 +147,10 @@ workflow-controller-5c7fc6fcdd-st7n4        1/1     Running   0          36m</pr
 <p>View the preview of the chaos scenario.</p>
 <p> (Optional) You could also edit the chaos scenario YAML depending upon your need at this stage</p>
 <p class="image-container"><img style="width: 624.00px" src="img/e456843387f5719c.png"></p>
+<p> (Optional) You could also add the steady-state hypothesis for the chaos scenario</p>
+<p class="image-container"><img style="width: 624.00px" src="img/ddd6843387f5809g.png"></p>
+<p> (Optional) Verify the hypothesis for the chaos scenario</p>
+<p class="image-container"><img style="width: 624.00px" src="img/e456843387f5809g.png"></p>
 <h3 is-upgraded><strong>(Optional) Preview the Chaos Scenario Steps </strong></h3>
 <p>Assign weights to the chaos experiments that are part of the chaos scenario using the slider. This is useful when there are multiple experiments in the chaos scenario. These weights influence the &#34;Resilience Score&#34; calculation for the chaos scenario. </p>
 <p class="image-container"><img style="width: 624.00px" src="img/4c73a234fbbddb5.png"></p>
@@ -252,10 +258,12 @@ workflow-controller-78dbff5b5d-xcthg        1/1     Running             0       
       </google-codelab-step>
     
       <google-codelab-step label="Analyze Chaos Scenario" duration="0">
-        <p>Check the Resilience Score achieved for the chaos scenario by clicking on &#34;Show the analytics&#34;. </p>
-        <p class="image-container"><img style="width: 624.00px" src="img/scenario-run-completed.png"></p>
-        <p>The analytics view also provides details of successful v/s failed experiments that were part of the scenario. </p>
-        <p class="image-container"><img style="width: 624.00px" src="img/scenario-analytics.png"></p>
+        <p>Check the Resilience Score achieved for the chaos scenario by clicking on &#34;Show the statistics&#34;. </p>
+        <p class="image-container"><img style="width: 624.00px" src="img/show-the-statistics.png"></p>
+        <p>Now click for the drop-down &#34; Show Statistics&#34;. </p>
+        <p class="image-container"><img style="width: 624.00px" src="img/show-statistics-drop-down.png"></p>
+        <p>Check the Experiment Statistics and resilience score of the scenario. </p>
+        <p class="image-container"><img style="width: 624.00px" src="img/statistics-view.png"></p>
       </google-codelab-step>
     
       <google-codelab-step label="Summary" duration="0">
