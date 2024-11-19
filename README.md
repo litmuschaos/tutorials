@@ -1,3 +1,6 @@
+
+### :warning: This repository is deprecated and no longer maintained. 
+
 ## Welcome to LitmusChaos Tutorials
 
 The tutorials help you to quickly learn some of the standard day-0 to day-n flows associated with the LitmusChaos framework (and Chaos Engineering in general).
